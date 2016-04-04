@@ -39,7 +39,7 @@ app.use('/VSTS', vstsRouter);
 
 // [START server]
 var server = app.listen(process.env.PORT || '8080', '0.0.0.0', function () {
-  console.log('App listening at http://%s', server);
+  console.log('App listening at http://%s ', server);
   console.log("Press Ctrl+C to quit.");
 });
 // [END server]
