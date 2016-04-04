@@ -1,7 +1,7 @@
 var path = require('path');
 var webpack = require('webpack');
 // var WebpackDevServer = require('webpack-dev-server');
-var config = require('./webpack.dev.config');
+// var config = require('./webpack.dev.config');
 var express = require('express');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
