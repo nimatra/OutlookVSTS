@@ -2,7 +2,7 @@ var gulp = require('gulp');
 var tslint = require('gulp-tslint');
 var webpack = require('webpack-stream');
 
-gulp.task('default', ['watch-tslint']);
+gulp.task('default', ['tslint-watch']);
 
 gulp.task('tslint', function(){
   return gulp.src(['App/**/*.ts', 'App/**/*.tsx'])

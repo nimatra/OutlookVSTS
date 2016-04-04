@@ -6,7 +6,6 @@ var express = require('express');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var index = require('./index');
 var authenticate = require('./routes/authenticate');
 var vsts = require('./routes/vsts');
 
@@ -28,7 +27,9 @@ var authRouter = express.Router({mergeParams: true});
 var vstsRouter = express.Router({mergeParams: true});
 
 // [START]
-app.get('/', index);
+app.get('/', function (req, res) {
+    res.sendFile(__dirname + '/index.html');
+});
 app.use('/authenticate', authRouter);
 authRouter.use('/callback', authenticate.callback);
 authRouter.use('/', authenticate.authorize);
