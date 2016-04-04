@@ -1,6 +1,6 @@
 var path = require('path');
 var webpack = require('webpack');
-var WebpackDevServer = require('webpack-dev-server');
+// var WebpackDevServer = require('webpack-dev-server');
 var config = require('./webpack.dev.config');
 var express = require('express');
 var logger = require('morgan');
