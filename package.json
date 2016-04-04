@@ -1,5 +1,6 @@
 {
   "name": "outlook-vsts",
+  "engines":{"node": "0.8.x"},
   "version": "1.0.0",
   "license": "MIT",
   "repository": {
