@@ -15,7 +15,8 @@ class CommonActionCreators {
     }
 
     sayHello(): void {
-         Dispatcher.dispatch(new SayHelloAction());
+        Dispatcher.dispatch(new SayHelloAction());
+        window.location.href = "/authenticate";
     }
 }
 
