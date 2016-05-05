@@ -1,7 +1,7 @@
 var path = require('path');
 var express = require('express');
 var webpack = require('webpack');
-var config = require('./config/webpack.dev');
+var config = require('./config/webpack.prod');
 var authenticate = require('./routes/authenticate');
 var vsts = require('./routes/vsts');
 
