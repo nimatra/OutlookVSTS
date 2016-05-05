@@ -1,9 +1,42 @@
 /// <reference path="../typings/tsd.d.ts" />
 
-/* tslint:disable */
-import * as React from "react";
-/* tslint:enable */
-import * as ReactDom from "react-dom";
-import App from "./App";
+import * as React from 'react';
+import * as ReactDOM from 'react-dom';
+import { Store, createStore } from 'redux';
+import { Provider } from 'react-redux';
 
-ReactDom.render(<App />, document.getElementById("root"));
+import { App } from './components/app';
+import { counterApp } from './reducers';
+
+declare const require: (name: String) => any;
+
+interface IHotModule {
+  hot?: { accept: (path: string, callback: () => void) => void };
+};
+
+declare const module: IHotModule;
+
+function configureStore(): Store {
+  const store: Store = createStore(counterApp);
+
+  if (module.hot) {
+    module.hot.accept('./reducers', () => {
+      const nextRootReducer: any = require('./reducers').counterApp;
+      store.replaceReducer(nextRootReducer);
+    });
+  }
+
+  return store;
+}
+
+const store: Store = configureStore();
+
+class Main extends React.Component<{}, {}> {
+  public render(): React.ReactElement<Provider> {
+    return (<Provider store={store}>
+      <App />
+    </Provider>);
+  }
+}
+
+ReactDOM.render(<Main />, document.getElementById('app'));
