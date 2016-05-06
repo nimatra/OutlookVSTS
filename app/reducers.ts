@@ -1,30 +1,23 @@
 /// <reference path="../typings/tsd.d.ts" />
 
 import { Reducer, combineReducers } from 'redux';
-import { ICounterAction, ACTION } from './actions';
+import { IWorkItemAction, ACTION } from './actions';
+import { IWorkItemState, IField }  from './workItemModel';
 
-function counters(state: number[] = [0, 0, 0], action: ICounterAction): number[] {
+function getFields(type: string): IField[]{
+  return [{label: 'Story Points', value: '', type: 'integer'},
+          {label: 'Priority', value: '', type: 'integer'},
+          {label: 'Description', value: '', type: 'html'}];
+}
+
+function updateWorkItemType(state: IWorkItemState, action: IWorkItemAction): IWorkItemState {
   switch (action.type) {
-    case ACTION.IncrementCounter:
-      return [
-        ...state.slice(0, action.counterId),
-        state[action.counterId] + 1,
-        ...state.slice(action.counterId + 1),
-      ];
-
-    case ACTION.DecrementCounter:
-      return [
-        ...state.slice(0, action.counterId),
-        state[action.counterId] - 1,
-        ...state.slice(action.counterId + 1),
-      ];
-
-    case ACTION.AddCounter:
-      return [...state, 0];
-
+    case ACTION.ChangeWorkItemType:
+       return state != null ? { type: action.workItemType, fields: getFields(action.workItemType) }
+         : { type: 'Bug', fields: getFields('Bug') };
     default:
-      return state;
+      return state != null ? state : { type: 'Bug', fields: getFields('Bug') };
   }
 }
 
-export const counterApp: Reducer = combineReducers({ counters });
+export const vsoAddin: Reducer = combineReducers({ updateWorkItemType });
