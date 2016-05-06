@@ -14,6 +14,11 @@ export class Titlebar extends React.Component<{}, ITitleBarState> {
   public constructor(props : {}, context) {
     super(props,context);
     this.state = { title: '', status: 'New', assignee: 'Jesse Freitas'};
+    this.handleTitleChange = this.handleTitleChange.bind(this);
+  }
+
+  public handleTitleChange(event) {
+      this.setState({title : event.target.value, status: this.state.status, assignee : this.state.assignee});
   }
 
   public render(): React.ReactElement<{}> {
@@ -21,7 +26,7 @@ export class Titlebar extends React.Component<{}, ITitleBarState> {
     return (<div className="titleBar">
                 <div className="ms-TextField ms-TextField--underlined">
                     <label className="ms-Label">Title:</label>
-                    <input className="ms-TextField-field" type="text" />
+                    <input className="ms-TextField-field" type="text" value={this.state.title} onChange={this.handleTitleChange}/>
                 </div>
                 <div className="field-control" id="status">
                     <div className="ms-Dropdown" tabIndex={0}>
