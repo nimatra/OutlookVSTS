@@ -24,6 +24,10 @@ export class WorkItem extends React.Component<IWorkItemProps, IWorkItemState> {
       return <div></div>;
   }
 
+  public submitWorkItem() {
+
+  }
+
   public render(): React.ReactElement<{}> {
 
     let items: JSX.Element[] = [];
@@ -38,10 +42,10 @@ export class WorkItem extends React.Component<IWorkItemProps, IWorkItemState> {
                     <div>
                         <SelectField label="Work Item Type" options={this.props.types} />
                     </div>
-                    <button className="ms-Button ms-Button--primary">
+                    <button className="ms-Button ms-Button--primary" onClick={this.submitWorkItem}>
                         <span className="ms-Button-icon"><i className="ms-Icon ms-Icon--plus"></i></span>
                         <span className="ms-Button-label">Create work item</span>
-                        <span className="ms-Button-description">Create a work item using Visual Studio Team Services</span>
+                        <span className="ms-Button-description">Create a work item using Visual Studio Team Services.</span>
                     </button>
                     <Titlebar />
 
