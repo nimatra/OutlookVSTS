@@ -1,11 +1,5 @@
-Typescript + React + Webpack Boilerplate
+VSTS Addin for Outlook
 =======================================
-
-Base project for setting up a frontend application using Typescript and React. Heavily based off of Dan Abramov's [React Transform Boilerplate](https://github.com/gaearon/react-transform-boilerplate).
-
-Prerequisites
-----------------------------------
-* Typescript Definition Manager (TSD) `npm install -g tsd`
 
 Installation
 --------------------------------------
