@@ -41,7 +41,7 @@ module.exports = {
     extensions: ['', '.jsx', '.js', '.tsx', '.ts']
   },
   tslint: {
-    emitErrors: true,
-    failOnHint: true
+    emitErrors: false,
+    failOnHint: false
   }
 }
