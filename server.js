@@ -27,6 +27,8 @@ app.use('/authenticate', authRouter);
 authRouter.use('/callback', authenticate.callback);
 authRouter.use('/', authenticate.authorize);
 app.use('/VSTS', vstsRouter);
+app.use('/js', express.static(__dirname + '/js'));
+app.use('/css', express.static(__dirname + '/css'));
 
 app.listen(port, 'localhost', err => {
   if (err) {
