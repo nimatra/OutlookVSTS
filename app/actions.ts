@@ -1,20 +1,19 @@
 /// <reference path="../typings/tsd.d.ts" />
 
-export enum ACTION { IncrementCounter, DecrementCounter, AddCounter }
+import { IField } from './workItemModel';
 
-export interface ICounterAction {
+export enum ACTION { CreateWorkItem, ChangeWorkItemType }
+
+export interface IWorkItemAction {
   type: ACTION;
-  counterId?: number;
+  workItemType: string;
+  workItemFields: IField[];
 }
 
-export function incrementCounter(counterId: number): ICounterAction {
-  return { type: ACTION.IncrementCounter, counterId };
+export function createWorkItem(type: string, fields: IField[]) : IWorkItemAction {
+  return { type: ACTION.CreateWorkItem, workItemType: type, workItemFields: fields };
 }
 
-export function decrementCounter(counterId: number): ICounterAction {
-  return { type: ACTION.DecrementCounter, counterId };
-}
-
-export function addCounter(): ICounterAction {
-  return { type: ACTION.AddCounter };
+export function changeWorkItemType(type: string) : IWorkItemAction {
+  return { type: ACTION.ChangeWorkItemType, workItemType: type, workItemFields: null };
 }
