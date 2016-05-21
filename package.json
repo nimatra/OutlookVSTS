@@ -1,6 +1,8 @@
 {
   "name": "outlook-vsts",
-  "engines":{"node": ">=0.12.0"},
+  "engines": {
+    "node": ">=0.12.0"
+  },
   "version": "1.0.0",
   "license": "MIT",
   "repository": {
@@ -16,34 +18,32 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
-    "react": "^0.14.7",
-    "react-dom": "^0.14.7",
-    "react-redux": "^4.1.2",
-    "redux": "^3.1.5",
-    "ts-loader": "^0.8.1",
-    "typescript": "^1.7.5",
-    "querystring": "*",
-    "https": "*",
-    "fs": "*",
-
-
     "babel-core": "^6.4.5",
     "babel-loader": "^6.2.1",
     "babel-plugin-react-transform": "^2.0.0",
     "babel-preset-es2015": "^6.3.13",
     "babel-preset-react": "^6.3.13",
     "babel-preset-stage-0": "^6.3.13",
+    "body-parser": "^1.15.1",
     "express": "^4.13.4",
+    "fs": "*",
+    "https": "*",
+    "querystring": "*",
+    "react": "^0.14.7",
+    "react-dom": "^0.14.7",
+    "react-redux": "^4.1.2",
     "react-transform-catch-errors": "^1.0.2",
     "react-transform-hmr": "^1.0.2",
     "redbox-react": "^1.2.2",
+    "redux": "^3.1.5",
     "rimraf": "^2.5.2",
+    "ts-loader": "^0.8.1",
     "tslint": "^3.3.0",
     "tslint-loader": "^2.1.0",
+    "typescript": "^1.7.5",
     "webpack": "^1.12.15",
     "webpack-dev-middleware": "^1.5.1",
     "webpack-hot-middleware": "^2.6.4"
   },
-  "devDependencies": {
-  }
+  "devDependencies": {}
 }
