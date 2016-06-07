@@ -9,11 +9,11 @@ module.exports = router;
 router.entryPoint = function (req, res) {
     if(typeof req.query.accessToken === "undefined")
     {
-        res.redirect("../authenticate?redirect=vsts");
+        res.redirect("../authenticate?redirect=dogfood");
     }
     else
     {
-        res.sendFile(__dirname + '/../vsts/index.html');
+        res.sendFile(__dirname + '/../dogfood/index.html');
     }
 };
 router.use('/', router.entryPoint);

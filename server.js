@@ -5,6 +5,7 @@ var bodyParser = require('body-parser');
 var config = require('./config/webpack.prod');
 var authenticate = require('./routes/authenticate');
 var vsts = require('./routes/vsts');
+var dogfood = require('./routes/dogfood');
 
 var app = express();
 var compiler = webpack(config);
@@ -24,15 +25,12 @@ app.use(require('webpack-hot-middleware')(compiler));
 
 // Routes
 
-var authRouter = express.Router({mergeParams: true});
-var vstsRouter = express.Router({mergeParams: true});
 app.get('/', function (req, res) {
     res.sendFile(__dirname + '/index.html');
 });
-app.use('/authenticate', authRouter);
-authRouter.use('/callback', authenticate.callback);
-authRouter.use('/', authenticate.authorize);
-app.use('/VSTS', vstsRouter);
+app.use('/authenticate', authenticate);
+app.use('/VSTS', vsts);
+app.use('/dogfood', dogfood);
 app.use('/js', express.static(__dirname + '/js'));
 app.use('/css', express.static(__dirname + '/css'));
 

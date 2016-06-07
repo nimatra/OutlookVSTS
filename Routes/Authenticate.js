@@ -3,9 +3,12 @@ var fs = require('fs');
 var https = require('https');
 var querystring = require('querystring');
 
-
-var router = express.Router();
+var router = express.Router({ mergeParams: true });
 module.exports = router;
+
+//var secretFile = require('../clientSecret');
+//var clientSecret = JSON.stringify(secretFile);
+var clientSecret = process.env.ClientSecretJson;
 
 
 /**
@@ -14,18 +17,16 @@ module.exports = router;
  * @param res response object from the google oauth callback
  */
 router.callback = function (req, res) {
-  fs.readFile(__dirname + '/../client_secret.json', function processClientSecrets(err, content) {
-    if (err) {
-      console.log('Error loading client secret file: ' + err);
-      return;
-    }
+
     // Authorize a client with the loaded credentials, then call the
     // Google Calendar API.
-    router.credentials = JSON.parse(content);
+    router.credentials = JSON.parse(clientSecret);
     router.code = req.query.code;
-    router.Exchange(res);
-  });
+    //res.redirect('../VSTS');
+    router.Exchange(req.query.state, res);
+
 };
+router.use('/callback', router.callback);
 
 
 /**
@@ -35,32 +36,29 @@ router.callback = function (req, res) {
  */
 router.authorize = function (req, res) {
 
-  fs.readFile(__dirname + '/../client_secret.json', function processClientSecrets(err, content) {
-    if (err) {
-      console.log('Error loading client secret file: ' + err);
-      return;
-    }
-    router.credentials = JSON.parse(content);
+    router.credentials = JSON.parse(clientSecret);
 
     var authParams = querystring.stringify({
       redirect_uri: router.credentials.web.redirect_uris[0],
       response_type: 'Assertion',
       client_id: router.credentials.web.client_id,
       scope: 'vso.work_write',
-      approval_prompt: 'force'
+      approval_prompt: 'force',
+      state : req.query.redirect
     });
+    timer++;
     var authBaseUrl = router.credentials.web.auth_uri;
     var url = authBaseUrl + '?' + authParams.toString();
     res.redirect(url);
 
-  });
 };
+router.use('/', router.authorize);
 
 /**
  * Makes a http POST call to exchange the given code from the first call and get the token
  * @param res - response object, it is used saved here to be used in the callback
  */
-router.Exchange = function (res) {
+router.Exchange = function (state, res) {
 
   var data = querystring.stringify({
     assertion: router.code,
@@ -80,7 +78,9 @@ router.Exchange = function (res) {
     }
   };
   router.res = res;
-  var httpPost = https.request(options, exchangeApiCallback);
+  var httpPost = https.request(options, function(response) {
+                      exchangeApiCallback(state, response);
+                  });
   httpPost.write(data);
   httpPost.end();
 };
@@ -89,7 +89,7 @@ router.Exchange = function (res) {
  * callback of the get token call - redirects to /calendars
  * @param response - callback response
  */
-function exchangeApiCallback(response) {
+function exchangeApiCallback(state, response) {
   var str = '';
 
   //another chunk of data has been recieved, so append it to `str`
@@ -101,8 +101,17 @@ function exchangeApiCallback(response) {
   response.on('end', function () {
     exchanges = JSON.parse(str);
     router.AccessToken = exchanges.access_token;
-    router.res.redirect("../calendars?accessToken=" + router.AccessToken);
-    // router.res.render('callback', {title: str});
-
+    switch(state)
+    {
+      case 'dogfood':
+        router.res.redirect("../dogfood?accessToken=" + router.AccessToken);
+        break;
+      case 'vsts':
+        router.res.redirect("../vsts?accessToken=" + router.AccessToken);
+        break;
+      default:
+        router.res.send(500, "Unknown state value: " + state);
+        break;
+    }
   });
 }
