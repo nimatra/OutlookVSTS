@@ -4,10 +4,10 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { Store, createStore } from 'redux';
 import { Provider } from 'react-redux';
+import { Router, browserHistory } from 'react-router';
 
 import { vsoAddin } from './reducers';
-
-import { WorkItem } from './components/WorkItem';
+import Routes from './Routes';
 
 declare const require: (name: String) => any;
 
@@ -35,7 +35,7 @@ const store: Store = configureStore();
 class Main extends React.Component<{}, {}> {
   public render(): React.ReactElement<Provider> {
     return (<Provider store={store}>
-      <WorkItem allFields={[]} types={['Bug','Task','User Story','Feature']} />
+      <Router history={browserHistory} routes={Routes}/>
     </Provider>);
   }
 }

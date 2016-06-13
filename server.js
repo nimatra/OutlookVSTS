@@ -29,10 +29,11 @@ app.get('/', function (req, res) {
     res.sendFile(__dirname + '/index.html');
 });
 app.use('/authenticate', authenticate);
-app.use('/VSTS', vsts);
-app.use('/dogfood', dogfood);
+app.use('/VSTSAuth', vsts);
+app.use('/dogfoodAuth', dogfood);
 app.use('/js', express.static(__dirname + '/js'));
 app.use('/css', express.static(__dirname + '/css'));
+app.get('*', function(req,res){res.sendFile(__dirname+'/index.html');});
 
 app.listen(port, 'localhost', err => {
   if (err) {
