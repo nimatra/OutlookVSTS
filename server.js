@@ -1,11 +1,12 @@
 var path = require('path');
+var https = require('https');
 var express = require('express');
 var webpack = require('webpack');
 var bodyParser = require('body-parser');
+var fs = require('fs');
 var config = require('./config/webpack.prod');
 var authenticate = require('./routes/authenticate');
-var vsts = require('./routes/vsts');
-var dogfood = require('./routes/dogfood');
+var DEBUG = require('./debug');
 
 var app = express();
 var compiler = webpack(config);
@@ -25,21 +26,29 @@ app.use(require('webpack-hot-middleware')(compiler));
 
 // Routes
 
-app.get('/', function (req, res) {
-    res.sendFile(__dirname + '/index.html');
-});
 app.use('/authenticate', authenticate);
-app.use('/VSTSAuth', vsts);
-app.use('/dogfoodAuth', dogfood);
 app.use('/js', express.static(__dirname + '/js'));
 app.use('/css', express.static(__dirname + '/css'));
 app.get('*', function(req,res){res.sendFile(__dirname+'/index.html');});
 
-app.listen(port, 'localhost', err => {
-  if (err) {
-    console.log(err);
-    return;
-  }
 
-  console.log(`Listening at http://localhost:${port}`);
-});
+if(DEBUG == true){
+
+  const options = {
+    key: fs.readFileSync('secrets/key.pem'),
+    cert: fs.readFileSync('secrets/cert.pem')
+  };
+
+  https.createServer(options, app).listen(port, function() {
+    console.log('Listening at https://localhost:' + port);
+  });
+}
+else{
+  app.listen(port, "localhost", function(err) {
+    if (err) {
+      console.log(err);
+      return;
+    }
+    console.log('Listening at http://localhost:' + port);
+  });
+}

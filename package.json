@@ -58,5 +58,8 @@
     "webpack-dev-middleware": "^1.5.1",
     "webpack-hot-middleware": "^2.6.4"
   },
-  "devDependencies": {}
+  "devDependencies": {},
+  "typescript":{
+    "definition": "office.d.ts"
+  }
 }

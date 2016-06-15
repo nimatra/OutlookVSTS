@@ -11,7 +11,7 @@ import { VSTS } from './VSTS/VSTS';
 
 
 export default (
-    <Route path='/'>
+    <Route path='/' component={Dogfood}>
         <Route path='/VSTS' component={VSTS}/>
         <Route path='/Dogfood' component={Dogfood}/>
     </Route>);

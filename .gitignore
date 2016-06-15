@@ -1,4 +1,6 @@
 node_modules/
-typings/
+typings/*
 build/
-clientSecret.js
+secrets/
+
+!typings/office/

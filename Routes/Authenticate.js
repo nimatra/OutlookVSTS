@@ -2,14 +2,26 @@ var express = require('express');
 var fs = require('fs');
 var https = require('https');
 var querystring = require('querystring');
+var DEBUG = require('../debug');
 
 var router = express.Router({ mergeParams: true });
 module.exports = router;
 
-//var secretFile = require('../clientSecret');
-//var clientSecret = JSON.stringify(secretFile);
-var clientSecret = process.env.ClientSecretJson;
+var clientSecret = "";
 
+getClientSecret = function () {
+  if(clientSecret !== ""){
+    return clientSecret;
+  }
+  if(DEBUG == true) {
+    var secretFile = require('../secrets/clientSecret');
+    clientSecret = JSON.stringify(secretFile);
+  }
+  else {
+    clientSecret = process.env.CLientSecretJson;
+  }
+  return clientSecret;
+};
 
 /**
  * Auth Callback - Redirects to the Calendar Page
@@ -46,7 +58,6 @@ router.authorize = function (req, res) {
       approval_prompt: 'force',
       state : req.query.redirect
     });
-    timer++;
     var authBaseUrl = router.credentials.web.auth_uri;
     var url = authBaseUrl + '?' + authParams.toString();
     res.redirect(url);
