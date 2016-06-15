@@ -21,31 +21,31 @@
     <Form xsi:type="ItemRead">
       <DesktopSettings>
         <SourceLocation DefaultValue=
-          "http://officevsts.azurewebsites.net/vsts" />
+          "https://outlookvsts.azurewebsites.net/vsts" />
         <RequestedHeight>350</RequestedHeight>
       </DesktopSettings>
       <TabletSettings>
         <SourceLocation DefaultValue=
-          "http://officevsts.azurewebsites.net/vsts" />
+          "http://outlookvsts.azurewebsites.net/vsts" />
         <RequestedHeight>250</RequestedHeight>
       </TabletSettings>
       <PhoneSettings>
         <SourceLocation DefaultValue=
-          "http://officevsts.azurewebsites.net/vsts" />
+          "http://outlookvsts.azurewebsites.net/vsts" />
       </PhoneSettings>
     </Form>
     <Form xsi:type="ItemEdit">
       <DesktopSettings>
         <SourceLocation DefaultValue=
-          "http://officevsts.azurewebsites.net/vsts" />
+          "http://outlookvsts.azurewebsites.net/vsts" />
       </DesktopSettings>
       <TabletSettings>
         <SourceLocation DefaultValue=
-          "http://officevsts.azurewebsites.net/vsts" />
+          "http://outlookvsts.azurewebsites.net/vsts" />
       </TabletSettings>
       <PhoneSettings>
         <SourceLocation DefaultValue=
-          "http://officevsts.azurewebsites.net/vsts" />
+          "http://outlookvsts.azurewebsites.net/vsts" />
       </PhoneSettings>
     </Form>
   </FormSettings>

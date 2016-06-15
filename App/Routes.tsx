@@ -7,11 +7,8 @@ import {Route, Router, Link, browserHistory} from 'react-router';
 import { Dogfood } from './Dogfood/dogfood';
 import { VSTS } from './VSTS/VSTS';
 
-
-
-
 export default (
-    <Route path='/' component={Dogfood}>
+    <Route path='/'>
         <Route path='/VSTS' component={VSTS}/>
         <Route path='/Dogfood' component={Dogfood}/>
     </Route>);

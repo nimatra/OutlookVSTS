@@ -20,31 +20,31 @@
     <Form xsi:type="ItemRead">
       <DesktopSettings>
         <SourceLocation DefaultValue=
-          "https://azure.localtest.me:3000/#/Dogfood" />
+          "https://azure.localtest.me:3000/dogfood" />
         <RequestedHeight>350</RequestedHeight>
       </DesktopSettings>
       <TabletSettings>
         <SourceLocation DefaultValue=
-          "https://azure.localtest.me:3000/#/Dogfood" />
+          "https://azure.localtest.me:3000/dogfood" />
         <RequestedHeight>250</RequestedHeight>
       </TabletSettings>
       <PhoneSettings>
         <SourceLocation DefaultValue=
-          "https://azure.localtest.me:3000/#/Dogfood" />
+          "https://azure.localtest.me:3000/dogfood" />
       </PhoneSettings>
     </Form>
     <Form xsi:type="ItemEdit">
       <DesktopSettings>
         <SourceLocation DefaultValue=
-          "https://azure.localtest.me:3000/#/Dogfood" />
+          "https://azure.localtest.me:3000/dogfood" />
       </DesktopSettings>
       <TabletSettings>
         <SourceLocation DefaultValue=
-          "https://azure.localtest.me:3000/#/Dogfood" />
+          "https://azure.localtest.me:3000/dogfood" />
       </TabletSettings>
       <PhoneSettings>
         <SourceLocation DefaultValue=
-          "https://azure.localtest.me:3000/#/Dogfood" />
+          "https://azure.localtest.me:3000/dogfood" />
       </PhoneSettings>
     </Form>
   </FormSettings>

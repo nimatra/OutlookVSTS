@@ -4,10 +4,11 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { Store, createStore } from 'redux';
 import { Provider } from 'react-redux';
-import { Router, browserHistory } from 'react-router';
 
 import { vsoAddin } from './reducers';
-import Routes from './Routes';
+import { Dogfood } from './Dogfood/dogfood';
+import { VSTS } from './VSTS/VSTS';
+
 
 declare const require: (name: String) => any;
 
@@ -33,11 +34,25 @@ function configureStore(): Store {
 const store: Store = configureStore();
 
 class Main extends React.Component<{}, {}> {
+
+
+  private getRoute(): string{
+    var url = document.URL;
+    var l = document.createElement("a");
+    l.href = url;
+    return l.pathname;
+  }
+
   public render(): React.ReactElement<Provider> {
-    return (
-      <Provider store={store}>
-        <Router routes={Routes} history={browserHistory}/>
-      </Provider>);
+    const route : string = this.getRoute();
+    switch (route) {
+      case "/dogfood":
+        return(<Dogfood />);
+      case "/vsts":
+        return(<VSTS />);
+      default:
+        return(<div>No route selected</div>);
+    }
   }
 }
 
