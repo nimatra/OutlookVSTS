@@ -1,6 +1,6 @@
+/// <reference path="../../office.d.ts" />
 import * as React from 'react';
 import { Provider } from 'react-redux';
-import { Office } from 'Office';
 
 export class VSTS extends React.Component<{}, {}> {
   public render(): React.ReactElement<Provider> {

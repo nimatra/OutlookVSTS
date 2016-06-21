@@ -28,6 +28,7 @@
     "css-loader": "~0.23.1",
     "express": "^4.13.4",
     "extract-text-webpack-plugin": "*",
+    "fbjs": "^0.2.1",
     "http": "*",
     "https": "*",
     "isomorphic-fetch": "^2.2.1",
@@ -41,6 +42,7 @@
     "react-dom": "^0.14.7",
     "react-redux": "^4.1.2",
     "react-router": "^2.0.0",
+    "react-tap-event-plugin": "^0.2.0",
     "react-transform-catch-errors": "^1.0.2",
     "react-transform-hmr": "^1.0.2",
     "redbox-react": "^1.2.2",
@@ -50,6 +52,7 @@
     "request": "*",
     "rimraf": "^2.5.2",
     "style-loader": "~0.13.1",
+    "tedious": "^1.14.0",
     "ts-loader": "^0.8.1",
     "tslint": "^3.3.0",
     "tslint-loader": "^2.1.0",
@@ -59,7 +62,7 @@
     "webpack-hot-middleware": "^2.6.4"
   },
   "devDependencies": {},
-  "typescript":{
+  "typescript": {
     "definition": "office.d.ts"
   }
 }
