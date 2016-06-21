@@ -2,26 +2,78 @@ var express = require('express');
 var fs = require('fs');
 var https = require('https');
 var querystring = require('querystring');
+var tedious = require('tedious');
 var DEBUG = require('../debug');
 
 var router = express.Router({ mergeParams: true });
 module.exports = router;
 
 var clientSecret = "";
-
 getClientSecret = function () {
-  if(clientSecret !== ""){
-    return clientSecret;
-  }
-  if(DEBUG == true) {
-    var secretFile = require('../secrets/clientSecret');
-    clientSecret = JSON.stringify(secretFile);
-  }
-  else {
-    clientSecret = process.env.CLientSecretJson;
+  if (clientSecret === "") {
+    if (DEBUG == true) {
+      var secretFile = require('../secrets/clientSecret');
+      clientSecret = JSON.stringify(secretFile);
+    }
+    else {
+      clientSecret = process.env.ClientSecretJson;
+    }
   }
   return clientSecret;
 };
+
+var dbConfig = "";
+getDbConfig = function () {
+  if (dbConfig === "") {
+    if (DEBUG == true) {
+      var dbFile = require('../secrets/dbConfig.js')
+      dbConfig = JSON.stringify(dbFile);
+    }
+    else {
+      dbConfig = process.env.dbConfigJson;
+    }
+  }
+  return dbConfig;
+}
+
+router.db = function (req, res) {
+ var config = JSON.parse(getDbConfig());
+  var connection = new tedious.Connection(config);
+  connection.on('connect', function (err) {
+    if (err) {
+      console.log(err);
+      return;
+    }
+    getToken(req.query.user);
+  });
+
+  var TYPES = tedious.TYPES;
+
+  function getToken(user) {
+    var output = {success: false, token : ''}
+    var request = new tedious.Request("SELECT TOP 1 x.Token, x.Expiry, x.Refresh FROM dbo.Users AS x WHERE Id=@User", function (err) {
+      if (err) {
+        console.log(err);
+      }
+    });
+    request.addParameter('User', TYPES.VarChar, user);
+    request.on('row', function(columns){
+      columns.forEach(function (column) {
+        if(column.metadata.colName === 'Token'){
+          output.token = column.value;
+          output.success = true;
+          console.log(JSON.stringify(output));
+          res.send(JSON.stringify(output));
+        }
+      })
+    });
+    request.on('done', function (rowCount, more) {
+          res.send(JSON.stringify(output));
+    });
+    connection.execSql(request);
+  }
+};
+router.use('/db', router.db);
 
 /**
  * Auth Callback - Redirects to the Calendar Page
@@ -30,12 +82,11 @@ getClientSecret = function () {
  */
 router.callback = function (req, res) {
 
-    // Authorize a client with the loaded credentials, then call the
-    // Google Calendar API.
-    router.credentials = JSON.parse(clientSecret);
-    router.code = req.query.code;
-    //res.redirect('../VSTS');
-    router.Exchange(req.query.state, res);
+  // Authorize a client with the loaded credentials, then call the
+  // Google Calendar API.
+  router.credentials = JSON.parse(clientSecret);
+  router.code = req.query.code;
+  router.Exchange(req.query.state, res);
 
 };
 router.use('/callback', router.callback);
@@ -48,19 +99,19 @@ router.use('/callback', router.callback);
  */
 router.authorize = function (req, res) {
 
-    router.credentials = JSON.parse(clientSecret);
+  router.credentials = JSON.parse(getClientSecret());
 
-    var authParams = querystring.stringify({
-      redirect_uri: router.credentials.web.redirect_uris[0],
-      response_type: 'Assertion',
-      client_id: router.credentials.web.client_id,
-      scope: 'vso.work_write',
-      approval_prompt: 'force',
-      state : req.query.redirect
-    });
-    var authBaseUrl = router.credentials.web.auth_uri;
-    var url = authBaseUrl + '?' + authParams.toString();
-    res.redirect(url);
+  var authParams = querystring.stringify({
+    redirect_uri: router.credentials.web.redirect_uris[0],
+    response_type: 'Assertion',
+    client_id: router.credentials.web.client_id,
+    scope: 'vso.work_write',
+    approval_prompt: 'force',
+    state: req.query.user
+  });
+  var authBaseUrl = router.credentials.web.auth_uri;
+  var url = authBaseUrl + '?' + authParams.toString();
+  res.redirect(url);
 
 };
 router.use('/', router.authorize);
@@ -89,11 +140,12 @@ router.Exchange = function (state, res) {
     }
   };
   router.res = res;
-  var httpPost = https.request(options, function(response) {
-                      exchangeApiCallback(state, response);
-                  });
+  var httpPost = https.request(options, function (response) {
+    exchangeApiCallback(state, response);
+  });
   httpPost.write(data);
   httpPost.end();
+  res.redirect("../done");
 };
 
 /**
@@ -111,18 +163,34 @@ function exchangeApiCallback(state, response) {
   //the whole response has been recieved, so we just print it out here
   response.on('end', function () {
     exchanges = JSON.parse(str);
-    router.AccessToken = exchanges.access_token;
-    switch(state)
-    {
-      case 'dogfood':
-        router.res.redirect("../dogfood?accessToken=" + router.AccessToken);
-        break;
-      case 'vsts':
-        router.res.redirect("../vsts?accessToken=" + router.AccessToken);
-        break;
-      default:
-        router.res.send(500, "Unknown state value: " + state);
-        break;
-    }
+    console.log(exchanges.access_token.length);
+    saveToken(state, exchanges);
   });
+}
+
+function saveToken(id, data) {
+  var config = JSON.parse(getDbConfig());
+  var connection = new tedious.Connection(config);
+  connection.on('connect', function (err) {
+    if (err) {
+      console.log(err);
+      return;
+    }
+    addToken(id, data);
+  });
+
+  var TYPES = tedious.TYPES;
+
+  function addToken(id, data) {
+    var request = new tedious.Request("INSERT INTO dbo.Users(Id, Token, Expiry, Refresh) VALUES (@Id, @Token, DATEADD(ss, @Expiry, GETDATE()),  @Refresh);", function (err) {
+      if (err) {
+        console.log(err);
+      }
+    });
+    request.addParameter('Id', TYPES.VarChar, id);
+    request.addParameter('Token', TYPES.VarChar, data.access_token);
+    request.addParameter('Expiry', TYPES.Int, data.expires_in);
+    request.addParameter('Refresh', TYPES.VarChar, data.refresh_token);
+    connection.execSql(request);
+  }
 }

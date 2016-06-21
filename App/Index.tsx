@@ -1,5 +1,4 @@
 /// <reference path="../typings/tsd.d.ts" />
-
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { Store, createStore } from 'redux';
@@ -8,6 +7,7 @@ import { Provider } from 'react-redux';
 import { vsoAddin } from './reducers';
 import { Dogfood } from './Dogfood/dogfood';
 import { VSTS } from './VSTS/VSTS';
+import { Done } from './Authenticate/done';
 
 
 declare const require: (name: String) => any;
@@ -50,8 +50,10 @@ class Main extends React.Component<{}, {}> {
         return(<Dogfood />);
       case "/vsts":
         return(<VSTS />);
+      case "/done":
+        return(<Done />);
       default:
-        return(<div>No route selected</div>);
+        return(<div>Route: '{route}' is not a vaild route!</div>);
     }
   }
 }
