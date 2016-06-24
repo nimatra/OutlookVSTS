@@ -1,8 +1,8 @@
 /// <reference path="../../office.d.ts" />
 import * as React from 'react';
 import { Provider } from 'react-redux';
-
-export class VSTS extends React.Component<{}, {}> {
+//setting page
+export class Done extends React.Component<{}, {}> {
 
   public render(): React.ReactElement<Provider> {
     var style_img = {

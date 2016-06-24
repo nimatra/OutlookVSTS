@@ -48,10 +48,12 @@ class Main extends React.Component<{}, {}> {
     switch (route) {
       case "/dogfood":
         return(<Dogfood />);
-      case "/vsts":
+      case "vsts":
         return(<VSTS />);
-      case "/done":
+      case "done":
         return(<Done />);
+      case "authenticate":
+        return (<Authenticate />);
       default:
         return(<div>Route: '{route}' is not a vaild route!</div>);
     }
