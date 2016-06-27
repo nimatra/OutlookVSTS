@@ -9,13 +9,28 @@
       "commit": "ba424f7ee39717d51c17699a09ac8df312a7e9a1"
     },
     "react/react-dom.d.ts": {
-      "commit": "ba424f7ee39717d51c17699a09ac8df312a7e9a1"
+      "commit": "f3911d711006be676d9e1bcbc7c768b39d1ad81b"
     },
     "redux/redux.d.ts": {
       "commit": "ba424f7ee39717d51c17699a09ac8df312a7e9a1"
     },
     "react/react.d.ts": {
-      "commit": "ba424f7ee39717d51c17699a09ac8df312a7e9a1"
+      "commit": "f3911d711006be676d9e1bcbc7c768b39d1ad81b"
+    },
+    "react-router/history.d.ts": {
+      "commit": "f3911d711006be676d9e1bcbc7c768b39d1ad81b"
+    },
+    "react-router/react-router.d.ts": {
+      "commit": "f3911d711006be676d9e1bcbc7c768b39d1ad81b"
+    },
+    "node/node.d.ts": {
+      "commit": "421f98c654d93ba838e25c0067e8be57fe83b934"
+    },
+    "tedious/tedious.d.ts": {
+      "commit": "421f98c654d93ba838e25c0067e8be57fe83b934"
+    },
+    "jquery/jquery.d.ts": {
+      "commit": "b606be413a47daa61ba45715cf43bf3ae8e2ab39"
     }
   }
 }
