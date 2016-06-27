@@ -1,6 +1,7 @@
 /// <reference path="../../office.d.ts" />
 import * as React from 'react';
 import { Provider } from 'react-redux';
+//import { Office } from 'Office';
 
 export class VSTS extends React.Component<{}, {}> {
 
@@ -49,7 +50,7 @@ export class VSTS extends React.Component<{}, {}> {
     return (
       <div>
       <div>
-            <img src='./logo.png' alt="VSLogo" style = {style_img}/>
+            <img src='https://azure.localtest.me:3000/logo.png' alt="VSLogo" style = {style_img}/>
             </div>
             <div>
               <a href="https://azure.localtest.me:3000/authenticate" style = {style_signin}>Sign in</a>
@@ -62,8 +63,9 @@ export class VSTS extends React.Component<{}, {}> {
               <h3 style = {style_section}>View details of a work item</h3>
               <p style = {style_text2}> If a work item number is present in the email body, details will be displayed in the adjacent task pane.</p>
           </div>
-          <img src="./logo_strip.png" alt="VSOLogo" style={style_bottomlogo}/>
+          <img src="https://azure.localtest.me:3000/logo_strip.png" alt="VSOLogo" style={style_bottomlogo}/>
           </div>
           );
+          //TODO - pass in user to authenticate
   }
  }

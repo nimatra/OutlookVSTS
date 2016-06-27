@@ -7,7 +7,10 @@ import { Provider } from 'react-redux';
 import { vsoAddin } from './reducers';
 import { Dogfood } from './Dogfood/dogfood';
 import { VSTS } from './VSTS/VSTS';
-import { Done } from './Authenticate/done';
+//import { Done } from './Authenticate/done';
+import { Done } from './VSTS/Done';
+import {Authenticate } from './Authenticate/authenticate';
+import {LogInPage } from './VSTS/LogInPage';
 
 
 declare const require: (name: String) => any;
@@ -54,6 +57,8 @@ class Main extends React.Component<{}, {}> {
         return(<Done />);
       case "authenticate":
         return (<Authenticate />);
+      case "LogInPage":
+        return (<LogInPage />);
       default:
         return(<div>Route: '{route}' is not a vaild route!</div>);
     }
