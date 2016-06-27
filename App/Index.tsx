@@ -53,7 +53,7 @@ class Main extends React.Component<{}, {}> {
       case "done":
         return(<Done />);
       case "authenticate":
-        return (<Authenticate />);
+        return (<Authenticate/>);
       default:
         return(<div>Route: '{route}' is not a vaild route!</div>);
     }
