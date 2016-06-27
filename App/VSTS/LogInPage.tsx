@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Provider } from 'react-redux';
 //import { Office } from 'Office';
 
-export class VSTS extends React.Component<{}, {}> {
+export class LogInPage extends React.Component<{}, {}> {
 
   public render(): React.ReactElement<Provider> {
     var style_img = {
@@ -49,7 +49,7 @@ export class VSTS extends React.Component<{}, {}> {
     return (
       <div>
       <div>
-            <img src='./logo.png' alt="VSLogo" style = {style_img}/>
+            <img src='../Images/logo.png' alt="VSLogo" style = {style_img}/>
             </div>
             <div>
               <button id="msgprops" class="ms-Button stretch">

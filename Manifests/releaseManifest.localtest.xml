@@ -6,9 +6,9 @@
   <Version>1.0</Version>
   <ProviderName>Apps Platform</ProviderName>
   <DefaultLocale>en-us</DefaultLocale>
-  <DisplayName DefaultValue="[DEBUG] Visual Studio Bug Generator" />
-  <Description DefaultValue="Creates bugs using content of message"/>
-  <IconUrl DefaultValue="https://osf-agave/apps/pchan/Feature-Test_new/Resources/Icon.png" />
+  <DisplayName DefaultValue="Visual Studio Team Services" />
+  <Description DefaultValue="Create Visual Studio Team Services work items from an Outlook client."/>
+  <IconUrl DefaultValue="https://localhost:3000/Images/logo.png" />
   <Hosts>
     <Host Name="Mailbox" />
   </Hosts>
@@ -21,31 +21,31 @@
     <Form xsi:type="ItemRead">
       <DesktopSettings>
         <SourceLocation DefaultValue=
-          "https://azure.localtest.me:3000/vsts" />
+          "https://azure.localtest.me:3000/LogInPage" />
         <RequestedHeight>350</RequestedHeight>
       </DesktopSettings>
       <TabletSettings>
         <SourceLocation DefaultValue=
-          "https://azure.localtest.me:3000/vsts" />
+          "https://azure.localtest.me:3000/LogInPage" />
         <RequestedHeight>250</RequestedHeight>
       </TabletSettings>
       <PhoneSettings>
         <SourceLocation DefaultValue=
-          "https://azure.localtest.me:3000/vsts" />
+          "https://azure.localtest.me:3000/LogInPage" />
       </PhoneSettings>
     </Form>
     <Form xsi:type="ItemEdit">
       <DesktopSettings>
         <SourceLocation DefaultValue=
-          "https://azure.localtest.me:3000/vsts" />
+          "https://azure.localtest.me:3000/LogInPage" />
       </DesktopSettings>
       <TabletSettings>
         <SourceLocation DefaultValue=
-          "https://azure.localtest.me:3000/vsts" />
+          "https://azure.localtest.me:3000/LogInPage" />
       </TabletSettings>
       <PhoneSettings>
         <SourceLocation DefaultValue=
-          "https://azure.localtest.me:3000/vsts" />
+          "https://azure.localtest.me:3000/LogInPage" />
       </PhoneSettings>
     </Form>
   </FormSettings>
@@ -54,4 +54,60 @@
     <Rule xsi:type="ItemIs" ItemType="Message" FormType="ReadOrEdit"/>
     <Rule xsi:type="ItemIs" ItemType="Appointment" FormType="ReadOrEdit"/>
   </Rule>
+
+  <Hosts>
+      <Host xsi:type="MailHost">
+
+        <DesktopFormFactor>
+          <!-- Message compose form -->
+          <ExtensionPoint xsi:type="MessageComposeCommandSurface"> <!--5 extension points,read edit appt message pane-->
+            <OfficeTab id="TabDefault">
+              <Group id="msgReadDemoGroup">
+                <Label resid="groupLabel" />
+
+                <!-- Task pane button -->
+                <Control xsi:type="Button">
+                  <Label resid="paneButton" />
+                  <Supertip>
+                    <Title resid="superTipTitle" />
+                    <Description resid="superTipDescription" />
+                  </Supertip>
+                  <Action xsi:type="ShowTaskpane">
+                    <!--<SourceLocation resid="loginPage" />-->
+                  </Action>
+                </Control>
+              </Group>
+            </OfficeTab>
+
+          <!-- Message read form -->
+          <ExtensionPoint xsi:type="MessageReadCommandSurface">
+            <OfficeTab id="TabDefault">
+              <Group id="msgReadDemoGroup">
+                <Label resid="groupLabel" />
+                <!-- Task pane button -->
+                <Control xsi:type="Button" id="msgReadOpenPaneButton">
+                  <Label resid="paneButton" />
+                  <Supertip>
+                    <Title resid="superTipTitle" />
+                    <Description resid="superTipDescription" />
+                  </Supertip>
+                  <Action xsi:type="ShowTaskpane">
+                    <!--<SourceLocation resid="loginPage" />-->
+                  </Action>
+                </Control>
+              </Group>
+            </OfficeTab>
+          </ExtensionPoint>
+        </DesktopFormFactor>
+      </Host>
+    </Hosts>
+<Resources>
+      <bt:ShortStrings>
+        <bt:String id="groupLabel" DefaultValue="Visual Studio Team Services"/>
+        <bt:String id="paneButton" DefaultValue="Create Work Item"/>
+        <bt:String id="superTipTitle" DefaultValue="Create a bug, task, or user story for VSTS."/>
+
+      </bt:ShortStrings>
+    </Resources>
+
 </OfficeApp>
