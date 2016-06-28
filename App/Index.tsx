@@ -48,7 +48,7 @@ class Main extends React.Component<{}, {}> {
     switch (route) {
       case "/dogfood":
         return(<Dogfood />);
-      case "/vsts":
+      case "vsts":
         return(<VSTS />);
       case "/done":
         return(<Done />);
