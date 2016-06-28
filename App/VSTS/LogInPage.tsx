@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Provider } from 'react-redux';
-//import { Office } from 'Office';
+// import { Office } from 'Office';
 
 export class LogInPage extends React.Component<{}, {}> {
 
@@ -10,7 +10,7 @@ export class LogInPage extends React.Component<{}, {}> {
     };
 
     var style_button = {
-      backgroundcolor: 'rgb(0,122,204)', //save button blue
+      backgroundcolor: 'rgb(0,122,204)', // save button blue
       textalign: 'center',
       textcolor: 'rgb(255,255,255)',
       font: "Arial, sans-serif, 12px",
@@ -18,25 +18,25 @@ export class LogInPage extends React.Component<{}, {}> {
     };
 
     var style_section = {
-      color: 'rgb(104,33,122)', //VS purple
+      color: 'rgb(104,33,122)', // the VS purple
       font: "Arial, sans-serif, 12px"
     };
 
     var style_signin = {
-       color: 'rgb(104,33,122)', //VS purple
+       color: 'rgb(104,33,122)', // the VS purple
        font: "Arial, sans-serif, 12px"
 
     };
 
     var style_text1 = {
-       color: "rgb(30,30,30)", //black
+       color: "rgb(30,30,30)", // black
        font: "Arial, sans-serif, 12px"
 
     };
 
     var style_text2 = {
-      color: 'rgb(157,157,157)' //dark gray
-      //font: "Arial, sans-serif, 12px"
+      color: 'rgb(157,157,157)' // dark gray
+      // font: "Arial, sans-serif, 12px"
     };
 
     var style_bottomlogo = {
@@ -49,7 +49,7 @@ export class LogInPage extends React.Component<{}, {}> {
     return (
       <div>
       <div>
-            <img src="../Images/logo.png" alt="VSLogo" style = {style_img}/>
+            <img src="../Images/logo.png" alt="VSOLogo" style = {style_img}/>
             </div>
             <div>
               <button id="msgprops" class="ms-Button stretch">
@@ -57,7 +57,9 @@ export class LogInPage extends React.Component<{}, {}> {
               </button>
             </div>
             <div>
-              <p style = {style_text1}> Already have an account?     <a href="../Authenticate/authenticate.tsx" style = {style_signin}>Sign in</a> </p> //pass in user to authenticate.tsx
+              <p style = {style_text1}> Already have an account?
+              <a href="../Authenticate/authenticate.tsx" style = {style_signin}> Sign in</a> // pass in user to authenticate.tsx
+              </p>
             </div>
             <div>
               <h1 style = {style_section}> Create work items </h1>

@@ -21,31 +21,31 @@
     <Form xsi:type="ItemRead">
       <DesktopSettings>
         <SourceLocation DefaultValue=
-          "https://azure.localtest.me:3000/LogInPage" />
+          "https://azure.localtest.me:3000/vsts" />
         <RequestedHeight>350</RequestedHeight>
       </DesktopSettings>
       <TabletSettings>
         <SourceLocation DefaultValue=
-          "https://azure.localtest.me:3000/LogInPage" />
+          "https://azure.localtest.me:3000/vsts" />
         <RequestedHeight>250</RequestedHeight>
       </TabletSettings>
       <PhoneSettings>
         <SourceLocation DefaultValue=
-          "https://azure.localtest.me:3000/LogInPage" />
+          "https://azure.localtest.me:3000/vsts" />
       </PhoneSettings>
     </Form>
     <Form xsi:type="ItemEdit">
       <DesktopSettings>
         <SourceLocation DefaultValue=
-          "https://azure.localtest.me:3000/LogInPage" />
+          "https://azure.localtest.me:3000/vsts" />
       </DesktopSettings>
       <TabletSettings>
         <SourceLocation DefaultValue=
-          "https://azure.localtest.me:3000/LogInPage" />
+          "https://azure.localtest.me:3000/vsts" />
       </TabletSettings>
       <PhoneSettings>
         <SourceLocation DefaultValue=
-          "https://azure.localtest.me:3000/LogInPage" />
+          "https://azure.localtest.me:3000/vsts" />
       </PhoneSettings>
     </Form>
   </FormSettings>

@@ -7,10 +7,7 @@ import { Provider } from 'react-redux';
 import { vsoAddin } from './reducers';
 import { Dogfood } from './Dogfood/dogfood';
 import { VSTS } from './VSTS/VSTS';
-//import { Done } from './Authenticate/done';
-import { Done } from './VSTS/Done';
-import {Authenticate } from './Authenticate/authenticate';
-import {LogInPage } from './VSTS/LogInPage';
+import { Done } from './Authenticate/done';
 
 
 declare const require: (name: String) => any;
@@ -47,20 +44,17 @@ class Main extends React.Component<{}, {}> {
   }
 
   public render(): React.ReactElement<Provider> {
+
     const route : string = this.getRoute();
     switch (route) {
       case "/dogfood":
         return(<Dogfood />);
-      case "vsts":
+      case "/vsts":
         return(<VSTS />);
-      case "done":
+      case "/done":
         return(<Done />);
-      case "authenticate":
-        return (<Authenticate />);
-      case "LogInPage":
-        return (<LogInPage />);
       default:
-        return(<div>Route: '{route}' is not a vaild route!</div>);
+        return(<div>Route: '{route}' is not a valid route!</div>);
     }
   }
 }
