@@ -5,6 +5,8 @@ var querystring = require('querystring');
 var tedious = require('tedious');
 var DEBUG = require('../debug');
 
+var REFRESH_MINIMUM = 60; //
+
 var router = express.Router({ mergeParams: true });
 module.exports = router;
 
@@ -37,7 +39,7 @@ getDbConfig = function () {
 }
 
 router.db = function (req, res) {
- var config = JSON.parse(getDbConfig());
+  var config = JSON.parse(getDbConfig());
   var connection = new tedious.Connection(config);
   connection.on('connect', function (err) {
     if (err) {
@@ -50,53 +52,51 @@ router.db = function (req, res) {
   var TYPES = tedious.TYPES;
 
   function getToken(user) {
-    var output = {success: false, token : ''}
-    var request = new tedious.Request("SELECT TOP 1 x.Token, x.Expiry, x.Refresh FROM dbo.Users AS x WHERE Id=@User", function (err) {
+    var output = { success: false, token: '' }
+    var request = new tedious.Request("SELECT TOP 1 x.Token, x.Expiry, x.Refresh FROM dbo.Users AS x WHERE Id=@User", function (err, rowcount, rows) {
       if (err) {
         console.log(err);
       }
-    });
-    request.addParameter('User', TYPES.VarChar, user);
-    request.on('row', function(columns){
-      columns.forEach(function (column) {
-        if(column.metadata.colName === 'Token'){
-          output.token = column.value;
+      if(rowcount == 0){
+        res.send(JSON.stringify(output));
+      }
+      else {
+        var row = rows[0]; //There should only be 1 row
+
+        var data = {
+          token: row[0].value,
+          expiry: Date.parse(row[1].value),
+          refresh: row[2].value
+        };
+        var expiryLimit = new Date();
+        expiryLimit.setMinutes(expiryLimit.getMinutes() + REFRESH_MINIMUM);
+        if (data.expiry > expiryLimit) { // if the token doesn't expire before our limit
+          output.token = data.token;
           output.success = true;
-          console.log(JSON.stringify(output));
           res.send(JSON.stringify(output));
         }
-      })
+        else {
+          data.user = user;
+          router.refreshToken(data, res);
+        }
+      }
     });
-    request.on('done', function (rowCount, more) {
-          res.send(JSON.stringify(output));
-    });
+    request.addParameter('User', TYPES.VarChar, user);
     connection.execSql(request);
   }
 };
 router.use('/db', router.db);
 
-/**
- * Auth Callback - Redirects to the Calendar Page
- * @param req request object from the google oauth callback
- * @param res response object from the google oauth callback
- */
 router.callback = function (req, res) {
 
-  // Authorize a client with the loaded credentials, then call the
-  // Google Calendar API.
   router.credentials = JSON.parse(clientSecret);
   router.code = req.query.code;
-  router.Exchange(req.query.state, res);
+  router.getToken(req.query.state, res);
 
 };
 router.use('/callback', router.callback);
 
 
-/**
- * Authentication call - redirects to google login page
- * @param req request object from the get call to /authenticate
- * @param res response object from the get call to /authenticate
- */
 router.authorize = function (req, res) {
 
   router.credentials = JSON.parse(getClientSecret());
@@ -116,11 +116,7 @@ router.authorize = function (req, res) {
 };
 router.use('/', router.authorize);
 
-/**
- * Makes a http POST call to exchange the given code from the first call and get the token
- * @param res - response object, it is used saved here to be used in the callback
- */
-router.Exchange = function (state, res) {
+router.getToken = function (state, res) {
 
   var data = querystring.stringify({
     assertion: router.code,
@@ -141,32 +137,63 @@ router.Exchange = function (state, res) {
   };
   router.res = res;
   var httpPost = https.request(options, function (response) {
-    exchangeApiCallback(state, response);
+    var str = '';
+
+    //another chunk of data has been recieved, so append it to `str`
+    response.on('data', function (chunk) {
+      str += chunk;
+    });
+
+    //the whole response has been recieved, so we just print it out here
+    response.on('end', function () {
+      exchanges = JSON.parse(str);
+      saveToken(state, exchanges);
+    });
   });
   httpPost.write(data);
   httpPost.end();
   res.redirect("../done");
 };
 
-/**
- * callback of the get token call - redirects to /calendars
- * @param response - callback response
- */
-function exchangeApiCallback(state, response) {
-  var str = '';
 
-  //another chunk of data has been recieved, so append it to `str`
-  response.on('data', function (chunk) {
-    str += chunk;
-  });
+router.refreshToken = function (state, res) {
 
-  //the whole response has been recieved, so we just print it out here
-  response.on('end', function () {
-    exchanges = JSON.parse(str);
-    console.log(exchanges.access_token.length);
-    saveToken(state, exchanges);
+  router.credentials = JSON.parse(getClientSecret());
+  var data = querystring.stringify({
+    assertion: state.refresh,
+    client_assertion_type: "urn:ietf:params:oauth:client-assertion-type:jwt-bearer",
+    grant_type: "refresh_token",
+    client_assertion: router.credentials.web.client_secret.toString(),
+    redirect_uri: router.credentials.web.redirect_uris[0]
   });
-}
+  var options = {
+    host: 'app.vssps.visualstudio.com',
+    path: '/oauth2/token',
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Content-Length': data.length
+    }
+  };
+  router.res = res;
+  var httpPost = https.request(options, function (response) {
+    var str = '';
+
+    //another chunk of data has been recieved, so append it to `str`
+    response.on('data', function (chunk) {
+      str += chunk;
+    });
+
+    //the whole response has been recieved, so we just print it out here
+    response.on('end', function () {
+      exchanges = JSON.parse(str);
+      updateToken(state, exchanges, res);
+    });
+  });
+  httpPost.write(data);
+  httpPost.end();
+};
+
 
 function saveToken(id, data) {
   var config = JSON.parse(getDbConfig());
@@ -191,6 +218,34 @@ function saveToken(id, data) {
     request.addParameter('Token', TYPES.VarChar, data.access_token);
     request.addParameter('Expiry', TYPES.Int, data.expires_in);
     request.addParameter('Refresh', TYPES.VarChar, data.refresh_token);
+    connection.execSql(request);
+  }
+}
+
+function updateToken(state, data, res) {
+  var config = JSON.parse(getDbConfig());
+  var connection = new tedious.Connection(config);
+  connection.on('connect', function (err) {
+    if (err) {
+      console.log(err);
+      return;
+    }
+    updateToken(state.user, data);
+  });
+
+  var TYPES = tedious.TYPES;
+
+  function updateToken(id, data) {
+    var request = new tedious.Request("UPDATE dbo.Users SET Token=@Token, Expiry=DATEADD(ss, @Expiry, GETDATE()), Refresh=@Refresh WHERE Id=@Id;", function (err) {
+      if (err) {
+        console.log(err);
+      }
+    });
+    request.addParameter('Id', TYPES.VarChar, id);
+    request.addParameter('Token', TYPES.VarChar, data.access_token);
+    request.addParameter('Expiry', TYPES.Int, data.expires_in);
+    request.addParameter('Refresh', TYPES.VarChar, data.refresh_token);
+    res.send(JSON.stringify({success:true, token:data.access_token}));
     connection.execSql(request);
   }
 }
