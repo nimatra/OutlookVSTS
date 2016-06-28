@@ -44,11 +44,12 @@ class Main extends React.Component<{}, {}> {
   }
 
   public render(): React.ReactElement<Provider> {
+
     const route : string = this.getRoute();
     switch (route) {
       case "/dogfood":
         return(<Dogfood />);
-      case "vsts":
+      case "/vsts":
         return(<VSTS />);
       case "/done":
         return(<Done />);
