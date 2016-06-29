@@ -26,6 +26,11 @@ export class LogInPage extends React.Component<{}, {isReady : boolean}> {
     //return (<Authenticate user = {user}/>);
   }
 
+  public auth(): void{
+
+    window.open('./authenticate?user=' + Office.context.mailbox.userProfile.emailAddress);
+  }
+
   public render(): React.ReactElement<Provider> {
     if(this.isReady == false)
     {
@@ -70,6 +75,7 @@ export class LogInPage extends React.Component<{}, {isReady : boolean}> {
       <div><button onClick={this.auth} style = {style_button}>Sign In</button></div>
       <div> line separator</div>
       <div>
+<<<<<<< 477403f46d0856b72806b564bafaf1d58079253f
         <h1 style = {style_section}> Create work items</h1>
         <p  style = {style_text}> Do you have an email thread you need to make into a work item? Create work items directly from Outlook!</p>
       </div>
@@ -79,6 +85,16 @@ export class LogInPage extends React.Component<{}, {isReady : boolean}> {
       </div>
       <div>bottom image</div>
       <Settings />
+=======
+        <h1> Create work items</h1>
+        <p> Do you have an email thread you need to make into a work item? Create work items directly from Outlook!</p>
+      </div>
+      <div>
+        <h2> Communicate with your team</h2>
+        <p> After creating a work item, you can reply-all the thread with the item information or copy the information to the clipboard.</p>
+      </div>
+      <div>bottom image</div>
+>>>>>>> Added paragraphs and button direct to authenticate to LogInPage
       </div>
     );
   }
