@@ -34,6 +34,11 @@ export class LogInPage extends React.Component<{}, {authState: any, authToken:st
     window.open('./authenticate?user=' + this.state.user);
   }
 
+  public auth(): void{
+
+    window.open('./authenticate?user=' + Office.context.mailbox.userProfile.emailAddress);
+  }
+
   public render(): React.ReactElement<Provider> {
 
     //aadd to CSS folder for reuse
