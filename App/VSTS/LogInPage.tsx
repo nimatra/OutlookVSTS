@@ -3,6 +3,7 @@ import { Provider } from 'react-redux';
 // import { Office } from 'Office';
 import {Authenticate } from '../Authenticate/authenticate';
 import { Store, createStore } from 'redux';
+<<<<<<< 76a05fdccfc12bcbc2b4774a2868dc3179e5c179
 import {Settings } from './Settings';
 
 export class LogInPage extends React.Component<{}, {isReady : boolean}> {
@@ -25,10 +26,30 @@ export class LogInPage extends React.Component<{}, {isReady : boolean}> {
     window.open('./authenticate?user=' + user);
     //return (<Authenticate user = {user}/>);
   }
+=======
 
-  public auth(): void{
+export class LogInPage extends React.Component<{}, {isReady : boolean}> {
+>>>>>>> LogInPage correctly calls auth. Settings has basic buttons/headings/dropdowns
 
-    window.open('./authenticate?user=' + Office.context.mailbox.userProfile.emailAddress);
+  //Work around for Office slow to initialize w/ error:
+  //Office.js:12 Uncaught Office.js has not been fully loaded yet. Please try again later or make sure to add your initialization code on the Office.initialize function.
+  isReady : boolean; // set to false
+
+  private Initialize():void{
+    this.isReady = true;
+    this.forceUpdate(); //re-renders page
+  }
+
+  public constructor() {
+    super(); //required first line
+    this.isReady = true;
+    Office.initialize = this.Initialize;
+  }
+
+  private auth(): void{
+    var user = Office.context.mailbox.userProfile.emailAddress;
+    window.open('./authenticate?user=' + user);
+    //return (<Authenticate user = {user}/>);
   }
 
   public render(): React.ReactElement<Provider> {
@@ -45,7 +66,11 @@ export class LogInPage extends React.Component<{}, {isReady : boolean}> {
     var style_button = {
       backgroundcolor: 'rgb(0,122,204)', // save button blue
       textalign: 'center',
+<<<<<<< 76a05fdccfc12bcbc2b4774a2868dc3179e5c179
       color: 'rgb(255,255,255)',
+=======
+      textcolor: 'rgb(255,255,255)',
+>>>>>>> LogInPage correctly calls auth. Settings has basic buttons/headings/dropdowns
       font: "20px arial, sans-serif",
       align: 'center'
     };
@@ -71,10 +96,12 @@ export class LogInPage extends React.Component<{}, {isReady : boolean}> {
     console.log('got to login');
     return (
       <div>
-      <div> logo</div>
+      <div> logo
+      </div>
       <div><button onClick={this.auth} style = {style_button}>Sign In</button></div>
       <div> line separator</div>
       <div>
+<<<<<<< 76a05fdccfc12bcbc2b4774a2868dc3179e5c179
 <<<<<<< 477403f46d0856b72806b564bafaf1d58079253f
         <h1 style = {style_section}> Create work items</h1>
         <p  style = {style_text}> Do you have an email thread you need to make into a work item? Create work items directly from Outlook!</p>
@@ -88,10 +115,14 @@ export class LogInPage extends React.Component<{}, {isReady : boolean}> {
 =======
         <h1> Create work items</h1>
         <p> Do you have an email thread you need to make into a work item? Create work items directly from Outlook!</p>
+=======
+        <h1 style = {style_section}> Create work items</h1>
+        <p  style = {style_text}> Do you have an email thread you need to make into a work item? Create work items directly from Outlook!</p>
+>>>>>>> LogInPage correctly calls auth. Settings has basic buttons/headings/dropdowns
       </div>
       <div>
-        <h2> Communicate with your team</h2>
-        <p> After creating a work item, you can reply-all the thread with the item information or copy the information to the clipboard.</p>
+        <h1 style = {style_section}> Communicate with your team</h1>
+        <p style = {style_text}> After creating a work item, you can reply-all the thread with the item information or copy the information to the clipboard.</p>
       </div>
       <div>bottom image</div>
 >>>>>>> Added paragraphs and button direct to authenticate to LogInPage
