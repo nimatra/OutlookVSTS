@@ -1,13 +1,9 @@
 import * as React from 'react';
 import { Provider } from 'react-redux';
 import { Store, createStore } from 'redux';
-<<<<<<< 17b151eb4d8fc60b3c6239fcd02eafb5b85e92d6
 import { Auth, AuthState } from '../auth';
 import { Authenticate } from '../Authenticate/authenticate';
 import { Settings } from './Settings';
-=======
-import {Settings } from './Settings';
->>>>>>> Update Settings to have dropdowns
 
 export class LogInPage extends React.Component<{}, {authState: any, authToken:string, user: string, returning:boolean}> {
   //note: if auth expires, nav to azure.../done
@@ -57,6 +53,11 @@ export class LogInPage extends React.Component<{}, {authState: any, authToken:st
     //return (<Authenticate user = {user}/>);
   }
 
+  public auth(): void{
+
+    window.open('./authenticate?user=' + Office.context.mailbox.userProfile.emailAddress);
+  }
+
   public render(): React.ReactElement<Provider> {
 
     //aadd to CSS folder for reuse
@@ -89,7 +90,6 @@ export class LogInPage extends React.Component<{}, {authState: any, authToken:st
     };
 
     console.log('got to login');
-<<<<<<< 17b151eb4d8fc60b3c6239fcd02eafb5b85e92d6
     const state: AuthState = this.state.authState;
     const token: string = this.state.authToken;
     const user: string = this.state.user;
@@ -101,11 +101,6 @@ export class LogInPage extends React.Component<{}, {authState: any, authToken:st
       case AuthState.Request: // Office has initialized, but we don't have auth for this user, show Log-In Page and pass them to the auth flow
         return (<div>
       <div><image src = './images/logo.png' style = {style_img}/></div>
-=======
-    return (
-      <div>
-      <div> logo</div>
->>>>>>> Update Settings to have dropdowns
       <div><button onClick={this.auth} style = {style_button}>Sign In</button></div>
       <hr/>
       <div>
@@ -116,11 +111,6 @@ export class LogInPage extends React.Component<{}, {authState: any, authToken:st
         <h1 style = {style_section}> Communicate with your team</h1>
         <p style = {style_text}> After creating a work item, you can reply-all the thread with the item information or copy the information to the clipboard.</p>
       </div>
-<<<<<<< 17b151eb4d8fc60b3c6239fcd02eafb5b85e92d6
-=======
-      <div>bottom image</div>
-      <Settings />
->>>>>>> Update Settings to have dropdowns
       </div>
     );
       case AuthState.Authorized: // We have auth for this user, determine whether to show settings or straight to creation
