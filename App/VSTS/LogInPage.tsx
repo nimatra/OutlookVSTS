@@ -4,6 +4,11 @@ import { Provider } from 'react-redux';
 
 export class LogInPage extends React.Component<{}, {}> {
 
+  public auth(): void{
+
+    window.open('./authenticate?user=' + Office.context.mailbox.userProfile.emailAddress);
+  }
+
   public render(): React.ReactElement<Provider> {
     var style_img = {
       align: 'center'
@@ -48,29 +53,19 @@ export class LogInPage extends React.Component<{}, {}> {
     console.log('got to vsts');
     return (
       <div>
+      <div> logo</div>
+      <div><button onClick={this.auth} style = {style_button}>Sign In</button></div>
+      <div> line separator</div>
       <div>
-            <img src="../Images/logo.png" alt="VSOLogo" style = {style_img}/>
-            </div>
-            <div>
-              <button id="msgprops" class="ms-Button stretch">
-                <span class="ms-Button-label" align='center'> Create New Account </span>
-              </button>
-            </div>
-            <div>
-              <p style = {style_text1}> Already have an account?
-              <a href="../Authenticate/authenticate.tsx" style = {style_signin}> Sign in</a> // pass in user to authenticate.tsx
-              </p>
-            </div>
-            <div>
-              <h1 style = {style_section}> Create work items </h1>
-              <p style = {style_text2}> Do you have an email thread that should be turned into a work item or has your boss sent you a list of things to do? Create work items directly from your email.</p>
-              <h2 style = {style_section}>Respond to comments</h2>
-              <p style = {style_text2}> When you are mentioned in a comment thread, post a reply without clicking away from the email notification.</p>
-              <h3 style = {style_section}>View details of a work item</h3>
-              <p style = {style_text2}> If a work item number is present in the email body, details will be displayed in the adjacent task pane.</p>
-          </div>
-          <img src="./logo_strip.png" alt="VSOLogo" style={style_bottomlogo}/>
-          </div>
-          );
+        <h1> Create work items</h1>
+        <p> Do you have an email thread you need to make into a work item? Create work items directly from Outlook!</p>
+      </div>
+      <div>
+        <h2> Communicate with your team</h2>
+        <p> After creating a work item, you can reply-all the thread with the item information or copy the information to the clipboard.</p>
+      </div>
+      <div>bottom image</div>
+      </div>
+    );
   }
  }
