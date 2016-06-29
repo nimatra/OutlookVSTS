@@ -29,7 +29,7 @@ app.use(require('webpack-hot-middleware')(compiler));
 app.use('/authenticate', authenticate);
 app.use('/js', express.static(__dirname + '/js'));
 app.use('/css', express.static(__dirname + '/css'));
-app.use('/images', express.static(___dirname + '/images'));
+app.use('/images', express.static(__dirname + '/images'));
 app.get('*', function(req,res){res.sendFile(__dirname+'/index.html');});
 
 
