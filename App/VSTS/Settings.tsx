@@ -28,7 +28,6 @@ export class Settings extends React.Component<{}, {}> {
       font: "20px arial, sans-serif",
       align: 'center'
     };
-
     console.log('got to settings');
     return (
       <div>
