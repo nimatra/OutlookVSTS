@@ -1,6 +1,7 @@
 /// <reference path="../../office.d.ts" />
 import * as React from 'react';
 import { Provider } from 'react-redux';
+import {LogInPage } from './LogInPage';
 //import { Office } from 'Office';
 
 enum Users { None, EmilyT, EmilyZ, Miranda}
@@ -31,7 +32,7 @@ export class VSTS extends React.Component<{}, {user: Users}> {
       case Users.EmilyZ:
         return(<div>Emily Z's addIn</div>);
       case Users.Miranda:
-        return(<div>Miranda's addIn</div>);
+        return(<LogInPage />);
       default:
         return(<div><button onClick={this.setEmilyT}>EmilyT</button><button onClick={this.setEmilyZ}>EmilyZ</button><button onClick={this.setMiranda}>Miranda</button></div>);
     }
