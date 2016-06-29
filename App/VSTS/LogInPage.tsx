@@ -3,11 +3,10 @@ import { Provider } from 'react-redux';
 // import { Office } from 'Office';
 import {Authenticate } from '../Authenticate/authenticate';
 import { Store, createStore } from 'redux';
+import {Settings } from './Settings';
 
 export class LogInPage extends React.Component<{}, {isReady : boolean}> {
 
-  //Work around for Office slow to initialize w/ error:
-  //Office.js:12 Uncaught Office.js has not been fully loaded yet. Please try again later or make sure to add your initialization code on the Office.initialize function.
   isReady : boolean; // set to false
 
   private Initialize():void{
@@ -17,7 +16,7 @@ export class LogInPage extends React.Component<{}, {isReady : boolean}> {
 
   public constructor() {
     super(); //required first line
-    this.isReady = true;
+    this.isReady = true; //should be false, but doesnt reload
     Office.initialize = this.Initialize;
   }
 
@@ -41,7 +40,7 @@ export class LogInPage extends React.Component<{}, {isReady : boolean}> {
     var style_button = {
       backgroundcolor: 'rgb(0,122,204)', // save button blue
       textalign: 'center',
-      textcolor: 'rgb(255,255,255)',
+      color: 'rgb(255,255,255)',
       font: "20px arial, sans-serif",
       align: 'center'
     };
@@ -67,8 +66,7 @@ export class LogInPage extends React.Component<{}, {isReady : boolean}> {
     console.log('got to login');
     return (
       <div>
-      <div> logo
-      </div>
+      <div> logo</div>
       <div><button onClick={this.auth} style = {style_button}>Sign In</button></div>
       <div> line separator</div>
       <div>
@@ -80,6 +78,7 @@ export class LogInPage extends React.Component<{}, {isReady : boolean}> {
         <p style = {style_text}> After creating a work item, you can reply-all the thread with the item information or copy the information to the clipboard.</p>
       </div>
       <div>bottom image</div>
+      <Settings />
       </div>
     );
   }
