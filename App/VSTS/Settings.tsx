@@ -18,6 +18,7 @@ export class Settings extends React.Component<{}, {saved:boolean}> {
     //TODO - save defaults to roaming settings
   }
 
+
   public render(): React.ReactElement<Provider> {
     var style_img = {
       align: 'center',
@@ -40,6 +41,7 @@ export class Settings extends React.Component<{}, {saved:boolean}> {
       font: "20px arial, sans-serif",
       align: 'center',
     };
+
     console.log('got to settings');
     console.log(this.state);
     if(this.state.saved == false){
