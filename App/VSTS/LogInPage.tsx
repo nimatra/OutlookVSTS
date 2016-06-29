@@ -41,23 +41,6 @@ export class LogInPage extends React.Component<{}, {authState: any, authToken:st
     this.forceUpdate(); //re-renders page
   }
 
-  public constructor() {
-    super(); //required first line
-    this.isReady = true; //should be false, but doesnt reload
-    Office.initialize = this.Initialize;
-  }
-
-  private auth(): void{
-    var user = Office.context.mailbox.userProfile.emailAddress;
-    window.open('./authenticate?user=' + user);
-    //return (<Authenticate user = {user}/>);
-  }
-
-  public auth(): void{
-
-    window.open('./authenticate?user=' + Office.context.mailbox.userProfile.emailAddress);
-  }
-
   public render(): React.ReactElement<Provider> {
 
     //aadd to CSS folder for reuse
@@ -111,6 +94,8 @@ export class LogInPage extends React.Component<{}, {authState: any, authToken:st
         <h1 style = {style_section}> Communicate with your team</h1>
         <p style = {style_text}> After creating a work item, you can reply-all the thread with the item information or copy the information to the clipboard.</p>
       </div>
+      <div>bottom image</div>
+      <Settings />
       </div>
     );
       case AuthState.Authorized: // We have auth for this user, determine whether to show settings or straight to creation

@@ -23,7 +23,6 @@ export class Settings extends React.Component<{}, {saved:boolean}> {
     var style_img = {
       align: 'center',
     };
- 
     var style_section = {
       color: 'rgb(104,33,122)', // the VS purple
       font: "20px arial, sans-serif",
