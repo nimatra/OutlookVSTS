@@ -3,6 +3,7 @@ import * as React from 'react';
 import { Provider } from 'react-redux';
 import {LogInPage } from './LogInPage';
 import {Settings} from './Settings';
+import {AuthState} from './auth';
 
 enum Users { None, EmilyT, EmilyZ, Miranda}
 
