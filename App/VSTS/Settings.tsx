@@ -10,7 +10,6 @@ export class Settings extends React.Component<{}, {}> {
       align: 'center'
     };
 
-<<<<<<< 76a05fdccfc12bcbc2b4774a2868dc3179e5c179
     var style_section = {
       color: 'rgb(104,33,122)', // the VS purple
       font: "20px arial, sans-serif",
