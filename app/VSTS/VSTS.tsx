@@ -5,7 +5,7 @@ import {LogInPage } from './LogInPage';
 import {Settings} from './Settings';
 
 enum Users { None, EmilyT, EmilyZ, Miranda}
-
+ 
 export class VSTS extends React.Component<{}, {user: Users}> {
 
   public constructor(){
