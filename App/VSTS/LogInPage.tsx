@@ -1,12 +1,20 @@
 import * as React from 'react';
 import { Provider } from 'react-redux';
 import { Store, createStore } from 'redux';
+
 import { Auth, AuthState } from '../auth';
 import { Authenticate } from '../Authenticate/authenticate';
 import { Settings } from './Settings';
 
 export class LogInPage extends React.Component<{}, {authState: any, authToken:string, user: string, returning:boolean}> {
   //note: if auth expires, nav to azure.../done
+
+  isReady : boolean; // set to false
+
+  private Initialize():void{
+    this.isReady = true;
+    this.forceUpdate(); //re-renders page
+  }
 
   public constructor() {
     super();
@@ -32,13 +40,6 @@ export class LogInPage extends React.Component<{}, {authState: any, authToken:st
   private auth(): void{
     var user = Office.context.mailbox.userProfile.emailAddress;
     window.open('./authenticate?user=' + this.state.user);
-  }
-
-  isReady : boolean; // set to false
-
-  private Initialize():void{
-    this.isReady = true;
-    this.forceUpdate(); //re-renders page
   }
 
   public render(): React.ReactElement<Provider> {
