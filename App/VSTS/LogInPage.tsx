@@ -34,9 +34,25 @@ export class LogInPage extends React.Component<{}, {authState: any, authToken:st
     window.open('./authenticate?user=' + this.state.user);
   }
 
-  public auth(): void{
+  //Work around for Office slow to initialize w/ error:
+  //Office.js:12 Uncaught Office.js has not been fully loaded yet. Please try again later or make sure to add your initialization code on the Office.initialize function.
+  isReady : boolean; // set to false
 
-    window.open('./authenticate?user=' + Office.context.mailbox.userProfile.emailAddress);
+  private Initialize():void{
+    this.isReady = true;
+    this.forceUpdate(); //re-renders page
+  }
+
+  public constructor() {
+    super(); //required first line
+    this.isReady = true;
+    Office.initialize = this.Initialize;
+  }
+
+  private auth(): void{
+    var user = Office.context.mailbox.userProfile.emailAddress;
+    window.open('./authenticate?user=' + user);
+    //return (<Authenticate user = {user}/>);
   }
 
   public render(): React.ReactElement<Provider> {
