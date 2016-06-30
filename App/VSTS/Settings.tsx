@@ -4,10 +4,9 @@ import { Provider } from 'react-redux';
 
 export class Settings extends React.Component<{}, {}> {
 
-
   public render(): React.ReactElement<Provider> {
     var style_img = {
-      align: 'center'
+      align: 'center',
     };
 
     var style_section = {
@@ -17,29 +16,29 @@ export class Settings extends React.Component<{}, {}> {
     };
 
     var style_text = {
-       color: "rgb(30,30,30)", // TODO - change to dark gray
+       color: "rgb(118,118,118)", // TODO - change to dark gray
        font: "15px arial, sans-serif",
     };
 
     var style_button = {
-      backgroundcolor: 'rgb(0,122,204)', // save button blue
+      background: 'rgb(0,122,204)', // save button blue
       textalign: 'center',
       color: 'rgb(255,255,255)',
       font: "20px arial, sans-serif",
-      align: 'center'
+      align: 'center',
     };
     console.log('got to settings');
     return (
       <div>
-          <div> logo</div>
+          <div> <image src = './images/logo.png' style = {style_img}/></div>
           <div>
             <h1> Default Settings </h1>
             <p style = {style_text}> Assign default values for work item creation</p>
-            line separator
           </div>
           <div>
             <button style={style_button}> Save </button>
           </div>
+          <hr/>
           <div>
             <h3 style= {style_section} size = '6'>Account</h3>
             <select name ="account">
