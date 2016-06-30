@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { Provider } from 'react-redux';
 import { Store, createStore } from 'redux';
-
 import { Auth, AuthState } from '../auth';
 import { Authenticate } from '../Authenticate/authenticate';
 import { Settings } from './Settings';
@@ -97,6 +96,7 @@ export class LogInPage extends React.Component<{}, {authState: any, authToken:st
       </div>
       <div>bottom image</div>
       <Settings />
+      <div><image src = './images/logo_strip.png' style = {style_bottomlogo}/> </div>
       </div>
     );
       case AuthState.Authorized: // We have auth for this user, determine whether to show settings or straight to creation

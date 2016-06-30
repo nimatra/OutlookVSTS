@@ -18,7 +18,6 @@ export class Settings extends React.Component<{}, {saved:boolean}> {
     //TODO - save defaults to roaming settings
   }
 
-
   public render(): React.ReactElement<Provider> {
     var style_img = {
       align: 'center',
