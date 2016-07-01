@@ -1,23 +1,28 @@
-/// <reference path="../../../typings/tsd.d.ts" />
+/// <reference path='../../../typings/tsd.d.ts' />
 
 import * as React from 'react';
-import { connect } from 'react-redux';
-
-interface IStringFieldState {
-  text: string;
-}
 
 interface IStringFieldProps {
   label: string;
+  onChange?: ICallback;
+  value: string;
 }
 
-export class StringField extends React.Component<IStringFieldProps, IStringFieldState> {
+interface ICallback { (option: string): void; }
+
+export class StringField extends React.Component<IStringFieldProps, {}> {
+
+
+  public onChange(value: any): void {
+    this.props.onChange(value);
+  }
+
   public render(): React.ReactElement<{}> {
 
-    return (<div className="field-control">
-                <div className="ms-TextField">
-                    <label className="ms-Label">{this.props.label}</label>
-                    <input className="ms-TextField-field" type="text">{this.state.text}</input>
+    return (<div>
+                <div>
+                    <label>{this.props.label}</label>
+                    <input type='text' onChange={this.onChange.bind(this) } value={this.props.value} />
                 </div>
             </div>
     );

@@ -7,6 +7,14 @@ declare module Office {
 
   export var cast:any;
   export var context:any;
+
+  export namespace MailboxEnums{
+    export class ItemNotificationMessageType{
+      static ProgressIndicator: string;
+      static InformationalMessage: string;
+      static ErrorMessage: string;
+    }
+  }
 }
 
 declare module 'office' {
