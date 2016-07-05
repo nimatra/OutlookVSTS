@@ -39,7 +39,11 @@ class Main extends React.Component<{}, {}> {
   public getRoute(): string {
     let url: string = document.URL;
     let strings: string[] = url.split('/');
-    return strings[3].slice(0, strings[3].indexOf('?'));
+    let output: string = strings[3];
+    if (output.includes('?')) {
+      output = output.slice(0, strings[3].indexOf('?'));
+    }
+    return output;
   }
 
   public render(): React.ReactElement<Provider> {
