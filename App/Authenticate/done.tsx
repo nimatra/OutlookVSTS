@@ -1,7 +1,6 @@
 /// <reference path="../../office.d.ts" />
 import * as React from 'react';
 import { Provider } from 'react-redux';
-import { Store, createStore } from 'redux';
 
 export class Done extends React.Component<{}, {}> {
 

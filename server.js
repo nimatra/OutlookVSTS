@@ -6,6 +6,7 @@ var bodyParser = require('body-parser');
 var fs = require('fs');
 var config = require('./config/webpack.prod');
 var authenticate = require('./routes/authenticate');
+var rest = require('./routes/VstsRest');
 var DEBUG = require('./debug');
 
 var app = express();
@@ -27,6 +28,7 @@ app.use(require('webpack-hot-middleware')(compiler));
 // Routes
 
 app.use('/authenticate', authenticate);
+app.use('/rest', rest)
 app.use('/js', express.static(__dirname + '/js'));
 app.use('/css', express.static(__dirname + '/css'));
 app.use('/images', express.static(__dirname + '/images'));
@@ -45,6 +47,7 @@ if(DEBUG == true){
   });
 }
 else{
+  console.log("WARNING: you are not running in debug mode. nothing will work!");
   app.listen(port, "localhost", function(err) {
     if (err) {
       console.log(err);

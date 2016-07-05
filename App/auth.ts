@@ -1,25 +1,20 @@
-import * as React from 'react';
-
 export enum AuthState {
-    None,       // No auth data is available
-    Request,    // Need to request auth data
-    Authorized  // Have authorization
+    None,       // no auth data is available
+    Request,    // need to request auth data
+    Authorized  // have authorization
 }
 
-export interface AuthStateCallback { (state: AuthState, token: string) }
+export interface IAuthStateCallback { (state: AuthState): void; }
 
 export class Auth {
 
-    static getAuthState(user: string, callback: AuthStateCallback): void {
-        $.get("./authenticate/db?user=" + user, (output) => {
-            console.log(output);
-            var json : any = JSON.parse(output);
-            if (json.success == true) {
-                callback(AuthState.Authorized, json.token);
+    public static getAuthState(user: string, callback: IAuthStateCallback): void {
+        $.get('./authenticate/db?user=' + user, (output) => {
+            if (output === 'success') {
+                callback(AuthState.Authorized);
+            } else {
+                callback(AuthState.Request);
             }
-            else {
-                callback(AuthState.Request, '');
-            }
-        })
+        });
     }
 }
