@@ -6,16 +6,9 @@ import * as ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { Dogfood } from './Dogfood/dogfood';
 import { VSTS } from './VSTS/VSTS';
-<<<<<<< 8584db8a1a3b33fc8b6c8a67c15adc9ecf6597bc
 import { Done } from './Authenticate/done';
 
-=======
-//import { Done } from './Authenticate/done';
-import { Done } from './VSTS/Done';
-import {Authenticate } from './Authenticate/authenticate';
-import {LogInPage } from './VSTS/LogInPage';
-import { CreateWorkItem } from './VSTS/CreateWorkItem';
->>>>>>> created CreateWorkItem class and added imports in Index file
+
 
 declare const require: (name: String) => any;
 
