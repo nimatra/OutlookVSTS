@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { Provider } from 'react-redux';
+import {Authenticate } from '../Authenticate/authenticate';
 import { Store, createStore } from 'redux';
 import { Auth, AuthState } from '../auth';
-import { Authenticate } from '../Authenticate/authenticate';
 import { Settings } from './Settings';
 
 export class LogInPage extends React.Component<{}, {authState: any, authToken:string, user: string, returning:boolean}> {
@@ -25,6 +25,9 @@ export class LogInPage extends React.Component<{}, {authState: any, authToken:st
     };
 
     var user = Office.context.mailbox.userProfile.emailAddress;
+    this.isReady = true; //should be false, but doesnt reload
+    Office.initialize = this.Initialize;
+  
 
     Auth.getAuthState(user, (state:AuthState, token:string) =>{
       this.setState({
@@ -45,20 +48,21 @@ export class LogInPage extends React.Component<{}, {authState: any, authToken:st
 
     //aadd to CSS folder for reuse
     var style_img = {
-      align: 'center',
+      align: 'center'
     };
 
     var style_button = {
-      background: 'rgb(0,122,204)', // save button blue
+      backgroundcolor: 'rgb(0,122,204)', // save button blue
       textalign: 'center',
       color: 'rgb(255,255,255)',
       font: "20px arial, sans-serif",
-      align: 'center',
+      align: 'center'
     };
 
     var style_section = {
       color: 'rgb(104,33,122)', // the VS purple
       font: "20px arial, sans-serif",
+
     };
 
     var style_text = {
@@ -69,7 +73,7 @@ export class LogInPage extends React.Component<{}, {authState: any, authToken:st
     var style_bottomlogo = {
       width:'500px',
       height:'120px',
-      align: 'center',
+      align: 'center'
     };
 
     console.log('got to login');
