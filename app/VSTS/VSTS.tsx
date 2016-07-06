@@ -2,6 +2,7 @@
 import * as React from 'react';
 import { Provider } from 'react-redux';
 //import { Office } from 'Office';
+import { CreateWorkItem } from './CreateWorkItem'
 
 enum Users { None, EmilyT, EmilyZ, Miranda}
 
@@ -27,7 +28,7 @@ export class VSTS extends React.Component<{}, {user: Users}> {
     switch(user)
     {
       case Users.EmilyT:
-        return(<div>Emily T's addIn</div>);
+        return(<CreateWorkItem />);
       case Users.EmilyZ:
         return(<div>Emily Z's addIn</div>);
       case Users.Miranda:
