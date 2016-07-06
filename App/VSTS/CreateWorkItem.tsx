@@ -19,6 +19,7 @@ export class CreateWorkItem extends React.Component<{}, {}> {
     this.isReady = false; //should be false, but doesnt reload
     this.Initialize = this.Initialize.bind(this);
     Office.initialize = this.Initialize;
+
   }
 
 public render(): React.ReactElement<Provider> {
@@ -70,4 +71,3 @@ CLASSIFICATION <br/>
 </div>);
   }
  }
-
