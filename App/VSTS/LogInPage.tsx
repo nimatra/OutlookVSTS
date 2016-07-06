@@ -1,35 +1,42 @@
 import * as React from 'react';
 import { Provider } from 'react-redux';
 import { Store, createStore } from 'redux';
-import {Settings } from './Settings';
+import { Auth, AuthState } from '../auth';
+import { Authenticate } from '../Authenticate/authenticate';
+import { Settings } from './Settings';
 
-export class LogInPage extends React.Component<{}, {}> {
-
-  isReady : boolean; // set to false
-
-  private Initialize():void{
-    this.isReady = true;
-    this.forceUpdate(); //re-renders page
-  }
+export class LogInPage extends React.Component<{}, {authState: any, authToken:string, user: string, returning:boolean}> {
+  //note: if auth expires, nav to azure.../done
 
   public constructor() {
-    super(); //required first line
-    this.isReady = true; //should be false, but doesnt reload
-    Office.initialize = this.Initialize;
-  }
+    super();
+    this.state = {
+      authState: AuthState.Request, //AuthState.None
+      authToken: '',
+      user: '',
+      returning: false //needs to be saved in store
+    };
 
+    var user = Office.context.mailbox.userProfile.emailAddress;
+
+    Auth.getAuthState(user, (state:AuthState, token:string) =>{
+      this.setState({
+        user : user,
+        authState : state,
+        authToken : token,
+        returning: false
+      });
+      console.log('state:' + this.state.authState);
+  })
+}
   private auth(): void{
     var user = Office.context.mailbox.userProfile.emailAddress;
-    window.open('./authenticate?user=' + user);
+    window.open('./authenticate?user=' + this.state.user);
   }
 
   public render(): React.ReactElement<Provider> {
-    if(this.isReady == false)
-    {
-      return(<div>loading...</div>);
-    }
 
-    //add CSS in folder for reuse in other properties
+    //aadd to CSS folder for reuse
     var style_img = {
       align: 'center',
     };
@@ -48,7 +55,7 @@ export class LogInPage extends React.Component<{}, {}> {
     };
 
     var style_text = {
-       color: "rgb(118,118,118)", // TODO - change to dark gray
+       color: "rgb(118,118,118)", // dark gray
        font: "15px arial, sans-serif",
     };
 
@@ -58,10 +65,17 @@ export class LogInPage extends React.Component<{}, {}> {
       align: 'center',
     };
 
-
     console.log('got to login');
-    return (
-      <div>
+    const state: AuthState = this.state.authState;
+    const token: string = this.state.authToken;
+    const user: string = this.state.user;
+
+    console.log(AuthState);
+    switch (state) {
+      case AuthState.None: // We have to wait for Office to initialize, so show a waiting state
+        return (<div>Loading</div>);
+      case AuthState.Request: // Office has initialized, but we don't have auth for this user, show Log-In Page and pass them to the auth flow
+        return (<div>
       <div><image src = './images/logo.png' style = {style_img}/></div>
       <div><button onClick={this.auth} style = {style_button}>Sign In</button></div>
       <hr/>
@@ -73,9 +87,19 @@ export class LogInPage extends React.Component<{}, {}> {
         <h1 style = {style_section}> Communicate with your team</h1>
         <p style = {style_text}> After creating a work item, you can reply-all the thread with the item information or copy the information to the clipboard.</p>
       </div>
-      <div><image src = './images/logo_strip.png' style = {style_bottomlogo}/> </div>
-      <Settings />
       </div>
     );
+      case AuthState.Authorized: // We have auth for this user, determine whether to show settings or straight to creation
+      { if(this.state.returning == false){
+          console.log(this.state.returning)
+          this.state.returning = true; //don't want to automatically re-render, just save for next time - need to save in store
+          console.log(this.state.returning)
+          return (<Settings />);
+        }
+        else
+          return (<div>Create Item </div>);
+      }
   }
+
  }
+}
