@@ -3,6 +3,8 @@ import { Provider } from 'react-redux';
 import {Authenticate } from '../Authenticate/authenticate';
 import { Store, createStore } from 'redux';
 import {Settings } from './Settings';
+import { Auth, AuthState } from '../auth';
+import { AddInDescription } from './AddInDescription';
 
 export class LogInPage extends React.Component<{}, {isReady : boolean}> {
 
@@ -62,9 +64,15 @@ export class LogInPage extends React.Component<{}, {isReady : boolean}> {
     };
 
 
+
     console.log('got to login');
-    return (
-      <br/>
+    console.log(AuthState);
+    switch (state) {
+      case AuthState.None: // We have to wait for Office to initialize, so show a waiting state
+        return (<div>Loading</div>);
+      case AuthState.Request: // Office has initialized, but we don't have auth for this user, show Log-In Page and pass them to the auth flow
+        return (<AddInDescription />
     );
   }
- }
+  }
+
