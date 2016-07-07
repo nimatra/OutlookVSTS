@@ -3,16 +3,21 @@ import * as React from 'react';
 import { Provider } from 'react-redux';
 import {LogInPage } from './LogInPage';
 import {Settings} from './Settings';
-import {AuthState} from './auth';
+import {Auth, AuthState} from '../auth';
+import {Temp } from './Temp'
 
 enum Users { None, EmilyT, EmilyZ, Miranda}
 
-export class VSTS extends React.Component<{}, any/*{user: Users}*/> {
+export class VSTS extends React.Component<{}, any /*{user:Users, authState: AuthState, authToken: string}*/> {
+
+  state : any;
 
   public constructor(){
     super();
-    this.state = {user:Users.None,
-      ready:false
+    this.state = {
+        user : Users.None,
+        authState : AuthState.Request,
+        authToken : ''
     };
     this.setEmilyT = this.setEmilyT.bind(this);
     this.setEmilyZ = this.setEmilyZ.bind(this);
@@ -23,9 +28,18 @@ export class VSTS extends React.Component<{}, any/*{user: Users}*/> {
 
   private Initialize():void{
     console.log("Initiating");
-    this.setState({ready:true});
-    console.log(this.state.ready);
-    //this.forceUpdate();
+    var user = Office.context.mailbox.userProfile.emailAddress;
+    console.log('user:'+user);
+    console.log('state:'+this.state.authState);
+    Auth.getAuthState(user, (state:AuthState, token:string) =>{
+      this.setState({
+        user : user,
+        authState : state,
+        authToken : token
+      });
+    })
+    console.log(this.state.user);
+    console.log(this.state.authState);
   }
 
   public setEmilyT():void{this.setState({user:Users.EmilyT})}
@@ -33,9 +47,12 @@ export class VSTS extends React.Component<{}, any/*{user: Users}*/> {
   public setMiranda():void{this.setState({user:Users.Miranda})}
 
   public render(): React.ReactElement<Provider> {
-    if(!this.state.ready)
-      return(<div>Loading</div>);
-
+    switch(this.state.authState) {
+      case AuthState.None:// We have to wait for Office to initialize, so show a waiting state
+        return (<div>Loading...</div>);
+      default:
+        console.log('default');
+    }
     console.log('got to vsts');
     const user : Users = this.state.user;
 

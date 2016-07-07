@@ -41,7 +41,7 @@ export class Settings extends React.Component<{}, {saved:boolean}> {
 
     console.log('got to settings');
     console.log(this.state);
-    if(this.state.saved == false){
+    if(true){ //check if returning, Authorized, which page coming from
       return (
       <div>
           <div> <image src = './images/logo.png' style = {style_img}/></div>
@@ -58,11 +58,8 @@ export class Settings extends React.Component<{}, {saved:boolean}> {
             <ProjectDropdown />
             <AreaDropdown />
           </div>
+          <p> Create Item Page </p>
       </div>
       );}
-     else
-     {
-       return (<div>Create Item </div>);
-     }
   }
  }

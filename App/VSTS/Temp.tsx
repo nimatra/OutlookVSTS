@@ -6,11 +6,10 @@ import {Settings } from './Settings';
 import { Auth, AuthState } from '../auth';
 import { AddInDescription } from './AddInDescription';
 
-export class LogInPage extends React.Component<{}, {}> {
+export class Temp extends React.Component<{}, {}> {
 
   public constructor() {
     super(); //required first line
-
   }
 
   private auth(): void{
@@ -20,11 +19,8 @@ export class LogInPage extends React.Component<{}, {}> {
 
   public render(): React.ReactElement<Provider> {
     //each component should decide to show itself or not
-    return (<AddInDescription />);
-   /* return (<div>
-      <AddInDescription />
-      <Settings />
+    return (<div>
       <p> Create Work Item </p>
-        </div>);*/
+        </div>);
   }
  }
