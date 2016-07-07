@@ -1,5 +1,5 @@
 var path = require('path');
-var http = require('http');
+var https = require('https');
 var express = require('express');
 var webpack = require('webpack');
 var bodyParser = require('body-parser');
@@ -37,12 +37,12 @@ app.get('*', function(req,res){res.sendFile(__dirname+'/index.html');});
 
 if(DEBUG == true){
 
- // const options = {
- //   key: fs.readFileSync('secrets/key.pem'),
- //   cert: fs.readFileSync('secrets/cert.pem')
- // };
+  const options = {
+    key: fs.readFileSync('secrets/key.pem'),
+    cert: fs.readFileSync('secrets/cert.pem')
+  };
 
-  http.createServer(app).listen(port, function() {
+  https.createServer(options, app).listen(port, function() {
     console.log('Listening at https://localhost:' + port);
   });
 }
