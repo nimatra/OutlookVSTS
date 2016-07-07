@@ -1,10 +1,13 @@
 var path = require('path');
+var https = require('https');
 var express = require('express');
 var webpack = require('webpack');
 var bodyParser = require('body-parser');
+var fs = require('fs');
 var config = require('./config/webpack.prod');
 var authenticate = require('./routes/authenticate');
-var vsts = require('./routes/vsts');
+var rest = require('./routes/VstsRest');
+var DEBUG = require('./debug');
 
 var app = express();
 var compiler = webpack(config);
@@ -24,23 +27,32 @@ app.use(require('webpack-hot-middleware')(compiler));
 
 // Routes
 
-var authRouter = express.Router({mergeParams: true});
-var vstsRouter = express.Router({mergeParams: true});
-app.get('/', function (req, res) {
-    res.sendFile(__dirname + '/index.html');
-});
-app.use('/authenticate', authRouter);
-authRouter.use('/callback', authenticate.callback);
-authRouter.use('/', authenticate.authorize);
-app.use('/VSTS', vstsRouter);
+app.use('/authenticate', authenticate);
+app.use('/rest', rest)
 app.use('/js', express.static(__dirname + '/js'));
 app.use('/css', express.static(__dirname + '/css'));
+app.use('/images', express.static(__dirname + '/images'));
+app.get('*', function(req,res){res.sendFile(__dirname+'/index.html');});
 
-app.listen(port, 'localhost', err => {
-  if (err) {
-    console.log(err);
-    return;
-  }
 
-  console.log(`Listening at http://localhost:${port}`);
-});
+if(DEBUG == true){
+
+  const options = {
+    key: fs.readFileSync('secrets/key.pem'),
+    cert: fs.readFileSync('secrets/cert.pem')
+  };
+
+  https.createServer(options, app).listen(port, function() {
+    console.log('Listening at https://localhost:' + port);
+  });
+}
+else{
+  console.log("WARNING: you are not running in debug mode. nothing will work!");
+  app.listen(port, "localhost", function(err) {
+    if (err) {
+      console.log(err);
+      return;
+    }
+    console.log('Listening at http://localhost:' + port);
+  });
+}
