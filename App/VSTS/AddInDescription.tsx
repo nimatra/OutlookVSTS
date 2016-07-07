@@ -5,16 +5,26 @@ import { Auth, AuthState } from '../auth';
 import { Authenticate } from '../Authenticate/authenticate';
 import { Settings } from './Settings';
 
-export class AddInDescription extends React.Component<{}, {authState: any, authToken:string, user: string, returning:boolean}> {
+export class AddInDescription extends React.Component<{}, {authState: AuthState, authToken:string, user: string}> {
   //note: if auth expires, nav to azure.../done
 
   public constructor() {
     super();
+    console.log('got to addindescr');
+    var user =
+    Auth.getAuthState(user, (state:AuthState, token:string) =>{
+      this.setState({
+        user : user,
+        authState : state,
+        authToken : token
+      });
+    })
   }
 
   private auth(): void{
     var user = Office.context.mailbox.userProfile.emailAddress;
-    window.open('./authenticate?user=' + this.state.user);
+    //console.log(this.state.user);
+    window.open('./authenticate?user=' + user);
   }
 
   public render(): React.ReactElement<Provider> {
@@ -42,8 +52,10 @@ export class AddInDescription extends React.Component<{}, {authState: any, authT
        font: "15px arial, sans-serif",
     };
 
-    console.log(AuthState);
-    return(<div>
+    //console.log(this.state.authState);
+    //switch(this.state.authState){
+    //case AuthState.Request: // Office has initialized, but we don't have auth for this user, show Log-In Page and pass them to the auth flow
+      return(<div>
       <div><image src = './images/logo.png' style = {style_img}/></div>
       <div><button onClick={this.auth} style = {style_button}>Sign In</button></div>
       <hr/>
@@ -57,6 +69,9 @@ export class AddInDescription extends React.Component<{}, {authState: any, authT
       </div>
       </div>
     );
+    //default:
+      //return(<div/>);
   }
- }
+  }
+ //}
 
