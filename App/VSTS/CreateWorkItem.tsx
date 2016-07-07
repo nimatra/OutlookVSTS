@@ -1,9 +1,9 @@
 /// <reference path="../../office.d.ts" />
 import * as React from 'react';
 import { Provider } from 'react-redux';
-import { Description } from './Description'
-import { Title } from './Title'
-import { Save } from './Save'
+import { Description } from './Description';
+import { Title } from './Title';
+import { Save } from './Save';
 
 export class CreateWorkItem extends React.Component<{}, {}> {
 

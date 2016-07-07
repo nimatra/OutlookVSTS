@@ -27,6 +27,8 @@ export class Title extends React.Component<{}, {value:any}> {
   public render(): React.ReactElement<Provider> {
 
   var normalizedSubject = Office.context.mailbox.item.normalizedSubject;
+  {/*var titleval = document.getElementById("titleval").value;
+    document.getElementById("final").innerHTML = titlevar;*/}
 
   var title = {
   width: '250px',
@@ -38,7 +40,7 @@ export class Title extends React.Component<{}, {value:any}> {
 
     return ( <div>
     TITLE <br/>
-    <input type="text" style={title} value={normalizedSubject} onChange={this.handleChange} />
+    <input type="text" style={title} id= "titleval" value={normalizedSubject} onChange={this.handleChange} />
     <br/>
     </div>);
 

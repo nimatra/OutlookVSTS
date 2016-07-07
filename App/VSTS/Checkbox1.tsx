@@ -3,7 +3,7 @@ import { Provider } from 'react-redux';
 import { CreateWorkItem } from './CreateWorkItem'
 
 
-export class Save extends React.Component<{}, {isSaved:boolean}> {
+export class Checkbox1 extends React.Component<{}, {isSaved:boolean}> {
 
    public constructor(){
     super();
@@ -27,7 +27,7 @@ var save = {
 var text = this.state.isSaved ? 'Saved':'Save';
     return ( <div>
 <br/>
-  <button style= {save} onClick = {this.handleClick}> {text} </button>
+  <label><input type="checkbox" id="cbox" value="addasattachment" /> Add Email as Attachment </label> <br/>
 
     </div>);
 
