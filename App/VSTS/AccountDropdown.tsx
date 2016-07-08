@@ -7,7 +7,7 @@ export class AccountDropdown extends React.Component<{}, {}> {
 
   public constructor() {
     super();
-    console.log(this.state);
+    //console.log(this.state);
   }
 
   render(){
@@ -15,7 +15,7 @@ export class AccountDropdown extends React.Component<{}, {}> {
       color: 'rgb(104,33,122)', // the VS purple
       font: "20px arial, sans-serif",
     };
-    console.log('got to settings');
+    console.log('got to account');
   return (
       <div>
             <h3 style= {style_section} size = '6'>Account</h3>

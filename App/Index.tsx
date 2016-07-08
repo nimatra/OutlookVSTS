@@ -1,13 +1,13 @@
 /// <reference path="../typings/tsd.d.ts" />
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-// import { Store, createStore } from 'redux';
-// import { vsoAddin } from './reducers';
+import { Store, createStore } from 'redux';
+import { vsoAddin } from './reducers';
 import { Provider } from 'react-redux';
 import { Dogfood } from './Dogfood/dogfood';
 import { VSTS } from './VSTS/VSTS';
 import { Done } from './Authenticate/done';
-
+import {Settings } from './VSTS/Settings'
 
 declare const require: (name: String) => any;
 
@@ -17,7 +17,7 @@ interface IHotModule {
 
 declare const module: IHotModule;
 
-/*
+
 function configureStore(): Store {
   const store: Store = createStore(vsoAddin);
 
@@ -32,7 +32,7 @@ function configureStore(): Store {
 }
 
  const store: Store = configureStore();
- */
+
 
 class Main extends React.Component<{}, {}> {
 

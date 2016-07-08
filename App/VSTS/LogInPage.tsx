@@ -10,7 +10,7 @@ export class LogInPage extends React.Component<{}, {}> {
 
   public constructor() {
     super(); //required first line
-
+    console.log('login');
   }
 
   private auth(): void{
@@ -20,11 +20,10 @@ export class LogInPage extends React.Component<{}, {}> {
 
   public render(): React.ReactElement<Provider> {
     //each component should decide to show itself or not
-    return (<AddInDescription />);
-   /* return (<div>
+    return (<div>
       <AddInDescription />
       <Settings />
       <p> Create Work Item </p>
-        </div>);*/
+        </div>);
   }
  }

@@ -3,11 +3,8 @@
 /*
 actions types
 */
-export const UPDATE_AUTH_STATE = 'Update'
-export const SET_RETURNING = 'SetReturning'
-export const SET_PREV_PAGE = 'SetPrevPage'
 
-
+export enum ACTION {UPDATE_AUTH_STATE, SET_RETURNING, SET_PREV_PAGE}
 
 
 
