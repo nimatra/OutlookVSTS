@@ -1,26 +1,23 @@
-/// <reference path='../typings/tsd.d.ts' />
+/// <reference path="../typings/tsd.d.ts" />
 
 import { Reducer, combineReducers } from 'redux';
-import { AnState } from './Store/AnState';
-import { IGetAllPhotosAction, IPhotoAction, ACTION } from './actions';
+import { IWorkItemAction, ACTION } from './actions';
+import { IWorkItemState, IField }  from './workItemModel';
 
-export const initialState: AnState = {
-  allPhotos: <string[]>[],
-};
+function getFields(type: string): IField[]{
+  return [{label: 'Story Points', value: '', type: 'integer'},
+          {label: 'Priority', value: '', type: 'integer'},
+          {label: 'Description', value: '', type: 'html'}];
+}
 
-function photosReducer(state: string[] = initialState.allPhotos, action: IGetAllPhotosAction): string[] {
+function updateWorkItemType(state: IWorkItemState, action: IWorkItemAction): IWorkItemState {
   switch (action.type) {
-    case ACTION.Photos_ReceivedFromServer:
-      return Object.assign(
-        <string[]>[],
-        state,
-        action.photos
-      );
+    case ACTION.ChangeWorkItemType:
+       return state != null ? { type: action.workItemType, fields: getFields(action.workItemType) }
+         : { type: 'Bug', fields: getFields('Bug') };
     default:
-      return state;
+      return state != null ? state : { type: 'Bug', fields: getFields('Bug') };
   }
 }
 
-export const anReducer: Reducer = combineReducers({
-  allPhotos: photosReducer,
-});
+export const vsoAddin: Reducer = combineReducers({ updateWorkItemType });
