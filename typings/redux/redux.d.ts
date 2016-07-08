@@ -1,9 +1,17 @@
+<<<<<<< 933e29cd9222a9d7ab5a0990ec266be4a6f33e25
 // Type definitions for Redux v3.3.1
 // Project: https://github.com/rackt/redux
 // Definitions by: William Buchwalter <https://github.com/wbuchwalter/>, Vincent Prouillet <https://github.com/Keats/>
 // Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
 
 declare namespace Redux {
+=======
+// Type definitions for Redux v1.0.0
+// Project: https://github.com/rackt/redux
+// Definitions by: William Buchwalter <https://github.com/wbuchwalter/>, Vincent Prouillet <https://github.com/Keats/>
+// Definitions: https://github.com/borisyankov/DefinitelyTyped
+
+declare module Redux {
 
     interface ActionCreator extends Function {
         (...args: any[]): any;

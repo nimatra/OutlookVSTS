@@ -1,11 +1,17 @@
 /// <reference path="../../typings/tsd.d.ts" />
 
 import { Reducer, combineReducers } from 'redux';
-import { IUser } from './LoginModel'
 import { Auth, AuthState } from '../auth';
-import { UPDATE_AUTH_STATE, SET_RETURNING, SET_PREV_PAGE} from './LoginActions'
-//import { IWorkItemAction, ACTION } from '../actions';
-//import { IWorkItemState, IField }  from '../workItemModel';
+import { ACTION } from './LoginActions'
+import { Auth, AuthState } from '../auth';
+
+export interface IUser{
+    authState: AuthState;
+    authToken : string;
+    user: string;
+    returning: boolean;
+    prevPage: ''
+}
 
 //intitial state
 const initialState = {

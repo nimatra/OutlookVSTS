@@ -4,32 +4,43 @@ import { Store, createStore } from 'redux';
 import { Auth, AuthState } from '../auth';
 import { Authenticate } from '../Authenticate/authenticate';
 import { Settings } from './Settings';
+import {Users } from './VSTS';
 
-export class AddInDescription extends React.Component<{}, {authState: AuthState, authToken:string, user: string}> {
+export class AddInDescription extends React.Component<{}, {authState: AuthState, user: Users}> {
   //note: if auth expires, nav to azure.../done
 
   public constructor() {
     super();
     console.log('got to addindescr');
-    var user =
-    Auth.getAuthState(user, (state:AuthState, token:string) =>{
+    this.state = {
+        user : Users.Miranda,
+        authState : AuthState.Authorized,
+    };
+
+    this.updateAuth();
+  }
+
+  private updateAuth(): void {
+  var user = Office.context.mailbox.userProfile.emailAddress;
+  console.log(user);
+    Auth.getAuthState(user, (state: AuthState) => {
       this.setState({
-        user : user,
-        authState : state,
-        authToken : token
-      });
-    })
+        authState: state,
+        user: user });
+    });
+
+    console.log(this.state.user);
+    console.log(this.state.authState);
   }
 
   private auth(): void{
-    var user = Office.context.mailbox.userProfile.emailAddress;
+    //var user = Office.context.mailbox.userProfile.emailAddress;
     //console.log(this.state.user);
-    window.open('./authenticate?user=' + user);
+    window.open('./authenticate?user=' + this.state.user);
   }
 
   public render(): React.ReactElement<Provider> {
-
-    //add to CSS folder for reuse
+    this.updateAuth();
     var style_img = {
       align: 'center',
     };
@@ -53,8 +64,8 @@ export class AddInDescription extends React.Component<{}, {authState: AuthState,
     };
 
     //console.log(this.state.authState);
-    //switch(this.state.authState){
-    //case AuthState.Request: // Office has initialized, but we don't have auth for this user, show Log-In Page and pass them to the auth flow
+    switch(this.state.authState){
+    case AuthState.Request: // Office has initialized, but we don't have auth for this user, show Log-In Page and pass them to the auth flow
       return(<div>
       <div><image src = './images/logo.png' style = {style_img}/></div>
       <div><button onClick={this.auth} style = {style_button}>Sign In</button></div>
@@ -69,9 +80,9 @@ export class AddInDescription extends React.Component<{}, {authState: AuthState,
       </div>
       </div>
     );
-    //default:
-      //return(<div/>);
+    default:
+      return(<div/>);
   }
   }
- //}
+ }
 

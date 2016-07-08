@@ -3,11 +3,10 @@ import * as React from 'react';
 import { Provider } from 'react-redux';
 import {LogInPage } from './LogInPage';
 
-export class AreaDropdown extends React.Component<{}, {saved:boolean}> {
+export class AreaDropdown extends React.Component<{}, {}> {
 
   public constructor() {
     super();
-    console.log(this.state);
   }
 
   render(){
@@ -15,6 +14,7 @@ export class AreaDropdown extends React.Component<{}, {saved:boolean}> {
       color: 'rgb(104,33,122)', // the VS purple
       font: "20px arial, sans-serif",
     };
+    console.log('got to area');
     return (
     <div>
         <h3 style= {style_section} size = '6'>Area</h3>

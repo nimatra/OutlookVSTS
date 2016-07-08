@@ -150,7 +150,12 @@ declare namespace __React {
     var DOM: ReactDOM;
     var PropTypes: ReactPropTypes;
     var Children: ReactChildren;
+<<<<<<< 933e29cd9222a9d7ab5a0990ec266be4a6f33e25
 
+=======
+    var version: string;
+    
+>>>>>>> adding global state - step 1
     //
     // Component API
     // ----------------------------------------------------------------------
@@ -346,13 +351,32 @@ declare namespace __React {
         view: AbstractView;
     }
 
+<<<<<<< 933e29cd9222a9d7ab5a0990ec266be4a6f33e25
     interface WheelEvent extends SyntheticEvent {
+=======
+    interface WheelEvent extends MouseEvent {
+>>>>>>> adding global state - step 1
         deltaMode: number;
         deltaX: number;
         deltaY: number;
         deltaZ: number;
     }
 
+<<<<<<< 933e29cd9222a9d7ab5a0990ec266be4a6f33e25
+=======
+    interface AnimationEvent extends SyntheticEvent {
+        animationName: string;
+        pseudoElement: string;
+        elapsedTime: number;
+    }
+    
+    interface TransitionEvent extends SyntheticEvent {
+        propertyName: string;
+        pseudoElement: string;
+        elapsedTime: number;
+    }
+
+>>>>>>> adding global state - step 1
     //
     // Event Handler Types
     // ----------------------------------------------------------------------
@@ -373,6 +397,11 @@ declare namespace __React {
     type TouchEventHandler = EventHandler<TouchEvent>;
     type UIEventHandler = EventHandler<UIEvent>;
     type WheelEventHandler = EventHandler<WheelEvent>;
+<<<<<<< 933e29cd9222a9d7ab5a0990ec266be4a6f33e25
+=======
+    type AnimationEventHandler = EventHandler<AnimationEvent>;
+    type TransitionEventHandler = EventHandler<TransitionEvent>;
+>>>>>>> adding global state - step 1
 
     //
     // Props / DOM Attributes
@@ -496,6 +525,17 @@ declare namespace __React {
 
         // Wheel Events
         onWheel?: WheelEventHandler;
+<<<<<<< 933e29cd9222a9d7ab5a0990ec266be4a6f33e25
+=======
+
+        // Animation Events
+        onAnimationStart?: AnimationEventHandler;
+        onAnimationEnd?: AnimationEventHandler;
+        onAnimationIteration?: AnimationEventHandler;
+
+        // Transition Events
+        onTransitionEnd?: TransitionEventHandler;
+>>>>>>> adding global state - step 1
     }
 
     // This interface is not complete. Only properties accepting
@@ -2454,6 +2494,10 @@ declare namespace JSX {
         clipPath: React.SVGProps;
         defs: React.SVGProps;
         ellipse: React.SVGProps;
+<<<<<<< 933e29cd9222a9d7ab5a0990ec266be4a6f33e25
+=======
+        foreignObject: React.SVGProps;
+>>>>>>> adding global state - step 1
         g: React.SVGProps;
         image: React.SVGProps;
         line: React.SVGProps;

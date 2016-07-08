@@ -5,19 +5,26 @@ import {LogInPage } from './LogInPage';
 import {AccountDropdown } from './AccountDropdown';
 import {ProjectDropdown } from './ProjectDropdown';
 import {AreaDropdown } from './AreaDropdown';
+import {Users } from './VSTS';
+import {Auth, AuthState} from '../auth';
 
-export class Settings extends React.Component<{}, {saved:boolean}> {
+export class Settings extends React.Component<{}, any> {
 
   public constructor() {
     super();
-    this.state = {saved:false};
+    this.state = {
+        user : Users.Miranda,
+        authState : AuthState.Authorized,
+        returning: false
+    };
+    this.save = this.save.bind(this);
     console.log(this.state);
   }
 
   private save(): void{
     console.log('saving');
-    this.setState({saved:true});
-    this.forceUpdate();
+    this.setState({returning:true});
+    console.log(this.state.returning);
     //TODO - save defaults to roaming settings
   }
 
@@ -41,7 +48,7 @@ export class Settings extends React.Component<{}, {saved:boolean}> {
 
     console.log('got to settings');
     console.log(this.state);
-    if(true){ //check if returning, Authorized, which page coming from
+    if(this.state.returning === false){ //check if returning, Authorized, which page coming from
       return (
       <div>
           <div> <image src = './images/logo.png' style = {style_img}/></div>
@@ -50,7 +57,7 @@ export class Settings extends React.Component<{}, {saved:boolean}> {
             <p style = {style_text}> Assign default values for work item creation</p>
           </div>
           <div>
-            <button style={style_button} onclick = {window.close}> Save </button>
+            <button style={style_button} onclick = {this.save}> Save </button>
           </div>
           <hr/>
           <div>
@@ -58,7 +65,6 @@ export class Settings extends React.Component<{}, {saved:boolean}> {
             <ProjectDropdown />
             <AreaDropdown />
           </div>
-          <p> Create Item Page </p>
       </div>
       );}
   }

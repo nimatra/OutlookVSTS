@@ -6,38 +6,39 @@ import {Settings} from './Settings';
 import {Auth, AuthState} from '../auth';
 import {Temp } from './Temp'
 
-enum Users { None, EmilyT, EmilyZ, Miranda}
-
+export enum Users { None, EmilyT, EmilyZ, Miranda}
 export class VSTS extends React.Component<{}, any/*{user: Users}*/> {
 
   public constructor(){
     super();
     this.state = {
         user : Users.None,
-        authState : AuthState.Request,
-        authToken : ''
+        authState : AuthState.None,
     };
     this.setEmilyT = this.setEmilyT.bind(this);
     this.setEmilyZ = this.setEmilyZ.bind(this);
     this.setMiranda = this.setMiranda.bind(this);
-    this.Initialize = this.Initialize.bind(this);
-    Office.initialize = this.Initialize;
+    Office.initialize = this.Initialize.bind(this);
   }
 
   private Initialize():void{
     console.log("Initiating");
-    var user = Office.context.mailbox.userProfile.emailAddress;
-    console.log('user:'+user);
-    console.log('state:'+this.state.authState);
-    Auth.getAuthState(user, (state:AuthState, token:string) =>{
+    this.updateAuth();
+    //console.log(this.state.user);
+    //console.log(this.state.authState);
+  }
+
+  private updateAuth(): void {
+  var user = this.state.user;
+    Auth.getAuthState(user, (state: AuthState) => {
       this.setState({
-        user : user,
-        authState : state,
-        authToken : token
-      });
-    })
+        authState: state,
+        user: user });
+    });
+
     console.log(this.state.user);
     console.log(this.state.authState);
+
   }
 
   public setEmilyT():void{this.setState({user:Users.EmilyT})}
@@ -51,6 +52,7 @@ export class VSTS extends React.Component<{}, any/*{user: Users}*/> {
       default:
         console.log('default');
     }
+
     console.log('got to vsts');
     const user : Users = this.state.user;
 
@@ -61,7 +63,7 @@ export class VSTS extends React.Component<{}, any/*{user: Users}*/> {
       case Users.EmilyZ:
         return(<div>Emily Z's addIn</div>);
       case Users.Miranda:
-        return(<LogInPage />);
+        return(<Settings />);
       default:
         return(<div><button onClick={this.setEmilyT}>EmilyT</button><button onClick={this.setEmilyZ}>EmilyZ</button><button onClick={this.setMiranda}>Miranda</button></div>);
     } 
