@@ -9,28 +9,43 @@
       "commit": "ba424f7ee39717d51c17699a09ac8df312a7e9a1"
     },
     "react/react-dom.d.ts": {
-      "commit": "ba424f7ee39717d51c17699a09ac8df312a7e9a1"
+      "commit": "6052959591c9bc6f8463c58220965c7030ba934d"
     },
     "redux/redux.d.ts": {
-      "commit": "ba424f7ee39717d51c17699a09ac8df312a7e9a1"
+      "commit": "6052959591c9bc6f8463c58220965c7030ba934d"
     },
     "react/react.d.ts": {
-      "commit": "f3911d711006be676d9e1bcbc7c768b39d1ad81b"
-    },
-    "react-router/history.d.ts": {
-      "commit": "f3911d711006be676d9e1bcbc7c768b39d1ad81b"
-    },
-    "react-router/react-router.d.ts": {
-      "commit": "f3911d711006be676d9e1bcbc7c768b39d1ad81b"
+      "commit": "6052959591c9bc6f8463c58220965c7030ba934d"
     },
     "node/node.d.ts": {
-      "commit": "421f98c654d93ba838e25c0067e8be57fe83b934"
-    },
-    "tedious/tedious.d.ts": {
-      "commit": "421f98c654d93ba838e25c0067e8be57fe83b934"
+      "commit": "067edc80b9b70a1a4f342a53e7dc1dd00708d3fd"
     },
     "jquery/jquery.d.ts": {
-      "commit": "b606be413a47daa61ba45715cf43bf3ae8e2ab39"
+      "commit": "067edc80b9b70a1a4f342a53e7dc1dd00708d3fd"
+    },
+    "material-ui/material-ui.d.ts": {
+      "commit": "067edc80b9b70a1a4f342a53e7dc1dd00708d3fd"
+    },
+    "moment/moment.d.ts": {
+      "commit": "067edc80b9b70a1a4f342a53e7dc1dd00708d3fd"
+    },
+    "moment/moment-node.d.ts": {
+      "commit": "067edc80b9b70a1a4f342a53e7dc1dd00708d3fd"
+    },
+    "redux-thunk/redux-thunk.d.ts": {
+      "commit": "6052959591c9bc6f8463c58220965c7030ba934d"
+    },
+    "isomorphic-fetch/isomorphic-fetch.d.ts": {
+      "commit": "6052959591c9bc6f8463c58220965c7030ba934d"
+    },
+    "redux-logger/redux-logger.d.ts": {
+      "commit": "6052959591c9bc6f8463c58220965c7030ba934d"
+    },
+    "react-router/history.d.ts": {
+      "commit": "6052959591c9bc6f8463c58220965c7030ba934d"
+    },
+    "react-router/react-router.d.ts": {
+      "commit": "6052959591c9bc6f8463c58220965c7030ba934d"
     }
   }
 }

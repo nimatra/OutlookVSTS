@@ -167,7 +167,6 @@ export class Dogfood extends React.Component<{}, IDogfoodState> {
           let parsed: any = JSON.parse(output);
           this.notifier.replaceAsync(this.messageKey, this.notificationMessage(types.ProgressIndicator, 'Created bug #' + parsed.id));
         });
-
       });
     } else {
       this.notifier.replaceAsync(this.messageKey, this.notificationMessage(types.ErrorMessage, 'Bug must have a team, title, and body'));

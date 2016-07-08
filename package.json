@@ -1,14 +1,10 @@
 {
-  "name": "outlook-vsts",
+  "name": "react-typescript-boilerplate",
   "engines": {
-    "node": ">=5.11.0"
+    "node": ">=0.12.0"
   },
   "version": "1.0.0",
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/nimatra/OutlookVSTS.git"
-  },
+  "description": "Boilerplate project that uses Typescript, React, and Webpack",
   "main": "index.js",
   "scripts": {
     "build:webpack": "NODE_ENV=production webpack --config config/webpack.prod.js",
@@ -17,6 +13,14 @@
     "start": "node server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "author": "Microsoft",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://socialmemory.visualstudio.com/DefaultCollection/_git/Outlook%20Social%20Memory"
+  },
+  "bugs": {},
+  "devDependencies": {},
   "dependencies": {
     "babel-core": "^6.4.5",
     "babel-loader": "^6.2.1",
@@ -28,7 +32,6 @@
     "css-loader": "~0.23.1",
     "express": "^4.13.4",
     "extract-text-webpack-plugin": "*",
-    "fbjs": "^0.2.1",
     "http": "*",
     "https": "*",
     "isomorphic-fetch": "^2.2.1",
@@ -37,12 +40,10 @@
     "less-loader": "~2.2.3",
     "material-ui": "^0.14.4",
     "moment": "^2.13.0",
-    "querystring": "*",
     "react": "^0.14.7",
     "react-dom": "^0.14.7",
     "react-redux": "^4.1.2",
-    "react-router": "^2.0.0",
-    "react-tap-event-plugin": "^0.2.0",
+    "react-router": "^2.4.1",
     "react-transform-catch-errors": "^1.0.2",
     "react-transform-hmr": "^1.0.2",
     "redbox-react": "^1.2.2",
@@ -60,9 +61,5 @@
     "webpack": "^1.12.15",
     "webpack-dev-middleware": "^1.5.1",
     "webpack-hot-middleware": "^2.6.4"
-  },
-  "devDependencies": {},
-  "typescript": {
-    "definition": "office.d.ts"
   }
 }

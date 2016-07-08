@@ -68,7 +68,6 @@ declare namespace HistoryModule {
         state: LocationState
         action: Action
         key: LocationKey
-        hash: Hash
         basename?: string
     }
 
@@ -91,15 +90,13 @@ declare namespace HistoryModule {
 
     type Pathname = string
 
-    type Query = { [key: string]: any; }
+    type Query = Object
 
     type QueryString = string
 
     type Search = string
 
     type TransitionHook = (location: Location, callback: (result: any) => void) => any
-
-    type Hash = string
 
 
     interface HistoryBeforeUnload {
