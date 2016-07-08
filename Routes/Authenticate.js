@@ -100,9 +100,9 @@ router.callback = function (req, res) {
     assertion: req.query.code,
     client_assertion_type: "urn:ietf:params:oauth:client-assertion-type:jwt-bearer",
     grant_type: "urn:ietf:params:oauth:grant-type:jwt-bearer",
-    client_id: secrets.web.client_id.toString(),
-    client_assertion: secrets.web.client_secret.toString(),
-    redirect_uri: secrets.web.redirect_uris[0]
+    client_id: secrets.client_id.toString(),
+    client_assertion: secrets.client_secret.toString(),
+    redirect_uri: secrets.redirect_uris[0]
   });
   var options = {
     host: 'app.vssps.visualstudio.com',
