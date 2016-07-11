@@ -1,15 +1,23 @@
-
 import { Reducer, combineReducers } from 'redux';
-import { ACTION, ITestingState, ITestingAction } from './ActionsET';
+import { ACTION, changeTitle, ITestingAction } from './ActionsET';
 
-function changeme(state:ITestingState, action: ITestingAction) : ITestingState {
+export interface testState {
+  value: string;
+}
+
+export const initalState : testState = {
+  value : "initial state here"
+};
+
+
+function change_Title(state: testState = initalState, action : ITestingAction) : testState {
   switch (action.type) {
-    case ACTION.ChangeTest:
-      return state !=null ? {type: 'gotit', field: 'got it'} : {type: 'boooo', field: 'you'};
+    case ACTION.NEW_TITLE:
+      return Object.assign( {}, state, {value : action.value});
     default:
-      return state != null ? state: {type: 'what happened', field: 'no idea'};
+      return state;
  }
 }
 
- export const testreducer: Reducer = combineReducers({changeme});
+ export const testreducer: Reducer = combineReducers({change_Title});
 

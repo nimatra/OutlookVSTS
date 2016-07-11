@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Provider } from 'react-redux';
-import { CreateWorkItem } from './CreateWorkItem'
+import { CreateWorkItem } from './CreateWorkItem';
 
 
 export class Title extends React.Component<{}, {value:any}> {
@@ -24,6 +24,8 @@ export class Title extends React.Component<{}, {value:any}> {
     this.setState({value: event.target.value.substr(0, 250)});
   }
 
+
+
   public render(): React.ReactElement<Provider> {
 
   var normalizedSubject = Office.context.mailbox.item.normalizedSubject;
@@ -39,8 +41,9 @@ export class Title extends React.Component<{}, {value:any}> {
   }
 
     return ( <div>
+    <br/>
     TITLE <br/>
-    <input type="text" style={title} id= "titleval" value={normalizedSubject} onChange={this.handleChange} />
+    <input type="text" style={title} id= "titleval" value={normalizedSubject} onChange={this.handleChange}  />
     <br/>
     </div>);
 

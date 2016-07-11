@@ -1,28 +1,23 @@
-export const NEW_TITLE = 'NEW_TITLE'
-export const NEW_DESCRIP = 'NEW_DESCRIP'
+//export const NEW_TITLE = 'NEW_TITLE'
+//export const NEW_DESCRIP = 'NEW_DESCRIP'
 
-export enum ACTION { ChangeTest }
+export enum ACTION {NEW_TITLE}
 
 export interface ITestingAction {
   type: ACTION;
-  testtype: string;
+  value: string;
 }
 
-export interface ITestingState {
-  type: string;
-  field: string;
-}
-
-export function changetest (type: string) :ITestingAction {
-  return { type: ACTION.ChangeTest, testtype: type }
-}
+ export function changeTitle (value : string): ITestingAction {
+   return {type: ACTION.NEW_TITLE, value};
+ }
 
 {/*
-export function addTitle (text) {
-  return {type: NEW_TITLE, text}
+export function addTitle (value) {
+  return {type: NEW_TITLE, value}
 }
 
-export function addDescrip (text) {
-  return {type: NEW_DESCRIP, text}
+export function addDescrip (value) {
+  return {type: NEW_DESCRIP, value}
 }
 */}

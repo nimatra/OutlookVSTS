@@ -4,6 +4,8 @@ import { Provider } from 'react-redux';
 import { Description } from './Description';
 import { Title } from './Title';
 import { Save } from './Save';
+import { Dropdown } from './Dropdown';
+import { TestTitle } from './TestTitle';
 
 export class CreateWorkItem extends React.Component<{}, {}> {
 
@@ -35,36 +37,16 @@ var save = {
       align: 'center'
 };
 
-var drop = {
-    width: '187.5px',
-    align: 'left'
-}
-
-var gear = {
-  align: 'right'
-}
-
   return (<div>
-<div>
-<select style={drop}>
-   <option value="bug">Bug</option>
-   <option value="task">Task</option>
-   <option value="userstory">User Story</option>
-</select>
+<TestTitle />
 
- <img  style= {gear} src="http://www.clker.com/cliparts/T/Y/8/C/N/L/gear-icon-md.png"  height="15" width="15" />
-</div>
-
-<br/>
-
+<Dropdown/>
 
 <Title />
 
 <Description />
 
-<div>
 CLASSIFICATION <br/>
-</div>
 
 <Save/>
 

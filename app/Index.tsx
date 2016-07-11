@@ -8,6 +8,8 @@ import { Dogfood } from './Dogfood/dogfood';
 import { VSTS } from './VSTS/VSTS';
 import { Done } from './Authenticate/done';
 
+import { testreducer } from './Reducers/ReducersET'
+import { CreateWorkItem } from './VSTS/CreateWorkItem';
 
 
 declare const require: (name: String) => any;
@@ -20,20 +22,20 @@ declare const module: IHotModule;
 
 /*
 function configureStore(): Store {
-  const store: Store = createStore(vsoAddin);
-
-  if (module.hot) {
+//  const store: Store = createStore(vsoAddin);
+    const store: Store = createStore(testreducer);
+/*  if (module.hot) {
     module.hot.accept('./reducers', () => {
       const nextRootReducer: any = require('./reducers').vsoAddin;
       store.replaceReducer(nextRootReducer);
     });
   }
-
+  */
   return store;
 }
 
- const store: Store = configureStore();
- */
+
+const store: Store = configureStore();
 
 class Main extends React.Component<{}, {}> {
 
@@ -46,6 +48,7 @@ class Main extends React.Component<{}, {}> {
       output = output.slice(0, strings[3].indexOf('?'));
     }
     return output;
+
   }
 
   public render(): React.ReactElement<Provider> {
@@ -72,4 +75,10 @@ class Main extends React.Component<{}, {}> {
   }
 }
 
-ReactDOM.render(<Main />, document.getElementById('app'));
+//ReactDOM.render(<Main />, document.getElementById('app'));
+ReactDOM.render(
+  <Provider store={store}>
+    <Main />
+  </Provider>,
+  document.getElementById('app')
+)
