@@ -18,7 +18,7 @@ export class ButtonField extends React.Component<IButtonFieldProps, {}> {
 
   public render(): React.ReactElement<{}> {
     return (
-        <button onClick={this.onClick.bind(this) }>
+        <button className='ms-font-m' onClick={this.onClick.bind(this) }>
             <span >
                 <i ></i>
             </span>

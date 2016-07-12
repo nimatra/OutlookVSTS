@@ -9,6 +9,7 @@ import { HtmlField } from '../components/fields/htmlField';
 import { SelectField } from '../components/fields/selectField';
 import { StringField } from '../components/fields/stringField';
 import { Rest, Account, Project, Team } from '../RestHelpers/rest';
+import { RoamingSettings } from './roamingSettings';
 
 interface IHandleEmailCallback { (id: string): void; }
 
@@ -30,6 +31,7 @@ export class Dogfood extends React.Component<{}, IDogfoodState> {
 
   private messageKey: string = 'VSTS Bug Creator';
   private notifier: any;
+  private roamingSettings: RoamingSettings;
 
   public constructor() {
     super();
@@ -46,6 +48,11 @@ export class Dogfood extends React.Component<{}, IDogfoodState> {
   public Initialize(): void {
     console.log('Initing');
     this.notifier = Office.context.mailbox.item.notificationMessages;
+    this.roamingSettings = new RoamingSettings();
+    this.setState({
+      account: this.roamingSettings.account,
+      project: this.roamingSettings.project,
+      team: this.roamingSettings.team });
     this.updateAuth();
   }
 
@@ -72,7 +79,11 @@ export class Dogfood extends React.Component<{}, IDogfoodState> {
       accounts.forEach(account => {
         accountNames.push(account.name);
       });
-      this.setState({ accounts: accountNames });
+      let account: string = this.roamingSettings.account;
+      this.setState({ account: account, accounts: accountNames });
+      if (account != null) {
+        this.populateProjects(account);
+      }
     });
   }
 
@@ -82,7 +93,11 @@ export class Dogfood extends React.Component<{}, IDogfoodState> {
       projects.forEach(project => {
         projectNames.push(project.name);
       });
-      this.setState({ projects: projectNames });
+      let project: string = this.roamingSettings.project;
+      this.setState({ project: project, projects: projectNames });
+      if (project != null) {
+        this.populateTeams(project, account);
+      }
     });
   }
 
@@ -92,7 +107,8 @@ export class Dogfood extends React.Component<{}, IDogfoodState> {
       teams.forEach(team => {
         teamNames.push(team.name);
       });
-      this.setState({ teams: teamNames });
+      let team: string = this.roamingSettings.team;
+      this.setState({ team: team, teams: teamNames });
     });
   }
 
@@ -100,8 +116,8 @@ export class Dogfood extends React.Component<{}, IDogfoodState> {
     let types: any = Office.MailboxEnums.ItemNotificationMessageType;
     let output: any = {message: message, type : type};
     if (type === types.InformationalMessage) {
-      output.persistent = false;
-      output.icon = '';
+      output.persistent = true;
+      output.icon = './public/images/logo.png';
     }
     return output;
   }
@@ -153,6 +169,7 @@ export class Dogfood extends React.Component<{}, IDogfoodState> {
 
     // alert the user that we're working
     this.notifier.addAsync(this.messageKey, this.notificationMessage(types.ProgressIndicator, 'Creating Bug'));
+    this.roamingSettings.setRoamingSettings(state.account, state.project, state.team);
 
     // ensure we have all the data we need
     if (state.team && state.title && state.body) {
@@ -165,9 +182,8 @@ export class Dogfood extends React.Component<{}, IDogfoodState> {
         options.id = id;
         Rest.createBug(state.user, options, state.title, state.body, (output) => {
           let parsed: any = JSON.parse(output);
-          this.notifier.replaceAsync(this.messageKey, this.notificationMessage(types.ProgressIndicator, 'Created bug #' + parsed.id));
+          this.notifier.replaceAsync(this.messageKey, this.notificationMessage(types.InformationalMessage, 'Created bug #' + parsed.id));
         });
-
       });
     } else {
       this.notifier.replaceAsync(this.messageKey, this.notificationMessage(types.ErrorMessage, 'Bug must have a team, title, and body'));
@@ -192,27 +208,44 @@ export class Dogfood extends React.Component<{}, IDogfoodState> {
     const title: string = this.state.title;
     const body: string = this.state.body;
 
+    const account: string = this.state.account;
+    const project: string = this.state.project;
+    const team: string = this.state.team;
+
     switch (state) {
       case AuthState.None: // we have to wait for Office to initialize, so show a waiting state
-        return (<div>Loading</div>);
+        return (<div className='ms-font-m'>Loading</div>);
       case AuthState.Request: // office has initialized, but we don't have auth for this user, pass them to the auth flow
         return (<Authenticate user={user} pollInterval={2000} refresh={this.updateAuth.bind(this) } />);
       case AuthState.Authorized: // we have auth for this user, go ahead and show something cool
+            let items: JSX.Element[] = [<SelectField label='Account:'
+                                                     options={accounts}
+                                                     onChange={this.onAccountSelectChanged.bind(this)}
+                                                     selected={account} />];
+            if (projects.length > 0) {
+              items.push(<SelectField label='Project:'
+                                      options={projects}
+                                      onChange={this.onProjectSelectChanged.bind(this)}
+                                      selected={project} />);
+            }
+            if (teams.length > 0) {
+              items.push(<SelectField label='Team:'
+                                      options={teams}
+                                      onChange={this.onTeamSelectChanged.bind(this)}
+                                      selected={team} />);
+            }
         return (<div>
-          <h1>Create a bug</h1>
-          <SelectField label='Account:' options={accounts} onChange={this.onAccountSelectChanged.bind(this) }/>
-          <SelectField label='Project:' options={projects} onChange={this.onProjectSelectChanged.bind(this) }/>
-          <SelectField label='Team:' options={teams} onChange={this.onTeamSelectChanged.bind(this) }/>
+          {items}
           <StringField label='Bug Title' onChange={this.onTitleChanged.bind(this) } value={title} />
           <ButtonField primary={false} onClick={this.fillTitle.bind(this) } label='Use Email Subject' />
           <HtmlField onChange={this.onBodyChanged.bind(this) } label='Bug Description' text={body}/>
           <ButtonField primary={false} onClick={this.fillBody.bind(this) } label='Use Email Body' /> <br />
-          <CheckboxField onChange={this.onAttachChange.bind(this) } label='Attach email to bug?' /> <br/ ><br />
+          <CheckboxField onChange={this.onAttachChange.bind(this) } label='Attach email to bug?' /> <br/ >
           <ButtonField primary={true} onClick={this.createTask.bind(this) } label='Create' /><br />
 
         </div>);
       default:
-        return(<div>This should never happen</div>);
+        return(<div className='ms-font-m'>This should never happen</div>);
     }
   }
 }

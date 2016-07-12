@@ -13,11 +13,8 @@ module.exports = {
       loader: 'tslint',
       include: APP_DIR
     }],
-    loaders: [{
-      test: /\.tsx?$/,
-      loaders: ['babel', 'ts'],
-      include: APP_DIR
-    }]
+    loaders: [
+      { test: /\.tsx?$/, loaders: ['babel', 'ts'], include: APP_DIR}]
   },
   output: {
     filename: 'app.js',
@@ -30,6 +27,6 @@ module.exports = {
   ],
   resolve: {
     root: [path.resolve('../app')],
-    extensions: ['', '.jsx', '.js', '.tsx', '.ts']
+    extensions: ['', '.jsx', '.js', '.tsx', '.ts', '.css']
   }
 };
