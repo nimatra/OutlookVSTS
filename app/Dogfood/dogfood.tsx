@@ -218,11 +218,25 @@ export class Dogfood extends React.Component<{}, IDogfoodState> {
       case AuthState.Request: // office has initialized, but we don't have auth for this user, pass them to the auth flow
         return (<Authenticate user={user} pollInterval={2000} refresh={this.updateAuth.bind(this) } />);
       case AuthState.Authorized: // we have auth for this user, go ahead and show something cool
+            let items: JSX.Element[] = [<SelectField label='Account:'
+                                                     options={accounts}
+                                                     onChange={this.onAccountSelectChanged.bind(this)}
+                                                     selected={account} />];
+            if (projects.length > 0) {
+              items.push(<SelectField label='Project:'
+                                      options={projects}
+                                      onChange={this.onProjectSelectChanged.bind(this)}
+                                      selected={project} />);
+            }
+            if (teams.length > 0) {
+              items.push(<SelectField label='Team:'
+                                      options={teams}
+                                      onChange={this.onTeamSelectChanged.bind(this)}
+                                      selected={team} />);
+            }
         return (<div>
           <h1 className='ms-font-su'>Create a bug</h1>
-          <SelectField label='Account:' options={accounts} onChange={this.onAccountSelectChanged.bind(this)} selected={account} />
-          <SelectField label='Project:' options={projects} onChange={this.onProjectSelectChanged.bind(this)} selected={project} />
-          <SelectField label='Team:' options={teams} onChange={this.onTeamSelectChanged.bind(this)} selected={team} />
+          {items}
           <StringField label='Bug Title' onChange={this.onTitleChanged.bind(this) } value={title} />
           <ButtonField primary={false} onClick={this.fillTitle.bind(this) } label='Use Email Subject' />
           <HtmlField onChange={this.onBodyChanged.bind(this) } label='Bug Description' text={body}/>

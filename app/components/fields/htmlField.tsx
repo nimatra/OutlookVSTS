@@ -1,7 +1,7 @@
 /// <reference path='../../../typings/tsd.d.ts' />
 
 import * as React from 'react';
-import { Styles } from './styles'
+import { Styles } from './styles';
 
 interface IHtmlFieldProps {
   label: string;
