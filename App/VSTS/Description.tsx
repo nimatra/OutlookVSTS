@@ -30,7 +30,7 @@ export class Description extends React.Component<{}, {value:any}> {
     return ( <div>
     <br/>
     DESCRIPTION <br/>
-<label><input type="checkbox" id="cbox" value="addasattachment" /> Add Email as Attachment </label> <br/>
+    <label><input type="checkbox" id="cbox" value="addasattachment" /> Add Email as Attachment </label> <br/>
    <textarea style={scroll} value={this.state.value} onChange={this.handleChange}> </textarea>
     <br/>
     <br/>

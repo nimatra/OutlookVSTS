@@ -1,29 +1,37 @@
 import * as React from 'react';
 import { Provider } from 'react-redux';
 import { connect } from 'react-redux';
-import { testState } from './Reducers/ReducersET';
+import { testState, initalState } from './Reducers/ReducersET';
+import { changeTitle } from '../Reducers/ActionsET';
 
 export interface ItestProp {
-    value?: string;
+    title?: string;
 }
 
-function mapStateToProps (state: testState): ItestProp  {
-  return { value: state.value };
+function mapStateToProps (state: any): ItestProp  {
+  console.log('mapStateToProps' +JSON.stringify(state.testState));
+  return { title: state.testState.temp };
   }
 
-export class TestTitle extends React.Component<ItestProp, testState> {
-
-public constructor() {
-    super();
+const mapDispatchToProps = (dispatch) => {
+    console.log('mapDispatchToProps');
+  return {
+    onClick: () => {
+      dispatch(changeTitle("it worked!!!"))
+    }
   }
+}
 
-public render(): React.ReactElement<Provider> {
+@connect (mapStateToProps, mapDispatchToProps)
+
+export class TestTitle extends React.Component<ItestProp, {}> {
+
+public render(): React.ReactElement<{}> {
+console.log('got to test pg');
 
     return ( <div>
-    {}
+     <button> {this.props.title} </button>
     </div>);
 
   }
- }
-
- export default connect(mapStateToProps)(TestTitle);
+}

@@ -1,7 +1,7 @@
 /// <reference path="../typings/tsd.d.ts" />
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-// import { Store, createStore } from 'redux';
+import { Store, createStore } from 'redux';
 // import { vsoAddin } from './reducers';
 import { Provider } from 'react-redux';
 import { Dogfood } from './Dogfood/dogfood';
@@ -20,17 +20,17 @@ interface IHotModule {
 
 declare const module: IHotModule;
 
-/*
+
 function configureStore(): Store {
 //  const store: Store = createStore(vsoAddin);
     const store: Store = createStore(testreducer);
-/*  if (module.hot) {
-    module.hot.accept('./reducers', () => {
-      const nextRootReducer: any = require('./reducers').vsoAddin;
+  if (module.hot) {
+    module.hot.accept('./ReducersET', () => {
+      const nextRootReducer: any = require('./ReducersET').vsoAddin;
       store.replaceReducer(nextRootReducer);
     });
   }
-  */
+
   return store;
 }
 
@@ -56,9 +56,13 @@ class Main extends React.Component<{}, {}> {
     switch (route) {
       case 'dogfood':
         return(<Dogfood />);
-      case 'vsts':
-        return(<VSTS />);
-      case 'done':
+
+      case "/vsts":
+        return(<Provider store={store}>
+               <VSTS />
+               </Provider>);
+      case "/done":
+
         return(<Done />);
       default:
         return(<div>Route: '{route}' is not a valid route!</div>);
@@ -75,10 +79,10 @@ class Main extends React.Component<{}, {}> {
   }
 }
 
-//ReactDOM.render(<Main />, document.getElementById('app'));
-ReactDOM.render(
+ReactDOM.render(<Main />, document.getElementById('app'));
+/*ReactDOM.render(
   <Provider store={store}>
     <Main />
   </Provider>,
   document.getElementById('app')
-)
+)*/

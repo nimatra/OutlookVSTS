@@ -25,7 +25,7 @@ export class CreateWorkItem extends React.Component<{}, {}> {
   }
 
 public render(): React.ReactElement<Provider> {
-
+console.log('got to create pg');
 if (this.isReady == false)
   return (<div>loading</div>);
 
@@ -38,6 +38,7 @@ var save = {
 };
 
   return (<div>
+
 <TestTitle />
 
 <Dropdown/>
