@@ -116,8 +116,8 @@ export class Dogfood extends React.Component<{}, IDogfoodState> {
     let types: any = Office.MailboxEnums.ItemNotificationMessageType;
     let output: any = {message: message, type : type};
     if (type === types.InformationalMessage) {
-      output.persistent = false;
-      output.icon = '';
+      output.persistent = true;
+      output.icon = './public/images/logo.png';
     }
     return output;
   }
@@ -182,7 +182,7 @@ export class Dogfood extends React.Component<{}, IDogfoodState> {
         options.id = id;
         Rest.createBug(state.user, options, state.title, state.body, (output) => {
           let parsed: any = JSON.parse(output);
-          this.notifier.replaceAsync(this.messageKey, this.notificationMessage(types.ProgressIndicator, 'Created bug #' + parsed.id));
+          this.notifier.replaceAsync(this.messageKey, this.notificationMessage(types.InformationalMessage, 'Created bug #' + parsed.id));
         });
       });
     } else {
