@@ -14,7 +14,7 @@ export const initalState : testState = {
 function change_Title(state: testState = initalState, action : ITestingAction) : testState {
   switch (action.type) {
     case ACTION.NEW_TITLE:
-      return Object.assign( {}, state, {value : action.title});
+      return Object.assign( {}, state, {temp : action.title});
     default:
       return state;
  }

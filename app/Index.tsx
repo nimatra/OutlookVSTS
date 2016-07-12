@@ -10,6 +10,7 @@ import { Done } from './Authenticate/done';
 
 import { testreducer } from './Reducers/ReducersET'
 import { CreateWorkItem } from './VSTS/CreateWorkItem';
+import { changeTitle } from './Reducers/ActionsET';
 
 
 declare const require: (name: String) => any;
@@ -35,7 +36,10 @@ function configureStore(): Store {
 }
 
 
-const store: Store = configureStore();
+const store : Store = configureStore();
+//store.dispatch (changeTitle ('turtles'));
+//store.dispatch (changeTitle ('no fish'));
+
 
 class Main extends React.Component<{}, {}> {
 
