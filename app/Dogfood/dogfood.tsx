@@ -235,7 +235,6 @@ export class Dogfood extends React.Component<{}, IDogfoodState> {
                                       selected={team} />);
             }
         return (<div>
-          <h1 className='ms-font-su'>Create a bug</h1>
           {items}
           <StringField label='Bug Title' onChange={this.onTitleChanged.bind(this) } value={title} />
           <ButtonField primary={false} onClick={this.fillTitle.bind(this) } label='Use Email Subject' />
