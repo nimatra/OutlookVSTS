@@ -9,6 +9,7 @@ import { HtmlField } from '../components/fields/htmlField';
 import { SelectField } from '../components/fields/selectField';
 import { StringField } from '../components/fields/stringField';
 import { Rest, Account, Project, Team } from '../RestHelpers/rest';
+import { RoamingSettings } from './roamingSettings';
 
 interface IHandleEmailCallback { (id: string): void; }
 
@@ -30,6 +31,7 @@ export class Dogfood extends React.Component<{}, IDogfoodState> {
 
   private messageKey: string = 'VSTS Bug Creator';
   private notifier: any;
+  private roamingSettings: RoamingSettings;
 
   public constructor() {
     super();
@@ -46,6 +48,11 @@ export class Dogfood extends React.Component<{}, IDogfoodState> {
   public Initialize(): void {
     console.log('Initing');
     this.notifier = Office.context.mailbox.item.notificationMessages;
+    this.roamingSettings = new RoamingSettings();
+    this.setState({
+      account: this.roamingSettings.account,
+      project: this.roamingSettings.project,
+      team: this.roamingSettings.team });
     this.updateAuth();
   }
 
@@ -72,7 +79,11 @@ export class Dogfood extends React.Component<{}, IDogfoodState> {
       accounts.forEach(account => {
         accountNames.push(account.name);
       });
-      this.setState({ accounts: accountNames });
+      let account: string = this.roamingSettings.account;
+      this.setState({ account: account, accounts: accountNames });
+      if (account != null) {
+        this.populateProjects(account);
+      }
     });
   }
 
@@ -82,7 +93,11 @@ export class Dogfood extends React.Component<{}, IDogfoodState> {
       projects.forEach(project => {
         projectNames.push(project.name);
       });
-      this.setState({ projects: projectNames });
+      let project: string = this.roamingSettings.project;
+      this.setState({ project: project, projects: projectNames });
+      if (project != null) {
+        this.populateTeams(project, account);
+      }
     });
   }
 
@@ -92,7 +107,8 @@ export class Dogfood extends React.Component<{}, IDogfoodState> {
       teams.forEach(team => {
         teamNames.push(team.name);
       });
-      this.setState({ teams: teamNames });
+      let team: string = this.roamingSettings.team;
+      this.setState({ team: team, teams: teamNames });
     });
   }
 
@@ -153,6 +169,7 @@ export class Dogfood extends React.Component<{}, IDogfoodState> {
 
     // alert the user that we're working
     this.notifier.addAsync(this.messageKey, this.notificationMessage(types.ProgressIndicator, 'Creating Bug'));
+    this.roamingSettings.setRoamingSettings(state.account, state.project, state.team);
 
     // ensure we have all the data we need
     if (state.team && state.title && state.body) {
@@ -191,6 +208,10 @@ export class Dogfood extends React.Component<{}, IDogfoodState> {
     const title: string = this.state.title;
     const body: string = this.state.body;
 
+    const account: string = this.state.account;
+    const project: string = this.state.project;
+    const team: string = this.state.team;
+
     switch (state) {
       case AuthState.None: // we have to wait for Office to initialize, so show a waiting state
         return (<div>Loading</div>);
@@ -199,9 +220,9 @@ export class Dogfood extends React.Component<{}, IDogfoodState> {
       case AuthState.Authorized: // we have auth for this user, go ahead and show something cool
         return (<div>
           <h1>Create a bug</h1>
-          <SelectField label='Account:' options={accounts} onChange={this.onAccountSelectChanged.bind(this) }/>
-          <SelectField label='Project:' options={projects} onChange={this.onProjectSelectChanged.bind(this) }/>
-          <SelectField label='Team:' options={teams} onChange={this.onTeamSelectChanged.bind(this) }/>
+          <SelectField label='Account:' options={accounts} onChange={this.onAccountSelectChanged.bind(this)} selected={account} />
+          <SelectField label='Project:' options={projects} onChange={this.onProjectSelectChanged.bind(this)} selected={project} />
+          <SelectField label='Team:' options={teams} onChange={this.onTeamSelectChanged.bind(this)} selected={team} />
           <StringField label='Bug Title' onChange={this.onTitleChanged.bind(this) } value={title} />
           <ButtonField primary={false} onClick={this.fillTitle.bind(this) } label='Use Email Subject' />
           <HtmlField onChange={this.onBodyChanged.bind(this) } label='Bug Description' text={body}/>
