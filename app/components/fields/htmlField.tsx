@@ -1,6 +1,7 @@
 /// <reference path='../../../typings/tsd.d.ts' />
 
 import * as React from 'react';
+import { Styles } from './styles'
 
 interface IHtmlFieldProps {
   label: string;
@@ -19,8 +20,8 @@ export class HtmlField extends React.Component<IHtmlFieldProps, {} > {
   public render(): React.ReactElement<{}> {
     return (<div>
                 <div>
-                    <label>{this.props.label}</label>
-                    <textarea onChange={this.onChange.bind(this) } value={this.props.text} />
+                    <label className='ms-font-m'>{this.props.label}</label> <br />
+                    <textarea style={Styles.body} onChange={this.onChange.bind(this) } value={this.props.text} />
                 </div>
             </div>
     );

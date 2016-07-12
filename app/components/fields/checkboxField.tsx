@@ -18,7 +18,7 @@ export class CheckboxField extends React.Component<ICheckboxFieldProps, {}> {
   public render(): React.ReactElement<{}> {
     return (
         <div>
-            <label><input type='checkbox' onChange={this.onChange.bind(this)} />{this.props.label} </label>
+            <label className='ms-font-m'><input type='checkbox' onChange={this.onChange.bind(this)} />{this.props.label} </label>
         </div>
     );
   }

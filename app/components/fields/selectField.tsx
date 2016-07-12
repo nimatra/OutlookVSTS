@@ -1,6 +1,7 @@
 /// <reference path='../../../typings/tsd.d.ts' />
 
 import * as React from 'react';
+import { Styles } from './styles'
 
 interface ISelectFieldProps {
   label: string;
@@ -9,9 +10,13 @@ interface ISelectFieldProps {
   selected: string;
 }
 
+interface IEmptyState {
+
+}
+
 interface ICallback { (option: string): void; }
 
-export class SelectField extends React.Component<ISelectFieldProps, {}> {
+export class SelectField extends React.Component<ISelectFieldProps, IEmptyState> {
 
   public onSelect(event: any): void {
     this.props.onChange(event.target.value);
@@ -28,9 +33,8 @@ export class SelectField extends React.Component<ISelectFieldProps, {}> {
     });
 
     return (<div><div>
-      <label>{this.props.label}</label>
-      <i></i>
-      <select onChange={this.onSelect.bind(this) } value={selected}>
+      <label className='ms-font-m'>{this.props.label}</label> <br />
+      <select style={Styles.select} onChange={this.onSelect.bind(this) } value={selected}>
           {items}
       </select>
       </div></div>

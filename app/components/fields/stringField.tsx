@@ -1,6 +1,7 @@
 /// <reference path='../../../typings/tsd.d.ts' />
 
 import * as React from 'react';
+import { Styles } from './styles'
 
 interface IStringFieldProps {
   label: string;
@@ -21,8 +22,8 @@ export class StringField extends React.Component<IStringFieldProps, {}> {
 
     return (<div>
                 <div>
-                    <label>{this.props.label}</label>
-                    <input type='text' onChange={this.onChange.bind(this) } value={this.props.value} />
+                    <label className='ms-font-m'>{this.props.label}</label> <br />
+                    <input style={Styles.title} type='text' onChange={this.onChange.bind(this) } value={this.props.value} />
                 </div>
             </div>
     );

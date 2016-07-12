@@ -214,12 +214,12 @@ export class Dogfood extends React.Component<{}, IDogfoodState> {
 
     switch (state) {
       case AuthState.None: // we have to wait for Office to initialize, so show a waiting state
-        return (<div>Loading</div>);
+        return (<div className='ms-font-m'>Loading</div>);
       case AuthState.Request: // office has initialized, but we don't have auth for this user, pass them to the auth flow
         return (<Authenticate user={user} pollInterval={2000} refresh={this.updateAuth.bind(this) } />);
       case AuthState.Authorized: // we have auth for this user, go ahead and show something cool
         return (<div>
-          <h1>Create a bug</h1>
+          <h1 className='ms-font-su'>Create a bug</h1>
           <SelectField label='Account:' options={accounts} onChange={this.onAccountSelectChanged.bind(this)} selected={account} />
           <SelectField label='Project:' options={projects} onChange={this.onProjectSelectChanged.bind(this)} selected={project} />
           <SelectField label='Team:' options={teams} onChange={this.onTeamSelectChanged.bind(this)} selected={team} />
@@ -227,12 +227,12 @@ export class Dogfood extends React.Component<{}, IDogfoodState> {
           <ButtonField primary={false} onClick={this.fillTitle.bind(this) } label='Use Email Subject' />
           <HtmlField onChange={this.onBodyChanged.bind(this) } label='Bug Description' text={body}/>
           <ButtonField primary={false} onClick={this.fillBody.bind(this) } label='Use Email Body' /> <br />
-          <CheckboxField onChange={this.onAttachChange.bind(this) } label='Attach email to bug?' /> <br/ ><br />
+          <CheckboxField onChange={this.onAttachChange.bind(this) } label='Attach email to bug?' /> <br/ >
           <ButtonField primary={true} onClick={this.createTask.bind(this) } label='Create' /><br />
 
         </div>);
       default:
-        return(<div>This should never happen</div>);
+        return(<div className='ms-font-m'>This should never happen</div>);
     }
   }
 }
