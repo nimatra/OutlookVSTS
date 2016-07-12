@@ -8,7 +8,7 @@
   <Version>1.0</Version>
   <ProviderName>Apps Platform</ProviderName>
   <DefaultLocale>en-us</DefaultLocale>
-  <DisplayName DefaultValue="Visual Studio Bug Team Services" />
+  <DisplayName DefaultValue="Visual Studio Team Services" />
   <Description DefaultValue="Creates bugs using content of message"/>
   <IconUrl DefaultValue="https://outlookvsts.azurewebsites.net/public/Images/logo.png" />
   <Hosts>
