@@ -1,40 +1,56 @@
 /// <reference path="../../typings/tsd.d.ts" />
+import { Auth, AuthState } from '../auth';
+//action type
 
-/*
-actions types
-*/
-
-export enum ACTION {UPDATE_AUTH_STATE, SET_RETURNING, SET_PREV_PAGE}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*import { IField } from './workItemModel';
-
-export enum ACTION { CreateWorkItem, ChangeWorkItemType }
-
-export interface IWorkItemAction {
-  type: ACTION;
-  workItemType: string;
-  workItemFields: IField[];
+export interface ICurrentAccount{
+  type: string
+  account: string,
+  project: string,
+  areapath: string
 }
 
-export function createWorkItem(type: string, fields: IField[]) : IWorkItemAction {
-  return { type: ACTION.CreateWorkItem, workItemType: type, workItemFields: fields };
+export interface IAuthState{
+  type: string,
+  inProcess: boolean
+  authState: AuthState
 }
 
-export function changeWorkItemType(type: string) : IWorkItemAction {
-  return { type: ACTION.ChangeWorkItemType, workItemType: type, workItemFields: null };
-}*/
+export function updateAccount( tempAccount:string, tempProject:string, tempArea:string): ICurrentAccount{
+  return {
+    type: 'UPDATE_ACCOUNT',
+    account: tempAccount,
+    project: tempProject,
+    areapath: tempArea
+  }
+}
+
+//action creator
+export function updateAuth(newState:AuthState): IAuthState {
+  return {
+    type: 'UPDATE_AUTHSTATE',
+    inProcess: false,
+    authState: newState
+  };
+}
+
+export function toggleInProcess(currentAuth:AuthState, connect:boolean): IAuthState{
+  return {
+    type: 'TOGGLE_PROCESS',
+    inProcess: !connect,
+    authState: currentAuth
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+

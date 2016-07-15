@@ -7,7 +7,8 @@ import { Provider } from 'react-redux';
 import { Dogfood } from './Dogfood/dogfood';
 import { VSTS } from './VSTS/VSTS';
 import { Done } from './Authenticate/done';
-import {Settings } from './VSTS/Settings'
+import {Settings } from './VSTS/SettingsComponents/Settings';
+import { overallRed } from './Redux/TestReducer';
 
 declare const require: (name: String) => any;
 
@@ -17,13 +18,14 @@ interface IHotModule {
 
 declare const module: IHotModule;
 
-
 function configureStore(): Store {
-  const store: Store = createStore(vsoAddin);
+  //const store: Store = createStore(vsoAddin);
+  const store: Store = createStore(overallRed);
 
   if (module.hot) {
     module.hot.accept('./reducers', () => {
-      const nextRootReducer: any = require('./reducers').vsoAddin;
+      //const nextRootReducer: any = require('./reducers').vsoAddin;
+      const nextRootReducer: any = require('./Redux/LoginReducer').overallRed;
       store.replaceReducer(nextRootReducer);
     });
   }
@@ -31,7 +33,7 @@ function configureStore(): Store {
   return store;
 }
 
- const store: Store = configureStore();
+const store: Store = configureStore();
 
 
 class Main extends React.Component<{}, {}> {
@@ -48,12 +50,14 @@ class Main extends React.Component<{}, {}> {
   }
 
   public render(): React.ReactElement<Provider> {
+    console.log('starting');
+    console.log(store.getState());
     const route: string = this.getRoute();
     switch (route) {
       case 'dogfood':
         return(<Dogfood />);
       case 'vsts':
-        return(<VSTS />);
+        return(<Provider store = {store}><VSTS /></Provider>);
       case 'done':
         return(<Done />);
       default:
@@ -72,3 +76,5 @@ class Main extends React.Component<{}, {}> {
 }
 
 ReactDOM.render(<Main />, document.getElementById('app'));
+
+//ReactDOM.render(<Provider store = {store}><Main /></Provider>, document.getElementById('app'));

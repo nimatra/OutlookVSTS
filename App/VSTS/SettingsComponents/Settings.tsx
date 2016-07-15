@@ -1,12 +1,14 @@
-/// <reference path="../../office.d.ts" />
+/// <reference path="../../../office.d.ts" />
 import * as React from 'react';
 import { Provider } from 'react-redux';
-import {LogInPage } from './LogInPage';
+import {LogInPage } from '../LoginComponents/LogInPage';
 import {AccountDropdown } from './AccountDropdown';
 import {ProjectDropdown } from './ProjectDropdown';
 import {AreaDropdown } from './AreaDropdown';
-import {Users } from './VSTS';
-import {Auth, AuthState} from '../auth';
+import {Users } from '../VSTS';
+import {Auth, AuthState} from '../../auth';
+
+
 
 export class Settings extends React.Component<{}, any> {
 
@@ -46,8 +48,11 @@ export class Settings extends React.Component<{}, any> {
       align: 'center',
     };
 
+
     console.log('got to settings');
     console.log(this.state);
+
+
     if(this.state.returning === false){ //check if returning, Authorized, which page coming from
       return (
       <div>
@@ -66,6 +71,7 @@ export class Settings extends React.Component<{}, any> {
             <AreaDropdown />
           </div>
       </div>
-      );}
+      );
+  }
   }
  }

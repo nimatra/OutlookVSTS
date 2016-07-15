@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { Provider } from 'react-redux';
-import {Authenticate } from '../Authenticate/authenticate';
+import {Authenticate } from '../../Authenticate/authenticate';
 import { Store, createStore } from 'redux';
-import {Settings } from './Settings';
-import { Auth, AuthState } from '../auth';
+import {Settings } from '../SettingsComponents/Settings';
+import { Auth, AuthState } from '../../auth';
 import { AddInDescription } from './AddInDescription';
 
 export class LogInPage extends React.Component<{}, {authState: any, authToken:string, user: string, returning:boolean}> {

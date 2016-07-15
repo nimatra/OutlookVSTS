@@ -1,7 +1,6 @@
-/// <reference path="../../office.d.ts" />
+/// <reference path="../../../office.d.ts" />
 import * as React from 'react';
 import { Provider } from 'react-redux';
-import {LogInPage } from './LogInPage';
 
 export class AreaDropdown extends React.Component<{}, {}> {
 

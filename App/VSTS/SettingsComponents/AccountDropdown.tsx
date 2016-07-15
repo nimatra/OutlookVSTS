@@ -1,14 +1,8 @@
-/// <reference path="../../office.d.ts" />
+/// <reference path="../../../office.d.ts" />
 import * as React from 'react';
 import { Provider } from 'react-redux';
-import {LogInPage } from './LogInPage';
 
 export class AccountDropdown extends React.Component<{}, {}> {
-
-  public constructor() {
-    super();
-    //console.log(this.state);
-  }
 
   render(){
     var style_section = {
@@ -16,6 +10,7 @@ export class AccountDropdown extends React.Component<{}, {}> {
       font: "20px arial, sans-serif",
     };
     console.log('got to account');
+
   return (
       <div>
             <h3 style= {style_section} size = '6'>Account</h3>
