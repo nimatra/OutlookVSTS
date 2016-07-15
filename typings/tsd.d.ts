@@ -7,3 +7,4 @@
 /// <reference path="react/react.d.ts" />
 /// <reference path="redux/redux.d.ts" />
 /// <reference path="tedious/tedious.d.ts" />
+/// <reference path="redux-form/redux-form.d.ts" />

@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { Provider } from 'react-redux';
 import { Store, createStore } from 'redux';
-import { Auth, AuthState } from '../auth';
-import { Authenticate } from '../Authenticate/authenticate';
-import { Settings } from './Settings';
-import {Users } from './VSTS';
+import { Auth, AuthState } from '../../auth';
+import { Authenticate } from '../../Authenticate/authenticate';
+import { Settings } from '../SettingsComponents/Settings';
+import {Users } from './../VSTS';
 
 export class AddInDescription extends React.Component<{}, {authState: AuthState, user: Users}> {
   //note: if auth expires, nav to azure.../done
@@ -68,15 +68,15 @@ export class AddInDescription extends React.Component<{}, {authState: AuthState,
     case AuthState.Request: // Office has initialized, but we don't have auth for this user, show Log-In Page and pass them to the auth flow
       return(<div>
       <div><image src = './images/logo.png' style = {style_img}/></div>
-      <div><button onClick={this.auth} style = {style_button}>Sign In</button></div>
+      <div><button onClick={this.auth} style = {style_button}>Sign in to get started</button></div>
       <hr/>
       <div>
         <h1 style = {style_section}> Create work items</h1>
-        <p  style = {style_text}> Do you have an email thread you need to make into a work item? Create work items directly from Outlook!</p>
+        <p  style = {style_text}>Turn an email thread into a work item directly from Outlook!</p>
       </div>
       <div>
-        <h1 style = {style_section}> Communicate with your team</h1>
-        <p style = {style_text}> After creating a work item, you can reply-all the thread with the item information or copy the information to the clipboard.</p>
+        <h1 style = {style_section}> Communicate with your team </h1>
+        <p style = {style_text}> Once the work item is created, use the reply-all quick-action to share work item details with others, or copy the information </p>
       </div>
       </div>
     );

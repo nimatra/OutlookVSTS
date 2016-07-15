@@ -1,15 +1,16 @@
 import * as React from 'react';
 import { Provider } from 'react-redux';
-import {Authenticate } from '../Authenticate/authenticate';
+import {Authenticate } from '../../Authenticate/authenticate';
 import { Store, createStore } from 'redux';
-import {Settings } from './Settings';
-import { Auth, AuthState } from '../auth';
+import {Settings } from '../SettingsComponents/Settings';
+import { Auth, AuthState } from '../../auth';
 import { AddInDescription } from './AddInDescription';
 
-export class Temp extends React.Component<{}, {}> {
+export class LogInPage extends React.Component<{}, {}> {
 
   public constructor() {
     super(); //required first line
+    console.log('login');
   }
 
   private auth(): void{
@@ -20,7 +21,8 @@ export class Temp extends React.Component<{}, {}> {
   public render(): React.ReactElement<Provider> {
     //each component should decide to show itself or not
     return (<div>
-      <p> Create Work Item </p>
+      <AddInDescription />
+      <Settings />
         </div>);
   }
  }

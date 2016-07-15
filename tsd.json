@@ -31,6 +31,9 @@
     },
     "jquery/jquery.d.ts": {
       "commit": "b606be413a47daa61ba45715cf43bf3ae8e2ab39"
+    },
+    "redux-form/redux-form.d.ts": {
+      "commit": "f3911d711006be676d9e1bcbc7c768b39d1ad81b"
     }
   }
 }
