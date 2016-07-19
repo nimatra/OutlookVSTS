@@ -4,7 +4,6 @@ import { Provider } from 'react-redux';
 import { Auth, AuthState } from '../auth';
 import {Authenticate} from '../Authenticate/authenticate';
 import { ButtonField } from '../components/fields/buttonField';
-import { CheckboxField } from '../components/fields/checkboxField';
 import { HtmlField } from '../components/fields/htmlField';
 import { SelectField } from '../components/fields/selectField';
 import { StringField } from '../components/fields/stringField';
@@ -75,40 +74,49 @@ export class Dogfood extends React.Component<{}, IDogfoodState> {
 
   public populateAccounts(): void {
     Rest.getAccounts(this.state.user, (accounts: Account[]) => {
+      let accountName: string = '';
       let accountNames: string[] = [];
       accounts.forEach(account => {
         accountNames.push(account.name);
+        if (account.name === this.roamingSettings.account) {
+          accountName = this.roamingSettings.account;
+        }
       });
-      let account: string = this.roamingSettings.account;
-      this.setState({ account: account, accounts: accountNames });
-      if (account != null) {
-        this.populateProjects(account);
+      this.setState({ account: accountName, accounts: accountNames, project: '', projects: [], team: '', teams: [] });
+      if (accountName !== '') {
+        this.populateProjects(accountName);
       }
     });
   }
 
   public populateProjects(account: string): void {
     Rest.getProjects(this.state.user, account, (projects: Project[]) => {
+      let projectName: string = '';
       let projectNames: string[] = [];
       projects.forEach(project => {
         projectNames.push(project.name);
+        if (project.name === this.roamingSettings.project) {
+          projectName = this.roamingSettings.project;
+        }
       });
-      let project: string = this.roamingSettings.project;
-      this.setState({ project: project, projects: projectNames });
-      if (project != null) {
-        this.populateTeams(project, account);
+      this.setState({ project: projectName, projects: projectNames, team: '', teams: [] });
+      if (projectName !== '') {
+        this.populateTeams(projectName, account);
       }
     });
   }
 
   public populateTeams(project: string, account: string): void {
     Rest.getTeams(this.state.user, project, account, (teams: Team[]) => {
+      let teamName: string = '';
       let teamNames: string[] = [];
       teams.forEach(team => {
         teamNames.push(team.name);
+        if (team.name === this.roamingSettings.team) {
+          teamName = team.name;
+        }
       });
-      let team: string = this.roamingSettings.team;
-      this.setState({ team: team, teams: teamNames });
+      this.setState({ team: teamName, teams: teamNames });
     });
   }
 
@@ -222,6 +230,7 @@ export class Dogfood extends React.Component<{}, IDogfoodState> {
                                                      options={accounts}
                                                      onChange={this.onAccountSelectChanged.bind(this)}
                                                      selected={account} />];
+            console.log(projects.length + ' ->' + projects[0] + '<-');
             if (projects.length > 0) {
               items.push(<SelectField label='Project:'
                                       options={projects}
@@ -239,7 +248,7 @@ export class Dogfood extends React.Component<{}, IDogfoodState> {
           <StringField label='Bug Title' onChange={this.onTitleChanged.bind(this) } value={title} />
           <ButtonField primary={false} onClick={this.fillTitle.bind(this) } label='Use Email Subject' />
           <HtmlField onChange={this.onBodyChanged.bind(this) } label='Bug Description' text={body}/>
-          <ButtonField primary={false} onClick={this.fillBody.bind(this) } label='Use Email Body' /> <br />
+          {/*<ButtonField primary={false} onClick={this.fillBody.bind(this) } label='Use Email Body' /> <br />*/}
           <ButtonField primary={true} onClick={this.createTask.bind(this) } label='Create' /><br />
 
         </div>);
