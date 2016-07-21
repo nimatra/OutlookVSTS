@@ -2,13 +2,9 @@
 import * as React from 'react';
 import { Provider } from 'react-redux';
 import {LogInPage } from '../LoginComponents/LogInPage';
-import {AccountDropdown } from './AccountDropdown';
-import {ProjectDropdown } from './ProjectDropdown';
-import {AreaDropdown } from './AreaDropdown';
 import {Users } from '../VSTS';
 import {Auth, AuthState} from '../../auth';
-
-
+import { SelectField } from './SelectField';
 
 export class Settings extends React.Component<{}, any> {
 
@@ -17,7 +13,8 @@ export class Settings extends React.Component<{}, any> {
     this.state = {
         user : Users.Miranda,
         authState : AuthState.Authorized,
-        returning: false
+        returning: false,
+        name : "Miranda"
     };
     this.save = this.save.bind(this);
     console.log(this.state);
@@ -27,51 +24,65 @@ export class Settings extends React.Component<{}, any> {
     console.log('saving');
     this.setState({returning:true});
     console.log(this.state.returning);
-    //TODO - save defaults to roaming settings
+
   }
 
+  public changed(): void{
+    console.log('updated');
+  }
+
+  style_text = {
+       color: "rgb(63,63,63)", // dark gray
+       font: "15px arial, ms-segoe-ui",
+    };
+
+  style_label = {
+       color: "rgb(107,107,107)", // dark gray
+       font: "15px arial, ms-segoe-ui",
+    };
+
+  style_button = { //not added for
+      background: 'rgb(255,255,255)',
+      textalign: 'right',
+      color: 'rgb(0,63,204)',
+      font: "15px arial, ms-segoe-ui",
+      align: 'right',
+    };
+
   public render(): React.ReactElement<Provider> {
-    var style_img = {
-      align: 'center',
-    };
-
-    var style_text = {
-       color: "rgb(118,118,118)", // dark gray
-       font: "15px arial, sans-serif",
-    };
-
-    var style_button = {
-      background: 'rgb(0,122,204)', // save button blue
-      textalign: 'center',
-      color: 'rgb(255,255,255)',
-      font: "20px arial, sans-serif",
-      align: 'center',
-    };
-
-
     console.log('got to settings');
     console.log(this.state);
 
-
-    if(this.state.returning === false){ //check if returning, Authorized, which page coming from
+    const accounts: string[] = ["o365exchange","outlook","mseng"];
+    const projects: string[] = ["Outlook Services", "Outlook Desktop"];
+    const area: string[] = ["VSTS","Yelp","Display Dialog"];
+    //check if returning, Authorized, which page coming from
       return (
       <div>
-          <div> <image src = './images/logo.png' style = {style_img}/></div>
           <div>
-            <h1> Default Settings </h1>
-            <p style = {style_text}> Assign default values for work item creation</p>
+            <p style = {this.style_text}> Welcome {this.state.name}!</p>
+            <p/>
+            <p style = {this.style_text}> Take a moment to configure your default settings for work item creation. </p>
           </div>
           <div>
-            <button style={style_button} onclick = {this.save}> Save </button>
+          <label style = {this.style_label}> Account </label>
+          <SelectField options = {accounts} onChange = {this.changed} />
+          <label style = {this.style_label}> Project </label>
+          <SelectField options = {projects} onChange = {this.changed} />
+          <label style = {this.style_label}> Area </label>
+          <SelectField options = {area} onChange = {this.changed} />
           </div>
-          <hr/>
-          <div>
-            <AccountDropdown />
-            <ProjectDropdown />
-            <AreaDropdown />
-          </div>
+
+          <button className = 'ms-Button' onClick = {this.save}>
+            <span className= 'ms-Icon ms-Icon--save' > Save and continue </span>
+          </button>
+
       </div>
       );
   }
   }
- }
+
+
+ /*<div>
+            <SettingsForm onSubmit={(formValues)=>{console.log(formValues)}}/>
+</div>*/

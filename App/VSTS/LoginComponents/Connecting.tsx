@@ -1,20 +1,20 @@
 import * as React from 'react';
 import { Provider } from 'react-redux';
-import {Authenticate } from '../../Authenticate/authenticate';
 import { Store, createStore } from 'redux';
-import {SignInButton } from './SignInButton';
 import { Auth, AuthState } from '../../auth';
-import { AddInDescription } from './AddInDescription';
+import { Authenticate } from '../../Authenticate/authenticate';
+import { Settings } from '../SettingsComponents/Settings';
 import {Users } from './../VSTS';
 
-export class LogInPage extends React.Component<{}, {authState: AuthState, user: Users}> {
+export class Connecting extends React.Component<{}, {authState: AuthState, user: Users}> {
+  //note: if auth expires, nav to azure.../done
 
   public constructor() {
     super();
-    console.log('loginpage');
+    console.log('connecting...');
     this.state = {
         user : Users.Miranda,
-        authState : AuthState.Request,
+        authState : AuthState.Authorized,
     };
 
     this.updateAuth();
@@ -23,26 +23,28 @@ export class LogInPage extends React.Component<{}, {authState: AuthState, user: 
   private updateAuth(): void {
   var user = Office.context.mailbox.userProfile.emailAddress;
   console.log(user);
-    /*Auth.getAuthState(user, (state: AuthState) => {
+    Auth.getAuthState(user, (state: AuthState) => {
       this.setState({
         authState: state,
         user: user });
     });
-    */
+
     console.log(this.state.user);
     console.log(this.state.authState);
   }
 
   public render(): React.ReactElement<Provider> {
-    //each component should decide to show itself or not
+    this.updateAuth();
+
+    //console.log(this.state.authState);
     switch(this.state.authState){
-      case AuthState.Request: //request and !inProgress
-        return (<div>
-            <AddInDescription />
-            <SignInButton />
-            </div>);
-      default:
-        return(<div/>);
-      }
+    case AuthState.Request: // request and inProgress
+      return(<div>
+        Connecting...
+        </div>);
+    default:
+      return(<div/>);
+  }
   }
  }
+
