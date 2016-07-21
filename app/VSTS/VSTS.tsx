@@ -4,8 +4,8 @@ import { Provider } from 'react-redux';
 import {LogInPage } from './LoginComponents/LogInPage';
 import {Settings} from './SettingsComponents/Settings';
 import {Auth, AuthState} from '../auth';
-import {Test } from './Test'
-
+import {Test } from './TestComponents/Test';
+import {Error } from './Error'
 export enum Users { None, EmilyT, EmilyZ, Miranda}
 export class VSTS extends React.Component<{}, any/*{user: Users}*/> {
 
@@ -55,7 +55,7 @@ export class VSTS extends React.Component<{}, any/*{user: Users}*/> {
 
     console.log('got to vsts');
     const user : Users = this.state.user;
-
+    var bool = true;
     //form updates state
     switch(user)
     {
@@ -64,9 +64,15 @@ export class VSTS extends React.Component<{}, any/*{user: Users}*/> {
       case Users.EmilyZ:
         return(<div>Emily Z's addIn</div>);
       case Users.Miranda:
-        return(<Test />);
+        return(<Settings />
+              );
       default:
         return(<div><button onClick={this.setEmilyT}>EmilyT</button><button onClick={this.setEmilyZ}>EmilyZ</button><button onClick={this.setMiranda}>Miranda</button></div>);
     } 
   }
  }
+
+ /*
+ <Test />
+ <Error isVisible = {bool} message = "No error, just tests."/>
+ <LogInPage />*/

@@ -1,8 +1,8 @@
-/// <reference path="../../office.d.ts" />
+/// <reference path="../../../office.d.ts" />
 import * as React from 'react';
 import { Provider, connect} from 'react-redux';
-import {ITempState} from './../Redux/TestReducer';
-import { IBoolAction, reverse} from './../Redux/TestActions';
+import {ITempState} from '../../Redux/TestReducer';
+import { IBoolAction, reverse} from '../../Redux/TestActions';
 import {Component} from 'react';
 import { reduxForm } from 'redux-form';
 import TestForm from './TestForm'
@@ -15,8 +15,10 @@ interface testProp {
 //map function
 function mapStateToProps(state:any): testProp { //state of type in any
       console.log('state:'+JSON.stringify(state));
+
       return ({
         boolVal : state.ITempState.value
+        //state.form.value - form values
       });
   }
 
@@ -46,6 +48,7 @@ export class Test extends React.Component<testProp, {}> {
 
     var str = JSON.stringify(this.props.boolVal);
     var str2 = JSON.stringify(Office.context.roamingSettings.get('rSettings'));
+    console.log(JSON.stringify(Office.context.roamingSettings.get('test')));
     console.log('boolVal:' + str);
 
     return(
@@ -60,4 +63,9 @@ export class Test extends React.Component<testProp, {}> {
   }
  }
 
-
+  /*
+state:{
+  "ITempState":{"value":false},
+  "form":{"simpleForm":{"_asyncValidating":false,"_initialized":false,"_submitting":false,"_submitFailed":false,"testField":{"visited":true,"_isFieldValue":true,"value":"gegegeff","touched":true}}}
+}
+  */
