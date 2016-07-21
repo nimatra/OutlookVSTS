@@ -126,7 +126,6 @@ export class Rest {
                 }
             });
             this.makeRestCallWithArgs('getTeamField', user, {account: account, project: project, team: guid}, (output) => {
-                console.log(output);
                 let parsed: any = JSON.parse(output);
                 if (parsed.field.referenceName !== 'System.AreaPath') {
                     // we don't support teams that don't use area path as their team field
@@ -150,6 +149,7 @@ export class Rest {
                 user,
                 { account: options.account, areaPath: areaPath, body: body, project: options.project, title: title },
                 (output) => {
+                    console.log(output);
                     callback(output);
                 });
         });
