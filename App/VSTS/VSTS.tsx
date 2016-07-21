@@ -1,6 +1,7 @@
 /// <reference path="../../office.d.ts" />
 import * as React from 'react';
 import { Provider } from 'react-redux';
+<<<<<<< HEAD
 import {LogInPage } from './LoginComponents/LogInPage';
 import {Settings} from './SettingsComponents/Settings';
 import {Auth, AuthState} from '../auth';
@@ -15,15 +16,34 @@ export class VSTS extends React.Component<{}, any> {
     this.state = {
         user : Users.None,
         authState : AuthState.None,
+=======
+import {LogInPage } from './LogInPage';
+import {Settings} from './Settings';
+
+enum Users { None, EmilyT, EmilyZ, Miranda}
+
+export class VSTS extends React.Component<{}, any/*{user: Users}*/> {
+
+  public constructor(){
+    super();
+    this.state = {user:Users.None,
+      ready:false
+>>>>>>> 9c3c47b124b5d7c1a1aecd1c8ef4480cf4728c6e
     };
     this.setEmilyT = this.setEmilyT.bind(this);
     this.setEmilyZ = this.setEmilyZ.bind(this);
     this.setMiranda = this.setMiranda.bind(this);
+<<<<<<< HEAD
     Office.initialize = this.Initialize.bind(this);
+=======
+    this.Initialize = this.Initialize.bind(this);
+    Office.initialize = this.Initialize;
+>>>>>>> 9c3c47b124b5d7c1a1aecd1c8ef4480cf4728c6e
   }
 
   private Initialize():void{
     console.log("Initiating");
+<<<<<<< HEAD
     this.updateAuth();
     //console.log(this.state.user);
     //console.log(this.state.authState);
@@ -39,7 +59,9 @@ export class VSTS extends React.Component<{}, any> {
 
     console.log(this.state.user);
     console.log(this.state.authState);
-
+    this.setState({ready:true});
+    console.log(this.state.ready);
+    //this.forceUpdate();
   }
 
   public setEmilyT():void{this.setState({user:Users.EmilyT})}
@@ -47,6 +69,7 @@ export class VSTS extends React.Component<{}, any> {
   public setMiranda():void{this.setState({user:Users.Miranda})}
 
   public render(): React.ReactElement<Provider> {
+
     switch(this.state.authState) {
       case AuthState.None:// We have to wait for Office to initialize, so show a waiting state
         return (<div>Loading...</div>);
