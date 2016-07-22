@@ -248,7 +248,7 @@ export class Dogfood extends React.Component<{}, IDogfoodState> {
           <StringField label='Bug Title' onChange={this.onTitleChanged.bind(this) } value={title} />
           <ButtonField primary={false} onClick={this.fillTitle.bind(this) } label='Use Email Subject' />
           <HtmlField onChange={this.onBodyChanged.bind(this) } label='Bug Description' text={body}/>
-          {/*<ButtonField primary={false} onClick={this.fillBody.bind(this) } label='Use Email Body' /> <br />*/}
+          <ButtonField primary={false} onClick={this.fillBody.bind(this) } label='Use Email Body' /> <br />
           <ButtonField primary={true} onClick={this.createTask.bind(this) } label='Create' /><br />
 
         </div>);
