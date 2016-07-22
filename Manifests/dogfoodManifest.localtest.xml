@@ -4,11 +4,11 @@
     xmlns:bt="http://schemas.microsoft.com/office/officeappbasictypes/1.0"
   xmlns:mailappor="http://schemas.microsoft.com/office/mailappversionoverrides"
   xsi:type="MailApp">
-  <Id>FEDDECAF-FDAD-FACE-DABA-DDECADE00000</Id>
+  <Id>FEDDECAF-DADF-ACED-ABAD-DECADE000001</Id>
   <Version>1.0</Version>
   <ProviderName>Apps Platform</ProviderName>
   <DefaultLocale>en-us</DefaultLocale>
-  <DisplayName DefaultValue="Visual Studio Bug Generator" />
+  <DisplayName DefaultValue="[DEBUG] Visual Studio Team Services" />
   <Description DefaultValue="Creates bugs using content of message"/>
   <IconUrl DefaultValue="https://azure.localtest.me:3000/public/Images/logo.png" />
   <Hosts>
@@ -87,7 +87,7 @@
       <bt:ShortStrings>
         <bt:String id="groupLabel" DefaultValue="Visual Stuido Team Services"/>
         <!-- Read mode -->
-        <bt:String id="paneReadButtonLabel" DefaultValue="[DEBUG] Create Bug"/>
+        <bt:String id="paneReadButtonLabel" DefaultValue="[DEBUG} Create Bug"/>
         <bt:String id="paneReadSuperTipTitle" DefaultValue="Creates a bug using the contents of this email"/>
       </bt:ShortStrings>
       <bt:LongStrings>

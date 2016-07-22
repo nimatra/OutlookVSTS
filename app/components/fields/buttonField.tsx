@@ -17,13 +17,17 @@ export class ButtonField extends React.Component<IButtonFieldProps, {}> {
   }
 
   public render(): React.ReactElement<{}> {
+    let buttonClass: string = 'ms-Button';
+    if (this.props.primary) {
+      buttonClass += ' ms-Button--primary';
+    }
     return (
-        <button className='ms-font-m' onClick={this.onClick.bind(this) }>
-            <span >
-                <i ></i>
-            </span>
-            <span>{this.props.label}</span>
-            </button>
+        <button className={buttonClass} onClick={this.onClick.bind(this) }>
+          <span className="ms-Button-icon">
+            <i className="ms-Icon ms-Icon--plus"></i>
+          </span>
+          <span className="ms-Button-label">{this.props.label}</span>
+        </button>
     );
   }
 }

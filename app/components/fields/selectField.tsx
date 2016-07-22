@@ -1,7 +1,6 @@
 /// <reference path='../../../typings/tsd.d.ts' />
 
 import * as React from 'react';
-import { Styles } from './styles';
 
 interface ISelectFieldProps {
   label: string;
@@ -32,12 +31,13 @@ export class SelectField extends React.Component<ISelectFieldProps, IEmptyState>
       i += 1;
     });
 
-    return (<div><div>
-      <label className='ms-font-m'>{this.props.label}</label> <br />
-      <select style={Styles.select} onChange={this.onSelect.bind(this) } value={selected}>
+    return (<div>
+      <label for={this.props.label} className='ms-font-m'>{this.props.label}</label> <br />
+      <select id={this.props.label} className="form-control" onChange={this.onSelect.bind(this) } value={selected}>
           {items}
       </select>
-      </div></div>
+      <br />
+      </div>
     );
   }
 }
