@@ -56,17 +56,16 @@ class Main extends React.Component<{}, {}> {
   }
 
   public render(): React.ReactElement<Provider> {
+    
     const route: string = this.getRoute();
     switch (route) {
       case 'dogfood':
         return(<Dogfood />);
-
-      case "/vsts":
+      case 'vsts':
         return(<Provider store={store}>
                <VSTS />
                </Provider>);
-      case "/done":
-
+      case 'done':
         return(<Done />);
       default:
         return(<div>Route: '{route}' is not a valid route!</div>);

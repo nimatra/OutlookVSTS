@@ -10,8 +10,9 @@ export interface ItestProp {
 }
 
 function mapStateToProps (state: any): ItestProp  {
-  console.log('mapStateToProps' +JSON.stringify(state.testState));
-  return { title: state.testState.temp };
+  console.log('mapStateToProps' +JSON.stringify(state));
+  return { title: state.testState.temp} 
+    //firstName: state.form.firstName ? state.form.firstName : "None"*/ };
   }
 
 /*function mapDispatchToProps(dispatch) {
@@ -30,7 +31,7 @@ function mapDispatchToProps(dispatch) {
 export class TestTitle extends React.Component<ItestProp, {}> {
 
 public change() : void{
-  this.props.dispatch(changeTitle ("plz work"))
+  this.props.dispatch(changeTitle ('plz work', false))
 }
 
 public render(): React.ReactElement<{}> {

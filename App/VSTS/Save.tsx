@@ -24,7 +24,7 @@ var save = {
       height:'35px',
       align: 'center'
 };
-var text = this.state.isSaved ? 'Saved':'Save';
+var text = this.state.isSaved ? 'Creating':'Creating Work Item';
     return ( <div>
 <br/>
   <button style= {save} onClick = {this.handleClick}> {text} </button>

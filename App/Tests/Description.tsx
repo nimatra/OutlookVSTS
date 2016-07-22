@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Provider } from 'react-redux';
-import { CreateWorkItem } from './CreateWorkItem'
+//import { CreateWorkItem } from './CreateWorkItem'
 
 
 export class Description extends React.Component<{}, {value:any}> {
@@ -17,7 +17,8 @@ export class Description extends React.Component<{}, {value:any}> {
 
 
   public render(): React.ReactElement<Provider> {
-
+  //var checked = document.getElementById("cbox").checked; 
+ 
   var scroll = {
     width: '250px',
     height: '150px',
@@ -30,7 +31,8 @@ export class Description extends React.Component<{}, {value:any}> {
     return ( <div>
     <br/>
     DESCRIPTION <br/>
-    <label><input type="checkbox" id="cbox" value="addasattachment" /> Add Email as Attachment </label> <br/>
+    <label> <input type="checkbox" id="cbox" value="addasattachment" /> Add Email as Attachment </label> <br/>
+  
    <textarea style={scroll} value={this.state.value} onChange={this.handleChange}> </textarea>
     <br/>
     <br/>
