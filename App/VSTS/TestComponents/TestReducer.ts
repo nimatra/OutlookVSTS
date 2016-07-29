@@ -1,11 +1,11 @@
-/// <reference path="../../typings/tsd.d.ts" />
+/// <reference path="../../../typings/tsd.d.ts" />
 
 import { Reducer, combineReducers } from 'redux';
-import { Auth, AuthState } from '../auth';
 import { IBoolAction, reverse} from './TestActions';
 import { Store, createStore } from 'redux';
 import {reducer as formReducer } from 'redux-form';
 
+//semicolons for interface,
 export interface ITempState{
   value: boolean
 }

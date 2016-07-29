@@ -15,7 +15,7 @@
       "commit": "ba424f7ee39717d51c17699a09ac8df312a7e9a1"
     },
     "react/react.d.ts": {
-      "commit": "f3911d711006be676d9e1bcbc7c768b39d1ad81b"
+      "commit": "c6c068935a58aa58087a309740bcf933600140b8"
     },
     "react-router/history.d.ts": {
       "commit": "f3911d711006be676d9e1bcbc7c768b39d1ad81b"
@@ -34,6 +34,9 @@
     },
     "redux-form/redux-form.d.ts": {
       "commit": "f3911d711006be676d9e1bcbc7c768b39d1ad81b"
+    },
+    "react-select/react-select.d.ts": {
+      "commit": "c6c068935a58aa58087a309740bcf933600140b8"
     }
   }
 }

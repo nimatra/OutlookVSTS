@@ -8,3 +8,4 @@
 /// <reference path="redux/redux.d.ts" />
 /// <reference path="tedious/tedious.d.ts" />
 /// <reference path="redux-form/redux-form.d.ts" />
+/// <reference path="react-select/react-select.d.ts" />

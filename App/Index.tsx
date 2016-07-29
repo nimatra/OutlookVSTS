@@ -8,7 +8,8 @@ import { Dogfood } from './Dogfood/dogfood';
 import { VSTS } from './VSTS/VSTS';
 import { Done } from './Authenticate/done';
 import {Settings } from './VSTS/SettingsComponents/Settings';
-import { overallRed } from './Redux/TestReducer';
+//import { overallRed } from './VSTS/TestComponents/TestReducer';
+import { overallRed } from './Redux/GlobalReducer';
 
 declare const require: (name: String) => any;
 

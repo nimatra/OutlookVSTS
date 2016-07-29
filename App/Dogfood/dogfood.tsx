@@ -209,7 +209,6 @@ export class Dogfood extends React.Component<{}, IDogfoodState> {
           <ButtonField primary={false} onClick={this.fillBody.bind(this) } label='Use Email Body' /> <br />
           <CheckboxField onChange={this.onAttachChange.bind(this) } label='Attach email to bug?' /> <br/ ><br />
           <ButtonField primary={true} onClick={this.createTask.bind(this) } label='Create' /><br />
-
         </div>);
       default:
         return(<div>This should never happen</div>);

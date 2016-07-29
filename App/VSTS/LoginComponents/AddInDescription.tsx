@@ -28,7 +28,7 @@ export class AddInDescription extends React.Component<{}, {}> {
 
   // Office has initialized, but we don't have auth for this user, show Log-In Page and pass them to the auth flow
     return(<div>
-      <div>image</div>
+      <div></div>
       <div>
         <h1 style = {this.style_section}> Create work items</h1>
         <p  style = {this.style_text}>Turn an email thread into a work item directly from Outlook!</p>

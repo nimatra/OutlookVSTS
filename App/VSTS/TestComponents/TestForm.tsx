@@ -1,8 +1,8 @@
 /// <reference path="../../../office.d.ts" />
 import * as React from 'react';
 import { Provider, connect} from 'react-redux';
-import {ITempState} from '../../Redux/TestReducer';
-import { IBoolAction, reverse} from '../../Redux/TestActions';
+import {ITempState} from './TestReducer';
+import { IBoolAction, reverse} from './TestActions';
 import {Component} from 'react';
 import { reduxForm } from 'redux-form';
 
