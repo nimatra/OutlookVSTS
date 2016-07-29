@@ -1,88 +1,98 @@
 /// <reference path="../../../office.d.ts" />
 import * as React from 'react';
-import { Provider } from 'react-redux';
-import {LogInPage } from '../LoginComponents/LogInPage';
-import {Users } from '../VSTS';
-import {Auth, AuthState} from '../../auth';
-import { SelectField } from './SelectField';
+import { Provider, connect } from 'react-redux';
+//import {Users } from '../VSTS';
+import {Auth} from '../../auth';
+import {Error } from '../Error';
+import {ISettingsState} from '../../Redux/LogInReducer';
+import {updateSettings, ISettings} from '../../Redux/LoginActions';
+import {AccountDropdown } from './AccountDropdown'
+import { Rest, Account, Project, Team } from '../../RestHelpers/rest';
+import {SettingsOptions} from './SettingsOptions';
+//other import statements don't work properly
+require('react-select/dist/react-select.css');
+let Select = require('react-select');
 
-export class Settings extends React.Component<{}, any> {
+interface settingsLocal {
+  dispatch?: any;
+  account?: string;
+  project?: string;
+  team?: string;
+}
 
-  public constructor() {
-    super();
-    this.state = {
-        user : Users.Miranda,
-        authState : AuthState.Authorized,
-        returning: false,
-        name : "Miranda"
-    };
-    this.save = this.save.bind(this);
-    console.log(this.state);
+interface combo {
+  dispatch?: any;
+  settings?: settingsLocal;
+  name?:string;
+}
+
+function mapStateToProps(state: any): combo {
+  // state of type in any
+  console.log('state:' + JSON.stringify(state));
+  return ({
+    settings:{
+      account: state.ISettingsState.account,
+      project: state.ISettingsState.project,
+      team: state.ISettingsState.team,
+    },
+    name: state.IUserInfo.displayName});
+    //add pagestate
+}
+
+@connect(mapStateToProps)
+
+export class Settings extends React.Component<combo, any> {
+
+  private save(): void {
+    // save defaults to roaming settings
+    Office.context.roamingSettings.set('default_account', this.props.settings.account);
+    Office.context.roamingSettings.set('default_project', this.props.settings.project);
+    Office.context.roamingSettings.set('default_team', this.props.settings.team);
+    Office.context.roamingSettings.saveAsync();
+    console.log("persisted:"+Office.context.roamingSettings.get('default_account'));
+    //TODO - update page state
   }
-
-  private save(): void{
-    console.log('saving');
-    this.setState({returning:true});
-    console.log(this.state.returning);
-
-  }
-
-  public changed(): void{
-    console.log('updated');
-  }
-
-  style_text = {
-       color: "rgb(63,63,63)", // dark gray
-       font: "15px arial, ms-segoe-ui",
-    };
-
-  style_label = {
-       color: "rgb(107,107,107)", // dark gray
-       font: "15px arial, ms-segoe-ui",
-    };
-
-  style_button = { //not added for
-      background: 'rgb(255,255,255)',
-      textalign: 'right',
-      color: 'rgb(0,63,204)',
-      font: "15px arial, ms-segoe-ui",
-      align: 'right',
-    };
 
   public render(): React.ReactElement<Provider> {
     console.log('got to settings');
-    console.log(this.state);
+    console.log('props:' + this.props);
 
-    const accounts: string[] = ["o365exchange","outlook","mseng"];
-    const projects: string[] = ["Outlook Services", "Outlook Desktop"];
-    const area: string[] = ["VSTS","Yelp","Display Dialog"];
     //check if returning, Authorized, which page coming from
-      return (
+    return (
       <div>
-          <div>
-            <p style = {this.style_text}> Welcome {this.state.name}!</p>
-            <p/>
-            <p style = {this.style_text}> Take a moment to configure your default settings for work item creation. </p>
-          </div>
-          <div>
-          <label style = {this.style_label}> Account </label>
-          <SelectField options = {accounts} onChange = {this.changed} />
-          <label style = {this.style_label}> Project </label>
-          <SelectField options = {projects} onChange = {this.changed} />
-          <label style = {this.style_label}> Area </label>
-          <SelectField options = {area} onChange = {this.changed} />
-          </div>
-
-          <button className = 'ms-Button' onClick = {this.save}>
+        <Error />
+        <div>
+          <p style = {this.style_text}> Welcome {this.props.name}!</p>
+          <p/>
+          <p style = {this.style_text}> Take a moment to configure your default settings for work item creation.</p>
+        </div>
+        <div>
+          <SettingsOptions />
+        </div>
+        <div>
+          <button className = 'ms-Button' onClick = {this.save.bind(this)}>
             <span className= 'ms-Icon ms-Icon--save' > Save and continue </span>
           </button>
-
+        </div>
       </div>
-      );
-  }
+    );
   }
 
+  style_text = {
+    color: 'rgb(63,63,63)', // dark gray
+    font: '15px arial, ms-segoe-ui',
+  };
 
- /*<div>
-            <SettingsForm onSubmit={(formValues)=>{console.log(formValues)}}/>
-</div>*/
+  style_label = {
+    color: 'rgb(107,107,107)', // dark gray
+    font: '15px arial, ms-segoe-ui',
+  };
+
+  style_button = { //not added for
+    background: 'rgb(255,255,255)',
+    textalign: 'right',
+    color: 'rgb(0,63,204)',
+    font: '15px arial, ms-segoe-ui',
+    align: 'right',
+  };
+}

@@ -219,7 +219,8 @@ function saveToken(id, data) {
   }
 }
 
-function updateToken(state, data, res) {
+function updateToken(state, data, res) { //FAILS HERE - TOKEN NULL
+  //console.log('update')
   var config = JSON.parse(getDbConfig());
   var connection = new tedious.Connection(config);
   connection.on('connect', function (err) {

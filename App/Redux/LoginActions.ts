@@ -1,44 +1,48 @@
 /// <reference path="../../typings/tsd.d.ts" />
-import { Auth, AuthState } from '../auth';
-//action type
+import { Auth} from '../auth';
 
-export interface ICurrentAccount{
-  type: string
+//action types
+export interface ISettings{
+  type: string,
   account: string,
   project: string,
-  areapath: string
+  team: string
 }
 
-export interface IAuthState{
-  type: string,
-  inProcess: boolean
-  authState: AuthState
+export interface ISettingsInfo{
+  type:string,
+  name:string,
+  url:string,
+  id:string
 }
 
-export function updateAccount( tempAccount:string, tempProject:string, tempArea:string): ICurrentAccount{
-  return {
-    type: 'UPDATE_ACCOUNT',
-    account: tempAccount,
-    project: tempProject,
-    areapath: tempArea
-  }
-}
-
-//action creator
-export function updateAuth(newState:AuthState): IAuthState {
-  return {
-    type: 'UPDATE_AUTHSTATE',
-    inProcess: false,
-    authState: newState
+export function updateSettings(accountTemp:string, projectTemp:string, teamTemp: string):ISettings{
+  return{
+    type: 'DEFAULT_SETTINGS',
+    account: accountTemp,
+    project: projectTemp,
+    team: teamTemp
   };
 }
 
-export function toggleInProcess(currentAuth:AuthState, connect:boolean): IAuthState{
-  return {
-    type: 'TOGGLE_PROCESS',
-    inProcess: !connect,
-    authState: currentAuth
-  }
+export const accountList: ISettingsInfo[] = [];
+export const projectList: ISettingsInfo[] = [];
+export const teamList: ISettingsInfo[] = [];
+
+export interface IUserProfile{
+  type: string,
+  displayName: string,
+  email: string,
+  memberID: string
+}
+
+export function updateUserProfile(name:string, mail: string, id:string):IUserProfile{
+  return{
+      type: 'USER_PROFILE',
+      displayName: name,
+      email: mail,
+      memberID: id
+  };
 }
 
 

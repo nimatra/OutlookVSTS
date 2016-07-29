@@ -1,12 +1,13 @@
 /// <reference path="../../../office.d.ts" />
 import * as React from 'react';
 import { Provider, connect} from 'react-redux';
-import {ITempState} from '../../Redux/TestReducer';
-import { IBoolAction, reverse} from '../../Redux/TestActions';
+import {ITempState} from './TestReducer';
+import { IBoolAction, reverse} from './TestActions';
 import {Component} from 'react';
 import { reduxForm } from 'redux-form';
 import TestForm from './TestForm'
 
+//without ? will get errors about not passing in state fields
 interface testProp {
     dispatch?: any,
     boolVal?: boolean,

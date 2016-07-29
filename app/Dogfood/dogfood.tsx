@@ -250,7 +250,6 @@ export class Dogfood extends React.Component<{}, IDogfoodState> {
           <HtmlField onChange={this.onBodyChanged.bind(this) } label='Bug Description' text={body}/>
           <ButtonField primary={false} onClick={this.fillBody.bind(this) } label='Use Email Body' /> <br /><br />
           <ButtonField primary={true} onClick={this.createTask.bind(this) } label='Create' /><br />
-
         </div>);
       default:
         return(<div className='ms-font-m'>This should never happen</div>);

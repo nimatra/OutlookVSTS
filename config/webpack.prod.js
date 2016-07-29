@@ -16,7 +16,8 @@ module.exports = {
       test: /\.tsx?$/,
       loaders: ['babel', 'ts'],
       include: APP_DIR
-    }]
+    },
+      { test: /\.css$/, loader: "style-loader!css-loader" }]
   },
   output: {
     path: path.join(__dirname, '..', 'build'),
@@ -38,7 +39,7 @@ module.exports = {
   ],
   resolve: {
     root: [path.resolve('../app')],
-    extensions: ['', '.jsx', '.js', '.tsx', '.ts']
+    extensions: ['', '.jsx', '.js', '.tsx', '.ts', '.css']
   },
   tslint: {
     emitErrors: false,

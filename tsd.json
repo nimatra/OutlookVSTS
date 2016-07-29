@@ -52,6 +52,9 @@
     },
     "redux-form/redux-form.d.ts": {
       "commit": "f3911d711006be676d9e1bcbc7c768b39d1ad81b"
+    },
+    "react-select/react-select.d.ts": {
+      "commit": "c6c068935a58aa58087a309740bcf933600140b8"
     }
   }
 }
