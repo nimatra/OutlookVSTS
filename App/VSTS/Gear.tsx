@@ -1,34 +1,32 @@
 import * as React from 'react';
-import { Provider } from 'react-redux';
-import { CreateWorkItem } from './CreateWorkItem';
+import { Provider, connect } from 'react-redux';
+// import { changeGearVisiblility, PageVisibilityEnum } from '../Reducers/ActionsET';
 
-
-export class Gear extends React.Component<{}, {}> {
-
-public handlegearClick(): void {
-    console.log('gear click works');
-  }
-
-  public render(): React.ReactElement<Provider> {
-
-var gear = {
-  align: 'right'
+export interface IGearProp {
+    dispatch?: any;
 }
 
-var addasattachment = {
-    font: '14px arial, ms-segoe-ui'
+@connect ()
+
+export class Gear extends React.Component<IGearProp, {}> {
+
+public handlegearClick(): void {
+  //  this.props.dispatch(changeGearVisiblility(PageVisibilityEnum.Settings)); DUMB
+    console.log('dispatch action here to change visibility enum');
   }
 
-    return ( <div>
-<div style = {addasattachment}> Create Work Item
+public render(): React.ReactElement<Provider> {
 
-<button className="ms-Button" style = {gear} id="gear" onClick = {this.handlegearClick}>
-<span className="ms-Icon ms-Icon--gear"> </span>
-</button>
+let gear: any = {
+  align: 'right',
+};
 
-</div>
 
-    </div>);
-
+return ( <div>
+    <div className='ms-font-1x ms-fontWeight-light ms-fontColor-black'> Create Work Item
+    <button className='ms-Button' style = {gear} id='gear' onClick = {this.handlegearClick}>
+    <span className='ms-Icon ms-Icon--gear'> </span>
+    </button>
+    </div> </div>);
   }
 }

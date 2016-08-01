@@ -210,3 +210,38 @@ router.createBug = function (req, res) {
   })
 }
 router.use('/newBug', router.createBug);
+
+router.createWorkItem = function (req, res) {
+  console.log ('in vstsrest now');
+  var input = req.query;
+  var query = {
+    'api-version': API1_0 //which API it is using 1.0 ?? //also should i include it in the PATCH built?
+  }
+  var host = input.account + '.visualstudio.com';
+  var path = '/DefaultCollection/' + input.project + '/_apis/wit/workitems/$' + input.type //add it // where is the area included?
+  var headers = {
+    'Content-Type': 'application/json-patch+json'
+  };
+  var body = JSON.stringify(
+    {
+    "op": "add",
+    "path": "/fields/System.Title", // is this the correct reference name?
+    "value": input.title
+    },
+    {
+    "op": "add",
+    "path": "/fields/System.Description", // is this the correct reference name?
+    "value": input.description
+    }
+  );
+
+  getToken(input.user, (token) => {
+    if (token) {
+      headers.Authorization = wrapToken(token);
+      patchRequest(query, body, path, headers, host, (output) => { res.send(output) });
+    } else {
+      console.log("could not find token for user " + input.user); // ERROR here, REST call does not work because there is no token
+    }
+  })
+}
+router.use('/createWorkItem', router.createWorkItem);

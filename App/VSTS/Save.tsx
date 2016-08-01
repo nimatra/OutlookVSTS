@@ -1,35 +1,60 @@
 import * as React from 'react';
-import { Provider } from 'react-redux';
-import { CreateWorkItem } from './CreateWorkItem'
+import { Provider, connect } from 'react-redux';
+// import { changeSave, StageEnum } from '../Reducers/ActionsET';
+import { Rest } from '../RestHelpers/rest';
+import { changeStage, Stage } from '../Reducers/ActionsET';
 
+export interface ISaveProp {
+    dispatch?: any;
+  // pageState?: StageEnum; //CHANGE THIS
+  // comment VSTShtmlLink?: string;
+    title?: string;
+    description?: string;
+    type?: string;
+    account?: string;
+    project?: string;
+    stage?: Stage;
+}
 
-export class Save extends React.Component<{}, {isSaved:boolean}> {
+function mapStateToProps (state: any): ISaveProp  {
+    return {account: 'o365exchange.visualstudio.com', description: state.createWorkItemState.description, project: 'Outlook Services',
+            stage: state.createWorkItemState.stage, title: state.createWorkItemState.title, type: state.createWorkItemState.type} ;
+}
 
-   public constructor(){
-    super();
-    this.state = {isSaved: false};
-    this.handleClick = this.handleClick.bind(this)
+@connect (mapStateToProps)
+
+export class Save extends React.Component<ISaveProp, {}> {
+
+   public isDisabled: boolean = false;
+
+   public handleSave(): void {
+      this.props.dispatch(changeStage(Stage.Saved));
+      Rest.createWorkItem ('t-emtenc@microsoft.com', this.props.account, this.props.project,
+                           this.props.type, this.props.title, this.props.description, (output) => console.log('done'));
   }
 
-
-  public handleClick(): void {
-    this.setState({isSaved: !this.state.isSaved});
-  }
-
-  public render(): React.ReactElement<Provider> {
-
-var save = {
-      background: '#4da6ff',
-      width:'250px',
-      height:'35px',
-      align: 'center'
+public render(): React.ReactElement<Provider> {
+console.log(this.isDisabled);
+let save: any = {
+      align: 'center',
+      background: '#80ccff',
+      height: '35px',
+      width: '250px',
 };
-var text = this.state.isSaved ? 'Creating':'Creating Work Item';
-    return ( <div>
-<br/>
-  <button style= {save} onClick = {this.handleClick}> {text} </button>
 
+let disabled: any = {
+      align: 'center',
+      background: '#d9d9d9',
+      height: '35px',
+      width: '250px',
+};
+
+let currentStyle: any = this.props.stage === Stage.Saved ? disabled : save;
+
+return (<div>
+    <br/>
+    <button className = 'ms-Button' style= {currentStyle} disabled = {this.props.stage === Stage.Saved}
+      onClick = {this.handleSave.bind(this)} > Create Work Item </button>
     </div>);
-
   }
  }

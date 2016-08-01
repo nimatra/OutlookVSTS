@@ -21,7 +21,7 @@ export class Checkbox extends React.Component<{}, {isSaved:boolean}> {
 
 var text = this.state.isSaved ? 'Saved':'Save';
     return ( <div>
-    <label><input type="checkbox" id="cbox" onClick = {this.handleClick} value="addasattachment" /> Add Email as Attachment </label> <br/>
+    <label><input type="checkbox" id="cbox" onClick = {this.handleClick} value="addAsAttachment" /> Add Email as Attachment </label> <br/>
     </div>);
 
   }

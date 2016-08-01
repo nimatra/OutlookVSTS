@@ -1,44 +1,44 @@
 import { Reducer, combineReducers } from 'redux';
-import { ACTION, FOLLOW_STATE_TYPES,
-  changeWIType, changeTitle, changeDescription, changeAddAsAttachment, changeFollowState, changeHTMLLink, 
-  IWITypeAction, ITitleAction, IDescriptionAction, IAddAsAttachmentAction, IFollowStateAction, IHTMLLinkAction } from './ActionsET';
-//import {reducer as formReducer} from 'redux-form';
+import { ACTION, FollowStateTypes, Stage } from './ActionsET';
 
-export interface testState {
-  wi_type: string;
+export interface IcreateWorkItemState {
+  stage: Stage;
+  workItemType: string;
   title: string;
-  firstTime: boolean;
   description: string;
-  addasattachment: boolean;
-  followState: FOLLOW_STATE_TYPES;
-  htmlLink: string;
+  addAsAttachment: boolean;
+  followState: FollowStateTypes;
+  VSTShtmlLink: string;
+  id: string;
 }
 
-export const initalState : testState = {
-  wi_type: "bug",
-  title : "",
-  firstTime: true,
-  description: "For more details, please refer to the attached email thread.",
-  addasattachment: true,
-  followState: FOLLOW_STATE_TYPES.Unfollowed,
-  htmlLink: ""
+export const initalState: IcreateWorkItemState = {
+  VSTShtmlLink: '',
+  addAsAttachment: true,
+  description: 'For more details, please refer to the attached email thread.',
+  followState: FollowStateTypes.Unfollowed,
+  id: '',
+  stage: Stage.New,
+  title : '',
+  workItemType: 'Bug',
 };
 
 
-function change_Fields(state: testState = initalState, action) : testState {
+function changeFields(state: IcreateWorkItemState = initalState, action: any): IcreateWorkItemState {
   switch (action.type) {
-    case ACTION.WI_TYPE:
-      return Object.assign( {}, state, {wi_type : action.wi_type});
-    case ACTION.NEW_TITLE:
-      return Object.assign( {}, state, {title : action.title, firstTime: action.firstTime});
-    case ACTION.NEW_DESCRIPTION:
+    case ACTION.STAGE:
+      return Object.assign( {}, state, {stage : action.stage});
+    case ACTION.WORKITEMTYPE:
+      return Object.assign( {}, state, {workItemType : action.workItemType});
+    case ACTION.NEWTITLE:
+      return Object.assign( {}, state, {title : action.title});
+    case ACTION.NEWDESCRIPTION:
       return Object.assign( {}, state, {description : action.description});
-    case ACTION.ADD_AS_ATTACHMENT:
-      return Object.assign( {}, state, {addasattachment : action.addasattachment});
+    case ACTION.ADDASATTACHMENT:
+      return Object.assign( {}, state, {addAsAttachment : action.addAsAttachment});
     default:
       return state;
  }
 }
 
-
-export const testreducer: Reducer = combineReducers({ testState : change_Fields});
+export const testreducer: Reducer = combineReducers({ createWorkItemState : changeFields});

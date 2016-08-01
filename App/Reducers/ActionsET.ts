@@ -1,17 +1,26 @@
-//export const NEW_TITLE = 'NEW_TITLE'
+export enum ACTION {STAGE, GEAR, WORKITEMTYPE, NEWTITLE, NEWDESCRIPTION, ADDASATTACHMENT, FOLLOWSTATE, SAVE, POSTCREATION}
+export enum FollowStateTypes {Followed, Unfollowed, Request}
+export enum Stage {New, Draft, Saved}
+export enum PageVisibility {Settings, CreateItem, InProcess, QuickActions} // remove upon merge
 
-export enum ACTION {WI_TYPE, NEW_TITLE, NEW_DESCRIPTION, ADD_AS_ATTACHMENT, FOLLOW_STATE, HTML_LINK}
-export enum FOLLOW_STATE_TYPES {Followed, Request, Unfollowed}
-
-export interface IWITypeAction {
+export interface IStageAction {
   type: ACTION;
-  wi_type: string;
+  stage: Stage;
+}
+
+export interface IGearAction {
+  type: ACTION;
+  pageVisibility: PageVisibility;
+}
+
+export interface IWorkItemTypeAction {
+  type: ACTION;
+  workItemType: string;
 }
 
 export interface ITitleAction {
   type: ACTION;
   title: string;
-  firstTime : boolean;
 }
 
 export interface IDescriptionAction {
@@ -21,39 +30,40 @@ export interface IDescriptionAction {
 
 export interface IAddAsAttachmentAction {
   type: ACTION;
-  addasattachment: boolean;
+  addAsAttachment: boolean;
 }
 
-export interface IFollowStateAction {
+export interface ISaveAction {
   type: ACTION;
-  followState: FOLLOW_STATE_TYPES;
+  pageVisibility: PageVisibility;
+  VSTShtmlLink: string;
 }
 
-export interface IHTMLLinkAction {
-  type: ACTION;
-  htmlLink: string;
+export function changeStage (stage: Stage): IStageAction {
+  return {type: ACTION.STAGE, stage};
 }
 
- export function changeWIType (wi_type: string): IWITypeAction {
-   return {type: ACTION.WI_TYPE, wi_type};
+export function changeGearVisiblility (pageVisibility: PageVisibility): IGearAction {
+  return {type: ACTION.GEAR, pageVisibility};
+}
+
+export function changeWorkItemType (workItemType: string): IWorkItemTypeAction {
+   return {type: ACTION.WORKITEMTYPE, workItemType};
  }
 
- export function changeTitle (title: string, firstTime: boolean): ITitleAction {
-   return {type: ACTION.NEW_TITLE, title, firstTime: false};
+export function changeTitle (title: string): ITitleAction {
+   return {type: ACTION.NEWTITLE, title};
  }
 
- export function changeDescription (description : string): IDescriptionAction {
-   return {type: ACTION.NEW_DESCRIPTION, description};
- }
- 
- export function changeAddAsAttachment (addasattachment :boolean): IAddAsAttachmentAction {
-   return {type: ACTION.ADD_AS_ATTACHMENT, addasattachment: !addasattachment};
+export function changeDescription (description: string): IDescriptionAction {
+   return {type: ACTION.NEWDESCRIPTION, description};
  }
 
- export function changeFollowState (followState: FOLLOW_STATE_TYPES ): IFollowStateAction {
-   return {type: ACTION.FOLLOW_STATE, followState};
+export function changeAddAsAttachment (addAsAttachment: boolean): IAddAsAttachmentAction {
+   return {addAsAttachment: !addAsAttachment, type: ACTION.ADDASATTACHMENT};
  }
 
- export function changeHTMLLink (htmlLink: string) : IHTMLLinkAction {
-   return {type: ACTION.HTML_LINK, htmlLink}
- }
+export function changeSave (pageVisibility: PageVisibility, VSTShtmlLink: string): ISaveAction {
+  return {type: ACTION.SAVE, pageVisibility, VSTShtmlLink};
+}
+
