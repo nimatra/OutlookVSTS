@@ -1,29 +1,16 @@
 /// <reference path="../typings/tsd.d.ts" />
 
 import { Reducer, combineReducers } from 'redux';
-import { IEditText } from './actionsEZ';
+import { IChangeFollowState } from './actionsEZ';
+import { InitialState, IWorkItem } from './statesEZ';
 
-const InitialState: sampleState = {
-  value: 'initialstate',
-  foo: true
-}
-
-export interface sampleState {
-  value: string;
-  foo: boolean;
-}
-
-function sampleReducer(state: sampleState = InitialState, action: IEditText): sampleState {
-  console.log('got to sampleReducer'+state.value);
-  switch(action.type) {
-    case "WriteText":
-      console.log('got to WriteText Switch'+state.value);
-
-      return Object.assign({}, state, {value: action.value});
+function changeFollowReducer(state: IWorkItem = InitialState, action: IChangeFollowState): IWorkItem {
+  switch (action.type) {
+    case 'ChangeFollowState':
+      return Object.assign({}, state, {followState: action.followState});
     default:
-      console.log('got to Default Switch'+state.value);
-    return state;
+      return state;
   }
 }
 
-export const combinedReducer: Reducer = combineReducers({ sampleState: sampleReducer });
+export const quickActionReducer: Reducer = combineReducers({ quickActionState: changeFollowReducer });

@@ -1,19 +1,14 @@
 /// <reference path="../typings/tsd.d.ts" />
+import { FollowStateTypes } from './statesEZ';
 
-export interface IEditText {
+export interface IChangeFollowState {
+  followState: FollowStateTypes;
   type: string;
-  value: string;
 }
 
-export function writeValue(val: string): IEditText {
-  console.log('in writevalue');
+export function changeFollow(newState: FollowStateTypes): IChangeFollowState {
   return {
-    type: 'WriteText',
-    value: val
+    followState: newState,
+    type: 'ChangeFollowState',
   };
 }
-
-// export interface IEditBool {
-//   type: ACTION;
-//   foo: boolean;
-// }
