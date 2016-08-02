@@ -78,23 +78,6 @@ export class Rest {
         });
     }
 
-    public static getAccounts(user: string, callback: IAccountsCallback): void {
-        if (this.userProfile) { // if user profile already exists
-            this.makeRestCallWithArgs('accounts', user, { memberId: this.userProfile.id }, (output) => {
-                let parsed: any = JSON.parse(output);
-                this.accounts = [];
-                parsed.value.forEach(account => {
-                    this.accounts.push(new Account(account));
-                });
-                callback(this.accounts);
-            });
-        } else { // get user profile and come back
-            this.getUserProfile(user, (profile: UserProfile) => {
-                this.getAccounts(user, callback);
-            });
-        }
-    }
-
     public static getProjects(user: string, accountName: string, callback: IProjectsCallback): void {
         this.makeRestCallWithArgs('projects', user, { account: accountName }, (output) => {
             let parsed: any = JSON.parse(output);
@@ -153,6 +136,35 @@ export class Rest {
                     callback(output);
                 });
         });
+    }
+
+       public static getAccountsNew(user: string, memberId: string, callback: IAccountsCallback): void {
+            console.log('new');
+            this.makeRestCallWithArgs('accounts', user, {memberId: memberId} , (output) => {
+                let parsed: any = JSON.parse(output);
+                this.accounts = [];
+                parsed.value.forEach(account => {
+                    this.accounts.push(new Account(account));
+                });
+                callback(this.accounts);
+            });
+    }
+
+    public static getAccounts(user: string, callback: IAccountsCallback): void {
+        if (this.userProfile) { // if user profile already exists
+            this.makeRestCallWithArgs('accounts', user, { memberId: this.userProfile.id }, (output) => {
+                let parsed: any = JSON.parse(output);
+                this.accounts = [];
+                parsed.value.forEach(account => {
+                    this.accounts.push(new Account(account));
+                });
+                callback(this.accounts);
+            });
+        } else { // get user profile and come back
+            this.getUserProfile(user, (profile: UserProfile) => {
+                this.getAccounts(user, callback);
+            });
+        }
     }
 
     private static makeRestCall(name: string, user: string, callback: IRestCallback): void {

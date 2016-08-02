@@ -1,60 +1,78 @@
 /// <reference path="../../../office.d.ts" />
 import * as React from 'react';
 import { Provider, connect } from 'react-redux';
-//import {Users } from '../VSTS';
-import {ISettingsState} from '../../Redux/LogInReducer';
-import {updateSettings, ISettings} from '../../Redux/LoginActions';
-import {Rest, Account } from '../../RestHelpers/rest';
+import {updateSettings, ISettingsInfo, updateSettingsLists} from '../../Redux/LoginActions';
+import {Rest, Team } from '../../RestHelpers/rest';
 
-//other import statements don't work properly
+// other import statements don't work properly
 require('react-select/dist/react-select.css');
-let Select = require('react-select');
+let Select: any = require('react-select');
 
-interface settingsLocal {
+interface ISettingsLocal {
   dispatch?: any;
   account?: string;
   project?: string;
-  area?:string;
 }
 
-function mapStateToProps(state: any): settingsLocal {
-  // state of type in any
-  console.log('state:' + JSON.stringify(state));
+interface ICombo {
+  dispatch?: any;
+  accounts?: ISettingsInfo[];
+  id?: string;
+  email?: string;
+  settings?: ISettingsLocal;
+  projects?: ISettingsInfo[];
+}
+
+function mapStateToProps(state: any): ICombo {
   return ({
-    account: state.ISettingsState.account,
-    project: state.ISettingsState.project,
-    area: state.ISettingsState.team,
+    accounts: state.ICurrentLists.accountList,
+    email: state.IUserInfo.email,
+    id: state.IUserInfo.memberID,
+    projects: state.ICurrentLists.projectList,
+    settings: {
+      account: state.ISettingsState.account,
+      project: state.ISettingsState.project,
+    },
   });
 }
 
 @connect(mapStateToProps)
 
-export class ProjectDropdown extends React.Component<settingsLocal, any> {
+export class ProjectDropdown extends React.Component<ICombo, any> {
 
-  public onAccountSelect(option): void {
-    var project = option.label; //{"account":{"value":"two","label":"outlook"}
+  public onProjectSelect(option: any): void {
+    let project: string = option.label;
     console.log('updated');
     console.log('selected:' + project);
-    this.props.dispatch(updateSettings(this.props.account, project, ''));
+    this.props.dispatch(updateSettings(this.props.settings.account, project, ''));
+    this.populateTeams(project, this.props.settings.account);
   }
 
   public render(): React.ReactElement<Provider> {
-    console.log('got to settings');
-    console.log('props:' + this.props.project);
+    console.log('project drop');
 
-    var projects = [
-      { label: 'Outlook Services', value: 'Outlook Services'},
-      { label: 'Outlook Desktop' , value: 'Outlook Desktop'},
-    ];
-
-    //check if returning, Authorized, which page coming from
     return (
         <Select
             name='form-field-name'
-            options={projects}
-            value={this.props.project}
-            onChange={this.onAccountSelect.bind(this)}
+            options={this.props.projects}
+            value={this.props.settings.project}
+            onChange={this.onProjectSelect.bind(this)}
             />
     );
   }
+
+    public populateTeams(project: string, account: string): void {
+      console.log('getting team');
+      console.log('accounts' + this.props.accounts);
+      console.log('projs' + this.props.projects);
+      Rest.getTeams(this.props.email, project, account, (teams: Team[]) => {
+        let teamNames: ISettingsInfo[] = [];
+        teams.forEach(team => {
+          teamNames.push({label: team.name, value: team.name});
+        });
+        this.props.dispatch(updateSettingsLists(this.props.accounts, this.props.projects, teamNames)); // set store projectList
+        console.log('teams:' + teamNames);
+    });
+  }
+
 }

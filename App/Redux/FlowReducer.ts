@@ -1,27 +1,25 @@
 /// <reference path="../../typings/tsd.d.ts" />
-import { Auth} from '../auth';
-import {AuthStateEnum, PageStateEnum, IErrorState, IPageState, IAuthState} from './FlowActions';
+import {AuthStateEnum, PageVisibilityEnum, IErrorState} from './FlowActions';
 
 export interface IControlState{
   authState: AuthStateEnum;
-  pageState: PageStateEnum;
+  pageState: PageVisibilityEnum;
   error: IErrorState;
 }
 
 const initialControlState: IControlState = {
   authState : AuthStateEnum.None,
-  pageState : PageStateEnum.Settings,
   error: {
-    type: 'ErrorState',
     isVisible: false,
-    message: ''
-  }
-}
+    message: '',
+    type: 'ErrorState' },
+  pageState : PageVisibilityEnum.Settings,
+};
 
-export function updateControlState(state = initialControlState, action ): IControlState{
-  switch (action.type){
+export function updateControlState(state: IControlState = initialControlState, action: any): IControlState {
+  switch (action.type) {
     case 'ErrorState':
-      return Object.assign({}, state, { isVisible:action.isVisible, message: action.message});
+      return Object.assign({}, state, { isVisible: action.isVisible, message: action.message});
     case 'AUTH_STATE':
       return Object.assign({}, state, { authState: action.authState});
     case 'PAGE_STATE':

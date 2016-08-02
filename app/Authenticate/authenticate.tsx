@@ -2,7 +2,6 @@
 import * as React from 'react';
 import { Provider } from 'react-redux';
 import { Auth, AuthState } from '../auth';
-import {AuthStateEnum, updateAuth} from '../Redux/FlowActions';
 interface IRefreshCallback { (): void; }
 
 interface IAuthenticateProps {
@@ -29,7 +28,7 @@ export class Authenticate extends React.Component<IAuthenticateProps, {}> {
   public refreshAuth(): void {
     let refresh: IRefreshCallback = this.props.refresh;
     let authKey: any = this.authKey;
-    Auth.getAuthState(this.props.user, function (state: AuthState): void { // AuthState
+    Auth.getAuthState(this.props.user, function (state: AuthState): void {
       if (state === AuthState.Authorized) {
         refresh();
         clearInterval(authKey);

@@ -1,60 +1,59 @@
 /// <reference path="../../../office.d.ts" />
 import * as React from 'react';
 import { Provider, connect } from 'react-redux';
-//import {Users } from '../VSTS';
-import {ISettingsState} from '../../Redux/LogInReducer';
-import {updateSettings, ISettings} from '../../Redux/LoginActions';
-import {Rest, Account } from '../../RestHelpers/rest';
+import {updateSettings, ISettingsInfo} from '../../Redux/LoginActions';
 
-//other import statements don't work properly
 require('react-select/dist/react-select.css');
-let Select = require('react-select');
+let Select: any = require('react-select');
 
-interface settingsLocal {
+interface ISettingsLocal {
   dispatch?: any;
   account?: string;
   project?: string;
-  area?:string;
+  area?: string;
 }
 
-function mapStateToProps(state: any): settingsLocal {
-  // state of type in any
-  console.log('state:' + JSON.stringify(state));
+interface ICombo {
+  dispatch?: any;
+  id?: string;
+  email?: string;
+  settings?: ISettingsLocal;
+  teams?: ISettingsInfo[];
+}
+
+function mapStateToProps(state: any): ICombo {
   return ({
-    account: state.ISettingsState.account,
-    project: state.ISettingsState.project,
-    area: state.ISettingsState.team,
+    email: state.IUserInfo.email,
+    id: state.IUserInfo.memberID,
+    settings: {
+      account: state.ISettingsState.account,
+      area: state.ISettingsState.team,
+      project: state.ISettingsState.project,
+    },
+    teams: state.ICurrentLists.teamList,
   });
 }
 
 @connect(mapStateToProps)
 
-export class AreaDropdown extends React.Component<settingsLocal, any> {
+export class AreaDropdown extends React.Component<ICombo, any> {
 
-  public onAccountSelect(option): void {
-    var area = option.label; //{"account":{"value":"two","label":"outlook"}
+  public onTeamSelect(option): void {
+    let team: string = option.label;
     console.log('updated');
-    console.log('selected:' + area);
-    this.props.dispatch(updateSettings(this.props.account, this.props.project, area));
+    console.log('selected:' + team);
+    this.props.dispatch(updateSettings(this.props.settings.account, this.props.settings.project, team));
   }
 
   public render(): React.ReactElement<Provider> {
-    console.log('got to settings');
-    console.log('props:' + this.props.area);
+    console.log('area drop');
 
-    var teams = [
-      { label: 'VSTS', value: 'VSTS'},
-      { label: 'Display Dialog' , value: 'Display Dialog'},
-      { label: 'Yelp' , value: 'Yelp'},
-    ];
-
-    //check if returning, Authorized, which page coming from
     return (
         <Select
             name='form-field-name'
-            options={teams}
-            value={this.props.area}
-            onChange={this.onAccountSelect.bind(this)}
+            options={this.props.teams}
+            value={this.props.settings.area}
+            onChange={this.onTeamSelect.bind(this)}
             />
     );
   }

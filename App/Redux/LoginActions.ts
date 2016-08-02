@@ -1,47 +1,57 @@
 /// <reference path="../../typings/tsd.d.ts" />
-import { Auth} from '../auth';
 
-//action types
-export interface ISettings{
-  type: string,
-  account: string,
-  project: string,
-  team: string
+export interface ISettings {
+  type: string;
+  account: string;
+  project: string;
+  team: string;
 }
 
-export interface ISettingsInfo{
-  type:string,
-  name:string,
-  url:string,
-  id:string
+export interface ISettingsInfo {
+  label: string;
+  value: string;
 }
 
-export function updateSettings(accountTemp:string, projectTemp:string, teamTemp: string):ISettings{
+export function updateSettings(accountTemp: string, projectTemp: string, teamTemp: string): ISettings {
+  console.log('' + accountTemp + projectTemp + teamTemp);
   return{
-    type: 'DEFAULT_SETTINGS',
     account: accountTemp,
     project: projectTemp,
-    team: teamTemp
+    team: teamTemp,
+    type: 'DEFAULT_SETTINGS',
   };
 }
 
-export const accountList: ISettingsInfo[] = [];
-export const projectList: ISettingsInfo[] = [];
-export const teamList: ISettingsInfo[] = [];
-
-export interface IUserProfile{
-  type: string,
-  displayName: string,
-  email: string,
-  memberID: string
+export interface ISettingsLists {
+  type: string;
+  accountList: ISettingsInfo[];
+  projectList: ISettingsInfo[];
+  teamList: ISettingsInfo[];
 }
 
-export function updateUserProfile(name:string, mail: string, id:string):IUserProfile{
+export function updateSettingsLists(accountTemp: ISettingsInfo[], projectTemp: ISettingsInfo[], teamTemp: ISettingsInfo[]): ISettingsLists {
   return{
-      type: 'USER_PROFILE',
+    accountList: accountTemp,
+    projectList: projectTemp,
+    teamList: teamTemp,
+    type: 'DEFAULT_SETTINGS',
+  };
+}
+
+
+export interface IUserProfile{
+  type: string;
+  displayName: string;
+  email: string;
+  memberID: string;
+}
+
+export function updateUserProfile(name: string, mail: string, id: string): IUserProfile {
+  return{
       displayName: name,
       email: mail,
-      memberID: id
+      memberID: id,
+      type: 'USER_PROFILE',
   };
 }
 
