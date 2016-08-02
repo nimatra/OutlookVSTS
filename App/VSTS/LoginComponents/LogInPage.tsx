@@ -12,6 +12,4 @@ export class LogInPage extends React.Component<{}, {}> {
             <SignInButton />
             </div>);
   }
-
- }
-
+}
