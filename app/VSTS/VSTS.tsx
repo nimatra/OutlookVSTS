@@ -81,21 +81,19 @@ export class VSTS extends React.Component<ICombo, any> {
   }
 
   authKey: any;
-  pollInterval: number = 2000;
-  timer: number = 0;
-  timeMax: number = 10000;
+  pollInterval: number = 3000;
   firstTime: boolean = true;
 
   // logic to check for tokens in db
   public refreshAuth(): void {
     console.log('refresh');
-    console.log(this.timer);
     let localKey: any = this.authKey;
 
     let refresh: (state: AuthStateEnum) => void = this.updateAuthState;
     let currentState: AuthStateEnum = this.props.control.authState;
     console.log(this.props.prof.email);
     Auth.getAuthStateNew(this.props.prof.email, function (state: AuthStateEnum): void {
+      console.log(state);
       if (state === AuthStateEnum.Authorized) {
         refresh(state);
         clearInterval(localKey);
@@ -111,7 +109,7 @@ export class VSTS extends React.Component<ICombo, any> {
 
   // dispatch functions
   public updateAuthState(state: AuthStateEnum): void {
-    console.log(this.props)
+    console.log(this.props);
     this.props.dispatch(updateAuth(state));
   }
 

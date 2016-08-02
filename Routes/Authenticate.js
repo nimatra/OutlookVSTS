@@ -82,6 +82,7 @@ router.db = function (req, res) {
         res.send("success");
       }
       else {
+        console.log("middle state")
         data.user = req.query.user;
         router.refreshToken(data, res);
       }
@@ -156,15 +157,16 @@ router.authorize = function (req, res) {
 router.use('/', router.authorize);
 
 router.refreshToken = function (state, res) {
-
+  console.log("refresh token")
   router.credentials = JSON.parse(getClientSecret());
-  console.log(state.refresh);
+  console.log("token:"+state.refresh);
+  console.log("creds:"+JSON.stringify(router.credentials));
   var data = querystring.stringify({
     assertion: state.refresh,
     client_assertion_type: "urn:ietf:params:oauth:client-assertion-type:jwt-bearer",
     grant_type: "refresh_token",
-    client_assertion: router.credentials.client_secret.toString(),
-    redirect_uri: router.credentials.redirect_uris[0]
+    client_assertion: router.credentials.web.client_secret.toString(), //ERROR HERE CLIENT_SECRET UNDEFINED
+    redirect_uri: router.credentials.web.redirect_uris[0]
   });
   var options = {
     host: 'app.vssps.visualstudio.com',

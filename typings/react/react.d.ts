@@ -346,19 +346,14 @@ declare namespace __React {
         view: AbstractView;
     }
 
-<<<<<<< 933e29cd9222a9d7ab5a0990ec266be4a6f33e25
-    interface WheelEvent extends SyntheticEvent {
-=======
+
     interface WheelEvent extends MouseEvent {
->>>>>>> adding global state - step 1
         deltaMode: number;
         deltaX: number;
         deltaY: number;
         deltaZ: number;
     }
 
-<<<<<<< 933e29cd9222a9d7ab5a0990ec266be4a6f33e25
-=======
     interface AnimationEvent extends SyntheticEvent {
         animationName: string;
         pseudoElement: string;
@@ -371,7 +366,6 @@ declare namespace __React {
         elapsedTime: number;
     }
 
->>>>>>> adding global state - step 1
     //
     // Event Handler Types
     // ----------------------------------------------------------------------
@@ -392,11 +386,8 @@ declare namespace __React {
     type TouchEventHandler = EventHandler<TouchEvent>;
     type UIEventHandler = EventHandler<UIEvent>;
     type WheelEventHandler = EventHandler<WheelEvent>;
-<<<<<<< 933e29cd9222a9d7ab5a0990ec266be4a6f33e25
-=======
     type AnimationEventHandler = EventHandler<AnimationEvent>;
     type TransitionEventHandler = EventHandler<TransitionEvent>;
->>>>>>> adding global state - step 1
 
     //
     // Props / DOM Attributes
@@ -520,8 +511,6 @@ declare namespace __React {
 
         // Wheel Events
         onWheel?: WheelEventHandler;
-<<<<<<< 933e29cd9222a9d7ab5a0990ec266be4a6f33e25
-=======
 
         // Animation Events
         onAnimationStart?: AnimationEventHandler;
@@ -530,7 +519,6 @@ declare namespace __React {
 
         // Transition Events
         onTransitionEnd?: TransitionEventHandler;
->>>>>>> adding global state - step 1
     }
 
     // This interface is not complete. Only properties accepting
@@ -2489,10 +2477,6 @@ declare namespace JSX {
         clipPath: React.SVGProps;
         defs: React.SVGProps;
         ellipse: React.SVGProps;
-<<<<<<< 9db094a0f601cdc0a7ab3a2a83947322c4708aa4
-<<<<<<< 933e29cd9222a9d7ab5a0990ec266be4a6f33e25
-=======
-=======
         feBlend: React.SVGProps;
         feColorMatrix: React.SVGProps;
         feComponentTransfer: React.SVGProps;
@@ -2511,9 +2495,7 @@ declare namespace JSX {
         feTile: React.SVGProps;
         feTurbulence: React.SVGProps;
         filter: React.SVGProps;
->>>>>>> authentication correct and VSTS rest call to get profile works
         foreignObject: React.SVGProps;
->>>>>>> adding global state - step 1
         g: React.SVGProps;
         image: React.SVGProps;
         line: React.SVGProps;
