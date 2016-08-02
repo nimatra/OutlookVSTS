@@ -11,7 +11,7 @@ export interface ITitleProp {
 
 function mapStateToProps (state: any): ITitleProp  {
   console.log('mapStateToProps' + JSON.stringify(state));
-  return {stage: state.createWorkItemState.stage, title: state.createWorkItemState.title} ;
+  return {stage: state.workItem.stage, title: state.workItem.title} ;
    }
 
 @connect (mapStateToProps)

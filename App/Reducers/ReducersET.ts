@@ -1,7 +1,7 @@
 import { Reducer, combineReducers } from 'redux';
 import { ACTION, FollowStateTypes, Stage } from './ActionsET';
 
-export interface IcreateWorkItemState {
+export interface IWorkItem {
   stage: Stage;
   workItemType: string;
   title: string;
@@ -12,7 +12,7 @@ export interface IcreateWorkItemState {
   id: string;
 }
 
-export const initalState: IcreateWorkItemState = {
+export const initalState: IWorkItem = {
   VSTShtmlLink: '',
   addAsAttachment: true,
   description: 'For more details, please refer to the attached email thread.',
@@ -24,7 +24,7 @@ export const initalState: IcreateWorkItemState = {
 };
 
 
-function changeFields(state: IcreateWorkItemState = initalState, action: any): IcreateWorkItemState {
+function changeFields(state: IWorkItem = initalState, action: any): IWorkItem {
   switch (action.type) {
     case ACTION.STAGE:
       return Object.assign( {}, state, {stage : action.stage});
@@ -41,4 +41,4 @@ function changeFields(state: IcreateWorkItemState = initalState, action: any): I
  }
 }
 
-export const testreducer: Reducer = combineReducers({ createWorkItemState : changeFields});
+export const testreducer: Reducer = combineReducers({ workItem : changeFields});

@@ -11,7 +11,7 @@ export interface IGearProp {
 export class Gear extends React.Component<IGearProp, {}> {
 
 public handlegearClick(): void {
-  //  this.props.dispatch(changeGearVisiblility(PageVisibilityEnum.Settings)); DUMB
+  //  this.props.dispatch(changeGearVisiblility(PageVisibilityEnum.Settings));
     console.log('dispatch action here to change visibility enum');
   }
 

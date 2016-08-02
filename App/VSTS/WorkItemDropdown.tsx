@@ -11,7 +11,7 @@ export interface IWorkItemTypeDropdownProp {
 }
 
 function mapStateToProps (state: any): IWorkItemTypeDropdownProp  {
-    return {workItemType: state.createWorkItemState.workItemType} ;
+    return {workItemType: state.workItem.workItemType} ;
    }
 
 @connect (mapStateToProps)

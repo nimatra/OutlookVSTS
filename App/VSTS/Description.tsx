@@ -9,7 +9,7 @@ export interface IDescriptionProp {
 }
 
 function mapStateToProps (state: any): IDescriptionProp  {
-  return {addAsAttachment: state.createWorkItemState.addAsAttachment, description: state.createWorkItemState.description} ;
+  return {addAsAttachment: state.workItem.addAsAttachment, description: state.workItem.description} ;
    }
 
 @connect (mapStateToProps)

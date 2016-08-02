@@ -17,9 +17,9 @@ export class CreateWorkItem extends React.Component<{}, {}> {
     this.forceUpdate(); // re-renders page
   }
 
-  public constructor() {
-    super(); // required first line
-    this.isReady = false; // should be false, but doesnt reload
+  public constructor() { // will be removed after merge since office is initialized before this page is reached
+    super();
+    this.isReady = false;
     this.Initialize = this.Initialize.bind(this);
     Office.initialize = this.Initialize;
   }

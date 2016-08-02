@@ -37,6 +37,7 @@ export interface ISaveAction {
   type: ACTION;
   pageVisibility: PageVisibility;
   VSTShtmlLink: string;
+  id: string;
 }
 
 export function changeStage (stage: Stage): IStageAction {
@@ -63,7 +64,7 @@ export function changeAddAsAttachment (addAsAttachment: boolean): IAddAsAttachme
    return {addAsAttachment: !addAsAttachment, type: ACTION.ADDASATTACHMENT};
  }
 
-export function changeSave (pageVisibility: PageVisibility, VSTShtmlLink: string): ISaveAction {
-  return {type: ACTION.SAVE, pageVisibility, VSTShtmlLink};
+export function changeSave (pageVisibility: PageVisibility, VSTShtmlLink: string, id: string): ISaveAction {
+  return {type: ACTION.SAVE, pageVisibility, VSTShtmlLink, id};
 }
 

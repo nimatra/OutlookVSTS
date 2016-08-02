@@ -1,3 +1,5 @@
+import { Stage } from '../Reducers/ActionsET';
+
 export class UserProfile {
     public displayName: string;
     public publicAlias: string;
@@ -154,12 +156,14 @@ export class Rest {
         });
     }
 
-    public static createWorkItem (user: string, account: string, project: string, type: string, title: string, description: string, callback: IRestCallback): void {
+   public static createWorkItem (user: string, account: string, project: string, workItemType: string, stage: Stage,
+                                 title: string, description: string, callback: IRestCallback): void {
         console.log('got to createWorkItem function');
-        this.makeRestCallWithArgs('createWorkItem', 
-                                   user,
-                                   { account: account, project: project, type: type, title: title, description: description },
-                                   (output) => {callback(output);});
+        this.makeRestCallWithArgs('createWorkItem',
+                                  user,
+                                  { account: account, description: description, project: project, stage: Stage,
+                                    title: title, workItemType: workItemType},
+                                  (output) => {callback(output); });
     }
 
     private static makeRestCall(name: string, user: string, callback: IRestCallback): void {
@@ -167,9 +171,9 @@ export class Rest {
     }
 
     private static makeRestCallWithArgs(name: string, user: string, args: any, callback: IRestCallback): void {
-                console.log('got to restcallwithargs');
+        console.log('got to restcallwithargs');
         const path: string = './rest/' + name + '?user=' + user + '&' + $.param(args);
-           console.log('got to restcallwithargs part 2' +path);
+        console.log('got to restcallwithargs part 2' + path);
         $.get(path, callback);
     }
 
