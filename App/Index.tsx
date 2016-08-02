@@ -2,13 +2,10 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { Store, createStore } from 'redux';
-import { vsoAddin } from './reducers';
 import { Provider } from 'react-redux';
 import { Dogfood } from './Dogfood/dogfood';
 import { VSTS } from './VSTS/VSTS';
 import { Done } from './Authenticate/done';
-import {Settings } from './VSTS/SettingsComponents/Settings';
-//import { overallRed } from './VSTS/TestComponents/TestReducer';
 import { overallRed } from './Redux/GlobalReducer';
 
 declare const require: (name: String) => any;
@@ -20,12 +17,10 @@ interface IHotModule {
 declare const module: IHotModule;
 
 function configureStore(): Store {
-  //const store: Store = createStore(vsoAddin);
   const store: Store = createStore(overallRed);
 
   if (module.hot) {
     module.hot.accept('./reducers', () => {
-      //const nextRootReducer: any = require('./reducers').vsoAddin;
       const nextRootReducer: any = require('./Redux/LoginReducer').overallRed;
       store.replaceReducer(nextRootReducer);
     });
@@ -67,5 +62,3 @@ class Main extends React.Component<{}, {}> {
 }
 
 ReactDOM.render(<Main />, document.getElementById('app'));
-
-//ReactDOM.render(<Provider store = {store}><Main /></Provider>, document.getElementById('app'));

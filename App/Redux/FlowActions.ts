@@ -1,5 +1,4 @@
 /// <reference path="../../typings/tsd.d.ts" />
-import { Auth} from '../auth';
 
 export enum AuthStateEnum {
     None,       // no auth data is available
@@ -8,49 +7,48 @@ export enum AuthStateEnum {
     Authorized  // have authorization
 }
 
-export enum PageStateEnum{
+export enum PageVisibilityEnum {
     Settings,
     CreateItem,
     QuickActions
 }
 
 export interface IAuthState {
-    type: 'AUTH_STATE'
+    type: 'AUTH_STATE';
     authState: AuthStateEnum;
 }
 
 export interface IPageState {
-    type: 'PAGE_STATE'
-    pageState:PageStateEnum;
+    type: 'PAGE_STATE';
+    pageState: PageVisibilityEnum;
 }
 
-//action creator
-export function updateAuth(newState:AuthStateEnum): IAuthState{
+export function updateAuth(newState: AuthStateEnum): IAuthState {
   return {
-    type:'AUTH_STATE',
-    authState: newState
+    authState: newState,
+    type: 'AUTH_STATE',
     };
 }
 
-export function updatePage(newState:PageStateEnum): IPageState {
+export function updatePage(newState: PageVisibilityEnum): IPageState {
    return {
-    type:'PAGE_STATE',
-    pageState: newState
+    pageState: newState,
+    type: 'PAGE_STATE',
     };
 }
 
-export interface IErrorState{
+export interface IErrorState {
   type: 'ErrorState';
   isVisible: boolean;
   message: string;
 }
 
-export function showError(visibility:boolean, msg:string): IErrorState{
+export function showError(visibility: boolean, msg: string): IErrorState {
   return{
+    isVisible: visibility,
+    message: msg,
     type: 'ErrorState',
-    isVisible:visibility,
-    message:msg
-  }
+  };
 }
 
 

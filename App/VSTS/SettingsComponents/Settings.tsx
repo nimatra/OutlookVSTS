@@ -1,63 +1,57 @@
 /// <reference path="../../../office.d.ts" />
 import * as React from 'react';
 import { Provider, connect } from 'react-redux';
-//import {Users } from '../VSTS';
-import {Auth} from '../../auth';
 import {Error } from '../Error';
-import {ISettingsState} from '../../Redux/LogInReducer';
-import {updateSettings, ISettings} from '../../Redux/LoginActions';
-import {AccountDropdown } from './AccountDropdown'
-import { Rest, Account, Project, Team } from '../../RestHelpers/rest';
-import {SettingsOptions} from './SettingsOptions';
-//other import statements don't work properly
-require('react-select/dist/react-select.css');
-let Select = require('react-select');
+import {AccountDropdown } from './AccountDropdown';
+import {ProjectDropdown } from './ProjectDropdown';
+import {AreaDropdown } from './AreaDropdown';
+import {PageVisibilityEnum, updatePage, showError} from '../../Redux/FlowActions';
 
-interface settingsLocal {
+interface ISettingsLocal {
   dispatch?: any;
   account?: string;
   project?: string;
   team?: string;
 }
 
-interface combo {
+interface ICombo {
   dispatch?: any;
-  settings?: settingsLocal;
-  name?:string;
+  settings?: ISettingsLocal;
+  name?: string;
+  pageState?: PageVisibilityEnum;
 }
 
-function mapStateToProps(state: any): combo {
-  // state of type in any
+function mapStateToProps(state: any): ICombo {
   console.log('state:' + JSON.stringify(state));
   return ({
-    settings:{
+    name: state.IUserInfo.displayName,
+    pageState: state.IControlState.pageState,
+    settings: {
       account: state.ISettingsState.account,
       project: state.ISettingsState.project,
       team: state.ISettingsState.team,
     },
-    name: state.IUserInfo.displayName});
-    //add pagestate
+    });
 }
 
 @connect(mapStateToProps)
 
-export class Settings extends React.Component<combo, any> {
+export class Settings extends React.Component<ICombo, any> {
 
-  private save(): void {
+  public save(): void {
     // save defaults to roaming settings
     Office.context.roamingSettings.set('default_account', this.props.settings.account);
     Office.context.roamingSettings.set('default_project', this.props.settings.project);
     Office.context.roamingSettings.set('default_team', this.props.settings.team);
     Office.context.roamingSettings.saveAsync();
-    console.log("persisted:"+Office.context.roamingSettings.get('default_account'));
-    //TODO - update page state
+    console.log('persisted:' + Office.context.roamingSettings.get('default_account'));
+
+    this.props.dispatch(updatePage(PageVisibilityEnum.CreateItem));
   }
 
   public render(): React.ReactElement<Provider> {
     console.log('got to settings');
-    console.log('props:' + this.props);
 
-    //check if returning, Authorized, which page coming from
     return (
       <div>
         <Error />
@@ -67,7 +61,12 @@ export class Settings extends React.Component<combo, any> {
           <p style = {this.style_text}> Take a moment to configure your default settings for work item creation.</p>
         </div>
         <div>
-          <SettingsOptions />
+          <label style = {this.style_label}> Account </label>
+          <AccountDropdown />
+          <label style = {this.style_label}> Project </label>
+          <ProjectDropdown />
+          <label style = {this.style_label}> Area </label>
+          <AreaDropdown />
         </div>
         <div>
           <button className = 'ms-Button' onClick = {this.save.bind(this)}>
@@ -88,7 +87,7 @@ export class Settings extends React.Component<combo, any> {
     font: '15px arial, ms-segoe-ui',
   };
 
-  style_button = { //not added for
+  style_button = { // not added for
     background: 'rgb(255,255,255)',
     textalign: 'right',
     color: 'rgb(0,63,204)',

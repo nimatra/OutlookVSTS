@@ -1,62 +1,61 @@
 /// <reference path="../../../office.d.ts" />
 import * as React from 'react';
 import { Provider, connect } from 'react-redux';
-//import {Users } from '../VSTS';
-import {ISettingsState} from '../../Redux/LogInReducer';
-import {updateSettings, ISettings} from '../../Redux/LoginActions';
-import {Rest, Account } from '../../RestHelpers/rest';
+import {updateSettings, updateSettingsLists, ISettingsInfo} from '../../Redux/LoginActions';
+import {Rest, Project } from '../../RestHelpers/rest';
 
-//other import statements don't work properly
+// other import statements don't work properly
 require('react-select/dist/react-select.css');
-let Select = require('react-select');
+let Select: any = require('react-select');
 
-interface settingsLocal {
+interface ICombo {
   dispatch?: any;
+  id?: string;
+  email?: string;
   account?: string;
-  project?: string;
-  area?:string;
+  accounts?: ISettingsInfo[];
 }
 
-function mapStateToProps(state: any): settingsLocal {
-  // state of type in any
-  console.log('state:' + JSON.stringify(state));
+function mapStateToProps(state: any): ICombo {
   return ({
     account: state.ISettingsState.account,
-    project: state.ISettingsState.project,
-    area: state.ISettingsState.team,
-  });
+    accounts: state.ICurrentLists.accountList,
+    email: state.IUserInfo.email,
+    id: state.IUserInfo.memberID,
+    });
 }
 
 @connect(mapStateToProps)
 
-export class AccountDropdown extends React.Component<settingsLocal, any> {
+export class AccountDropdown extends React.Component<ICombo, any> {
 
-  public onAccountSelect(option): void {
-    var account = option.label; //{"account":{"value":"two","label":"outlook"}
-    console.log('updated');
+  public onAccountSelect(option: any): void {
+    let account: string = option.label; // {"account":{"value":"two","label":"outlook"}
     console.log('selected:' + account);
     this.props.dispatch(updateSettings(account, '', ''));
+    this.props.dispatch(updateSettingsLists(this.props.accounts, [], []));
+    this.populateProjects(account);
   }
 
   public render(): React.ReactElement<Provider> {
+    console.log('account drop');
 
-    console.log('got to settings');
-    console.log('props:' + this.props.account);
-
-    var accounts = [
-      { label: 'o365exchange', value: 'o365exchange'},
-      { label: 'outlook' , value: 'outlook'},
-      { label: 'mseng', value: 'mseng'},
-    ];
-
-    //check if returning, Authorized, which page coming from
     return (
         <Select
             name='form-field-name'
-            options={accounts}
+            options={this.props.accounts}
             value={this.props.account}
-            onChange={this.onAccountSelect.bind(this)}
-            />
+            onChange={this.onAccountSelect.bind(this)}/>
     );
+  }
+
+  public populateProjects(account: string): void {
+    Rest.getProjects(this.props.email, account, (projects: Project[]) => {
+      let projectNames: ISettingsInfo[] = [];
+      projects.forEach(project => {
+        projectNames.push({ label: project.name, value: project.name });
+      });
+      this.props.dispatch(updateSettingsLists(this.props.accounts, projectNames, []));
+  });
   }
 }
