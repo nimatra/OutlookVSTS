@@ -163,7 +163,7 @@ export class Rest {
                                   user,
                                   { account: account, description: description, project: project, stage: Stage,
                                     title: title, workItemType: workItemType},
-                                  (output) => {callback(output); });
+                                  (output) => {callback(output);});
     }
 
     private static makeRestCall(name: string, user: string, callback: IRestCallback): void {

@@ -218,10 +218,11 @@ router.createWorkItem = function (req, res) {
     'api-version': API1_0 //which API it is using 1.0 ?? //also should i include it in the PATCH built?
   }
   var host = input.account + '.visualstudio.com';
-  var path = '/DefaultCollection/' + input.project + '/_apis/wit/workitems/$' + input.type //add it // where is the area included?
+  var path = '/DefaultCollection/' + input.project + '/_apis/wit/workitems/$' + input.workItemType //add it // where is the area included?
   var headers = {
     'Content-Type': 'application/json-patch+json'
   };
+  console.log('created the path');
   var body = JSON.stringify(
     {
     "op": "add",
@@ -234,9 +235,11 @@ router.createWorkItem = function (req, res) {
     "value": input.description
     }
   );
+   console.log('made the body' + body);
 
   getToken(input.user, (token) => {
     if (token) {
+      console.log('good token');
       headers.Authorization = wrapToken(token);
       patchRequest(query, body, path, headers, host, (output) => { res.send(output) });
     } else {

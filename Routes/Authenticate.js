@@ -100,9 +100,9 @@ router.callback = function (req, res) {
     assertion: req.query.code,
     client_assertion_type: "urn:ietf:params:oauth:client-assertion-type:jwt-bearer",
     grant_type: "urn:ietf:params:oauth:grant-type:jwt-bearer",
-    client_id: secrets.client_id.toString(),
-    client_assertion: secrets.client_secret.toString(),
-    redirect_uri: secrets.redirect_uris[0]
+    client_id: secrets.web.client_id.toString(),
+    client_assertion: secrets.web.client_secret.toString(),
+    redirect_uri: secrets.web.redirect_uris[0]
   });
   var options = {
     host: 'app.vssps.visualstudio.com',
@@ -141,14 +141,14 @@ router.authorize = function (req, res) {
   router.credentials = JSON.parse(getClientSecret());
 
   var authParams = {
-    redirect_uri: router.credentials.redirect_uris[0],
+    redirect_uri: router.credentials.web.redirect_uris[0],
     response_type: 'Assertion',
-    client_id: router.credentials.client_id,
+    client_id: router.credentials.web.client_id,
     scope: 'vso.agentpools_manage vso.build_execute vso.chat_manage vso.code_manage vso.code_status vso.dashboards vso.dashboards_manage vso.entitlements vso.extension.data_write vso.extension_manage vso.gallery_acquire vso.gallery_manage vso.identity vso.loadtest_write vso.packaging_manage vso.profile_write vso.project_manage vso.release_manage vso.test_write vso.work_write',
     approval_prompt: 'force',
     state: req.query.user
   };
-  var authBaseUrl = router.credentials.auth_uri;
+  var authBaseUrl = router.credentials.web.auth_uri;
   var url = authBaseUrl + '?' + querystring.stringify(authParams).toString();
   res.redirect(url);
 
@@ -162,8 +162,8 @@ router.refreshToken = function (state, res) {
     assertion: state.refresh,
     client_assertion_type: "urn:ietf:params:oauth:client-assertion-type:jwt-bearer",
     grant_type: "refresh_token",
-    client_assertion: router.credentials.client_secret.toString(),
-    redirect_uri: router.credentials.redirect_uris[0]
+    client_assertion: router.credentials.web.client_secret.toString(),
+    redirect_uri: router.credentials.web.redirect_uris[0]
   });
   var options = {
     host: 'app.vssps.visualstudio.com',

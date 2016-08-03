@@ -7,6 +7,10 @@ import { WorkItemDropdown } from './WorkItemDropdown';
 import { Classification } from './Classification';
 import { Gear } from './Gear';
 
+/**
+ * Renders all components of the Create page
+ * @class { CreateWorkItem }
+ */
 
 export class CreateWorkItem extends React.Component<{}, {}> {
 
@@ -24,7 +28,9 @@ export class CreateWorkItem extends React.Component<{}, {}> {
     Office.initialize = this.Initialize;
   }
 
-
+/**
+ * Renders the div that contains all the components of the Create page
+ */
 public render(): React.ReactElement<{}> {
 
   console.log('got to create pg');

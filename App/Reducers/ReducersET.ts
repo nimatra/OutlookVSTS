@@ -1,21 +1,59 @@
 import { Reducer, combineReducers } from 'redux';
 import { ACTION, FollowStateTypes, Stage } from './ActionsET';
-
+ /**
+  * Represents the part of the state for the new WorkItem
+  * @interface IWorkItem
+  */
 export interface IWorkItem {
+    /**
+     * Flag to signal the stage the user is on: New if no edits are make, Draft if edits were made, Saved if the user created the work item
+     * @type {Stage}
+     */
   stage: Stage;
+    /**
+     * the type of the work item
+     * @type {string}
+     */
   workItemType: string;
+    /**
+     * the title of the work item
+     * @type {string}
+     */
   title: string;
+    /**
+     * the description of the work item
+     * @type {string}
+     */
   description: string;
+    /**
+     * whether to attach the email to the newly created work item
+     * @type {boolean}
+     */
   addAsAttachment: boolean;
+    /**
+     * where the use is in the process of Following a work item
+     * @type {FollowStateTypes}
+     */
   followState: FollowStateTypes;
+    /**
+     * the htmlLink of the newly created VSTS work item
+     * @type {string}
+     */
   VSTShtmlLink: string;
+    /**
+     * the id of the newly created VSTS work item
+     * @type {string}
+     */
   id: string;
 }
-
+/**
+ * The initial state of the workItem state 
+ * @const
+ */
 export const initalState: IWorkItem = {
   VSTShtmlLink: '',
   addAsAttachment: true,
-  description: 'For more details, please refer to the attached email thread.',
+  description: 'For more details, please refer to the attached email thread. ',
   followState: FollowStateTypes.Unfollowed,
   id: '',
   stage: Stage.New,
@@ -23,7 +61,11 @@ export const initalState: IWorkItem = {
   workItemType: 'Bug',
 };
 
-
+  /**
+   * Handles changing the value of the fields with each action
+   * @param {IWorkItem} state
+   * @param {any} action
+   */
 function changeFields(state: IWorkItem = initalState, action: any): IWorkItem {
   switch (action.type) {
     case ACTION.STAGE:
@@ -40,5 +82,8 @@ function changeFields(state: IWorkItem = initalState, action: any): IWorkItem {
       return state;
  }
 }
-
+/**
+ * The reducer for the workItem state
+ * @const
+ */
 export const testreducer: Reducer = combineReducers({ workItem : changeFields});
