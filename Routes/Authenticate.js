@@ -162,8 +162,8 @@ router.refreshToken = function (state, res) {
     assertion: state.refresh,
     client_assertion_type: "urn:ietf:params:oauth:client-assertion-type:jwt-bearer",
     grant_type: "refresh_token",
-    client_assertion: router.credentials.web.client_secret.toString(),
-    redirect_uri: router.credentials.web.redirect_uris[0]
+    client_assertion: router.credentials.client_secret.toString(),
+    redirect_uri: router.credentials.redirect_uris[0]
   });
   var options = {
     host: 'app.vssps.visualstudio.com',
