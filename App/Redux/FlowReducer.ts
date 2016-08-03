@@ -1,22 +1,26 @@
 /// <reference path="../../typings/tsd.d.ts" />
-import {AuthStateEnum, PageVisibilityEnum, IErrorState} from './FlowActions';
+import {AuthState, PageVisibility} from './FlowActions';
 
-export interface IControlState{
-  authState: AuthStateEnum;
-  pageState: PageVisibilityEnum;
-  error: IErrorState;
+export interface IAuthStateReducer {
+  authState: AuthState;
+  pageState: PageVisibility;
+  error: IErrorStateReducer;
 }
 
-const initialControlState: IControlState = {
-  authState : AuthStateEnum.None,
+export interface IErrorStateReducer {
+  isVisible: boolean;
+  message: string;
+}
+
+const initialControlState: IAuthStateReducer = {
+  authState : AuthState.None,
   error: {
     isVisible: false,
-    message: '',
-    type: 'ErrorState' },
-  pageState : PageVisibilityEnum.Settings,
+    message: ''},
+  pageState : PageVisibility.Settings,
 };
 
-export function updateControlState(state: IControlState = initialControlState, action: any): IControlState {
+export function updateControlStateReducer(state: IAuthStateReducer = initialControlState, action: any): IAuthStateReducer {
   switch (action.type) {
     case 'ErrorState':
       return Object.assign({}, state, { isVisible: action.isVisible, message: action.message});

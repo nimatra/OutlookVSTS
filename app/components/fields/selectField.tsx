@@ -33,7 +33,7 @@ export class SelectField extends React.Component<ISelectFieldProps, IEmptyState>
 
     return (<div>
       <label for={this.props.label} className='ms-font-m'>{this.props.label}</label> <br />
-      <select id={this.props.label} className="form-control" onChange={this.onSelect.bind(this) } value={selected}>
+      <select id={this.props.label} className='form-control' onChange={this.onSelect.bind(this) } value={selected}>
           {items}
       </select>
       <br />

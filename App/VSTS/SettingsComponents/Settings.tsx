@@ -1,11 +1,11 @@
 /// <reference path="../../../office.d.ts" />
 import * as React from 'react';
 import { Provider, connect } from 'react-redux';
-import {Error } from '../Error';
+import {Error } from '../SimpleComponents/Error';
 import {AccountDropdown } from './AccountDropdown';
 import {ProjectDropdown } from './ProjectDropdown';
 import {AreaDropdown } from './AreaDropdown';
-import {PageVisibilityEnum, updatePage, showError} from '../../Redux/FlowActions';
+import {PageVisibilityEnum, updatePage} from '../../Redux/FlowActions';
 
 interface ISettingsLocal {
   dispatch?: any;
@@ -51,47 +51,46 @@ export class Settings extends React.Component<ICombo, any> {
 
   public render(): React.ReactElement<Provider> {
     console.log('got to settings');
+    let style_text: any = {
+      color: 'rgb(63,63,63)', // dark gray
+      font: '15px arial, ms-segoe-ui',
+    };
+
+    let style_label: any = {
+      color: 'rgb(107,107,107)', // dark gray
+      font: '15px arial, ms-segoe-ui',
+    };
+
+    let style_button: any = { // not added for
+      align: 'right',
+      background: 'rgb(255,255,255)',
+      color: 'rgb(0,63,204)',
+      font: '15px arial, ms-segoe-ui',
+      textalign: 'right',
+    };
 
     return (
       <div>
         <Error />
         <div>
-          <p style = {this.style_text}> Welcome {this.props.name}!</p>
+          <p style = {style_text}> Welcome {this.props.name}!</p>
           <p/>
-          <p style = {this.style_text}> Take a moment to configure your default settings for work item creation.</p>
+          <p style = {style_text}> Take a moment to configure your default settings for work item creation.</p>
         </div>
         <div>
-          <label style = {this.style_label}> Account </label>
+          <label style = {style_label}> Account </label>
           <AccountDropdown />
-          <label style = {this.style_label}> Project </label>
+          <label style = {style_label}> Project </label>
           <ProjectDropdown />
-          <label style = {this.style_label}> Area </label>
+          <label style = {style_label}> Area </label>
           <AreaDropdown />
         </div>
         <div>
-          <button className = 'ms-Button' onClick = {this.save.bind(this)}>
+          <button className = 'ms-Button' style = {style_button} onClick = {this.save.bind(this)}>
             <span className= 'ms-Icon ms-Icon--save' > Save and continue </span>
           </button>
         </div>
       </div>
     );
   }
-
-  style_text = {
-    color: 'rgb(63,63,63)', // dark gray
-    font: '15px arial, ms-segoe-ui',
-  };
-
-  style_label = {
-    color: 'rgb(107,107,107)', // dark gray
-    font: '15px arial, ms-segoe-ui',
-  };
-
-  style_button = { // not added for
-    background: 'rgb(255,255,255)',
-    textalign: 'right',
-    color: 'rgb(0,63,204)',
-    font: '15px arial, ms-segoe-ui',
-    align: 'right',
-  };
 }

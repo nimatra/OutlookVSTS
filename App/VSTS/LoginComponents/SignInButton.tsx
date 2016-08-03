@@ -1,14 +1,14 @@
 import * as React from 'react';
 import { Provider, connect } from 'react-redux';
-import { AuthStateEnum, updateAuth } from '../../Redux/FlowActions';
+import { AuthState, updateAuthAction } from '../../Redux/FlowActions';
 
-interface ICombo {
+interface ISignInProps {
     dispatch?: any;
     email?: string;
-    authState?: AuthStateEnum;
+    authState?: AuthState;
 }
 
-function mapStateToProps(state: any): ICombo {
+function mapStateToProps(state: any): ISignInProps {
   console.log('state:' + JSON.stringify(state));
 
   return ({
@@ -19,27 +19,27 @@ function mapStateToProps(state: any): ICombo {
 
 @connect(mapStateToProps)
 
-export class SignInButton extends React.Component<ICombo,  {}> {
-
-  style_button = {
-      background: 'rgb(0,122,204)',
-      textalign: 'center',
-      color: 'rgb(255,255,255)',
-      font: '15px arial, //ms-segoe-ui',
-      align: 'center',
-    };
+export class SignInButton extends React.Component<ISignInProps,  {}> {
 
   public auth(): void {
     console.log('auth opened');
     window.open('./authenticate?user=' + this.props.email);
-    this.props.dispatch(updateAuth(AuthStateEnum.Request));
+    this.props.dispatch(updateAuthAction(AuthState.Request));
   }
 
   public render(): React.ReactElement<Provider> {
     console.log('signinbutton');
+    let style_button: any = {
+      align: 'center',
+      background: 'rgb(0,122,204)',
+      font: '15px arial, ms-segoe-ui',
+      textalign: 'center',
+      textcolor: 'rgb(255,255,255)',
+    };
+
     return(
       <div>
-      <button className = 'ms-Button' style = {this.style_button} onClick = {this.auth.bind(this)}> Sign in to get started </button>
+      <button className = 'ms-Button' onClick = {this.auth.bind(this)}> Sign in to get started </button>
       </div>);
   }
   }

@@ -10,7 +10,6 @@ export interface IErrorState {
 function mapStateToProps(state: any): IErrorState {
   // state of type in any
   console.log('state:' + JSON.stringify(state));
-
   return (
       {
       isVisible: state.IControlState.error.isVisible,
@@ -30,7 +29,7 @@ export class Error extends React.Component<IErrorState, {}> {
       return (<div/>);
     }
   }
-  }
+}
 
 
 

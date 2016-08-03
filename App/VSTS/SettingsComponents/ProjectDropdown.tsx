@@ -1,29 +1,29 @@
 /// <reference path="../../../office.d.ts" />
 import * as React from 'react';
 import { Provider, connect } from 'react-redux';
-import {updateSettings, ISettingsInfo, updateSettingsLists} from '../../Redux/LoginActions';
+import {/*updateSettings, updateSettingsLists,*/  updateSettingsAndLists, ISettingsInfo} from '../../Redux/LoginActions';
 import {Rest, Team } from '../../RestHelpers/rest';
 
 // other import statements don't work properly
 require('react-select/dist/react-select.css');
 let Select: any = require('react-select');
 
-interface ISettingsLocal {
+interface ISettingsLocalProps {
   dispatch?: any;
   account?: string;
   project?: string;
 }
 
-interface ICombo {
+interface IProjectProps {
   dispatch?: any;
   accounts?: ISettingsInfo[];
   id?: string;
   email?: string;
-  settings?: ISettingsLocal;
+  settings?: ISettingsLocalProps;
   projects?: ISettingsInfo[];
 }
 
-function mapStateToProps(state: any): ICombo {
+function mapStateToProps(state: any): IProjectProps {
   return ({
     accounts: state.ICurrentLists.accountList,
     email: state.IUserInfo.email,
@@ -38,7 +38,7 @@ function mapStateToProps(state: any): ICombo {
 
 @connect(mapStateToProps)
 
-export class ProjectDropdown extends React.Component<ICombo, any> {
+export class ProjectDropdown extends React.Component<IProjectProps, any> {
 
   public onProjectSelect(option: any): void {
     let project: string = option.label;

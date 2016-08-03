@@ -24,7 +24,6 @@ export class Authenticate extends React.Component<IAuthenticateProps, {}> {
     window.open('./authenticate?user=' + this.props.user);
   }
 
-
   public refreshAuth(): void {
     let refresh: IRefreshCallback = this.props.refresh;
     let authKey: any = this.authKey;

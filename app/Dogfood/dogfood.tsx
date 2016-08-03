@@ -243,7 +243,7 @@ export class Dogfood extends React.Component<{}, IDogfoodState> {
                                       onChange={this.onTeamSelectChanged.bind(this)}
                                       selected={team} />);
             }
-        return (<div className="p-x-2">
+        return (<div className='p-x-2'>
           {items}
           <StringField label='Bug Title' onChange={this.onTitleChanged.bind(this) } value={title} />
           <ButtonField primary={false} onClick={this.fillTitle.bind(this) } label='Use Email Subject' /> <br /> <br />

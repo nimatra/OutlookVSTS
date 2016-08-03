@@ -3,39 +3,32 @@ import { Provider } from 'react-redux';
 
 export class AddInDescription extends React.Component<{}, {}> {
 
-  style_section = {
+  public render(): React.ReactElement<Provider> {
+    console.log('addindescription');
+    let style_section: any = {
       color: 'rgb(0,122,204)',
       font: '20px arial, ms-segoe-ui-semibold',
     };
 
-    style_text = {
+    let style_text: any = {
        color: 'rgb(63,63,63)',
        font: '15px arial, ms-segoe-ui',
-    };
-
-
-  public render(): React.ReactElement<Provider> {
-    console.log('addindescription');
-    let style_img = {
-      align: 'center',
     };
 
     return(<div>
       <div></div>
       <div>
-        <h1 style = {this.style_section}> Create work items</h1>
-        <p  style = {this.style_text}>Turn an email thread into a work item directly from Outlook!</p>
+        <h1 style = {style_section}> Create work items</h1>
+        <p  style = {style_text}>Turn an email thread into a work item directly from Outlook!</p>
       </div>
       <div>
-        <h1 style = {this.style_section}> Communicate with your team </h1>
-        <p style = {this.style_text}> Once the work item is created,
+        <h1 style = {style_section}> Communicate with your team </h1>
+        <p style = {style_text}> Once the work item is created,
         use the reply-all feature to close the thread with a link and details to the work item. </p>
       </div>
       </div>
     );
   }
   }
-
-//<image src = './images/logo.png' style = {style_img}/>
 
 

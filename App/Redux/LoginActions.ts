@@ -1,52 +1,60 @@
 /// <reference path="../../typings/tsd.d.ts" />
 
-export interface ISettings {
-  type: string;
-  account: string;
-  project: string;
-  team: string;
-}
-
 export interface ISettingsInfo {
   label: string;
   value: string;
 }
 
-export function updateSettings(accountTemp: string, projectTemp: string, teamTemp: string): ISettings {
-  console.log('' + accountTemp + projectTemp + teamTemp);
-  return{
-    account: accountTemp,
-    project: projectTemp,
-    team: teamTemp,
-    type: 'DEFAULT_SETTINGS',
-  };
+export interface ISettingsAction {
+  type: 'DEFAULT_SETTINGS';
+  account: string;
+  project: string;
+  team: string;
 }
 
-export interface ISettingsLists {
-  type: string;
+export interface ISettingsListsAction {
+  type: 'CURRENT_LISTS';
   accountList: ISettingsInfo[];
   projectList: ISettingsInfo[];
   teamList: ISettingsInfo[];
 }
 
-export function updateSettingsLists(accountTemp: ISettingsInfo[], projectTemp: ISettingsInfo[], teamTemp: ISettingsInfo[]): ISettingsLists {
-  return{
-    accountList: accountTemp,
-    projectList: projectTemp,
-    teamList: teamTemp,
-    type: 'DEFAULT_SETTINGS',
+export interface ISettingsAndListsAction {
+  type: 'CURRENT_SETTINGS';
+  lists: ISettingsListsAction;
+  settings: ISettingsAction;
+}
+
+export function updateSettingsAndListsAction(accountTemp: string, projectTemp: string, teamTemp: string,
+                                       accountList: ISettingsInfo[], projectList: ISettingsInfo[],
+                                       teamList: ISettingsInfo[]): ISettingsAndListsAction {
+  console.log('updateSettingsAndLists');
+  return {
+      lists: {
+        type: 'CURRENT_LISTS',
+        accountList: accountList,
+        projectList: projectList,
+        teamList: teamList,
+      },
+      settings: {
+        type: 'DEFAULT_SETTINGS',
+        account: accountTemp,
+        project: projectTemp,
+        team: teamTemp,
+      },
+      type: 'CURRENT_SETTINGS',
   };
 }
 
-
-export interface IUserProfile{
+export interface IUserProfileAction {
   type: string;
   displayName: string;
   email: string;
   memberID: string;
 }
 
-export function updateUserProfile(name: string, mail: string, id: string): IUserProfile {
+export function updateUserProfileAction(name: string, mail: string, id: string): IUserProfileAction {
+  console.log('profile actions:' + name + mail + id);
   return{
       displayName: name,
       email: mail,
@@ -54,6 +62,7 @@ export function updateUserProfile(name: string, mail: string, id: string): IUser
       type: 'USER_PROFILE',
   };
 }
+
 
 
 
