@@ -1,5 +1,17 @@
+/**
+ * enum for Actions
+ * @type {enum}
+ */
 export enum ACTION {STAGE, GEAR, WORKITEMTYPE, NEWTITLE, NEWDESCRIPTION, ADDASATTACHMENT, FOLLOWSTATE, SAVE, POSTCREATION}
+/**
+ * enum for the stages in the Follow Process
+ * @type {enum}
+ */
 export enum FollowStateTypes {Followed, Unfollowed, Request}
+/**
+ * enum for Stage of the edit process of the work item
+ * @type {enum}
+ */
 export enum Stage {New, Draft, Saved}
 export enum PageVisibility {Settings, CreateItem, InProcess, QuickActions} // remove upon merge
  /**
