@@ -4,9 +4,9 @@ import { changeAddAsAttachment, changeDescription } from '../Reducers/ActionsET'
 
  /**
   * Represents the Description Properties
-  * @interface IDescriptionProp
+  * @interface IDescriptionProps
   */
-export interface IDescriptionProp {
+export interface IDescriptionProps {
     /**
      * dispatch to map dispatch to props
      * @type {any}
@@ -26,10 +26,10 @@ export interface IDescriptionProp {
 
 /**
  * Maps elements of the state to properties
- * @returns {IDescriptionProp}
+ * @returns {IDescriptionProps}
  * @param {any} state
  */
-function mapStateToProps (state: any): IDescriptionProp  {
+function mapStateToProps (state: any): IDescriptionProps  {
   return {addAsAttachment: state.workItem.addAsAttachment, description: state.workItem.description} ;
    }
 
@@ -39,7 +39,7 @@ function mapStateToProps (state: any): IDescriptionProp  {
  * Renders the Description heading, Add Email as Attachment checkbox, and description textbox
  * @class { Description }
  */
-export class Description extends React.Component<IDescriptionProp, {}> {
+export class Description extends React.Component<IDescriptionProps, {}> {
 
 /**
  * Dispatches the action to change the description value in the store

@@ -4,9 +4,9 @@ import { changeTitle, changeStage, Stage } from '../Reducers/ActionsET';
 
  /**
   * Represents the Title Properties
-  * @interface ITitleProp
+  * @interface ITitleProps
   */
-export interface ITitleProp {
+export interface ITitleProps {
     /**
      * dispatch to map dispatch to props
      * @type {any}
@@ -25,10 +25,10 @@ export interface ITitleProp {
 }
 /**
  * Maps elements of the state to properties
- * @returns {ITitleProp}
+ * @returns {ITitleProps}
  * @param {any} state
  */
-function mapStateToProps (state: any): ITitleProp  {
+function mapStateToProps (state: any): ITitleProps  {
   console.log('mapStateToProps' + JSON.stringify(state));
   return {stage: state.workItem.stage, title: state.workItem.title} ;
    }
@@ -38,7 +38,7 @@ function mapStateToProps (state: any): ITitleProp  {
  * Renders the Title heading and Title textbox
  * @class { Title }
  */
-export class Title extends React.Component<ITitleProp, {}> {
+export class Title extends React.Component<ITitleProps, {}> {
 /**
  * Dipatches the action to change the value of title in the store 
  * @returns {void}

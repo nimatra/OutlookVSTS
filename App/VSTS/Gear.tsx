@@ -4,9 +4,9 @@ import { Provider, connect } from 'react-redux';
 
 /**
  * Represents the Gear Properties
- * @interface IGearProp
+ * @interface IGearProps
  */
-export interface IGearProp {
+export interface IGearProps {
 /**
  * dispatch to map dispatch to props
  * @type {any}
@@ -19,7 +19,7 @@ export interface IGearProp {
  * Renders the Gear Icon and the button underneath
  * @class { Gear }
  */
-export class Gear extends React.Component<IGearProp, {}> {
+export class Gear extends React.Component<IGearProps, {}> {
 /**
  * Dispatches the action to change the pageVisibility value in the store
  * @ returns {void}

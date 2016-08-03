@@ -6,9 +6,9 @@ require ('react-select/dist/react-select.css');
 let Select: any = require('react-select');
  /**
   * Represents the WorkItemType Properties
-  * @interface IWorkItemTypeDropdownProp
+  * @interface IWorkItemTypeDropdownProps
   */
-export interface IWorkItemTypeDropdownProp {
+export interface IWorkItemTypeDropdownProps {
     /**
      * dispatch to map dispatch to props
      * @type {any}
@@ -22,10 +22,10 @@ export interface IWorkItemTypeDropdownProp {
 }
 /**
  * Maps elements of the state to properties
- * @returns {IWorkItemTypeDropdownProp}
+ * @returns {IWorkItemTypeDropdownProps}
  * @param {any} state
  */
-function mapStateToProps (state: any): IWorkItemTypeDropdownProp  {
+function mapStateToProps (state: any): IWorkItemTypeDropdownProps  {
     return {workItemType: state.workItem.workItemType} ;
    }
 
@@ -34,7 +34,7 @@ function mapStateToProps (state: any): IWorkItemTypeDropdownProp  {
  * Renders the dropdown to select the workItemType using React-Select
  * @class { WorkItemDropdown }
  */
-export class WorkItemDropdown extends React.Component<IWorkItemTypeDropdownProp, {}> {
+export class WorkItemDropdown extends React.Component<IWorkItemTypeDropdownProps, {}> {
 /**
  * Dipatches an action to update the value of workItemType in the store to the selected value
  * @returns {void}

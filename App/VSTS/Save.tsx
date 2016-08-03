@@ -6,9 +6,9 @@ import { changeStage, Stage } from '../Reducers/ActionsET';
 import { IWorkItem } from '../Reducers/ReducersET';
  /**
   * Represents the Save Properties
-  * @interface ISaveProp
+  * @interface ISaveProps
   */
-export interface ISaveProp {
+export interface ISaveProps {
     /**
      * dispatch to map dispatch to props
      * @type {any}
@@ -22,10 +22,10 @@ export interface ISaveProp {
 }
 /**
  * Maps elements of the state to properties
- * @returns {ISaveProp}
+ * @returns {ISaveProps}
  * @param {any} state
  */
-function mapStateToProps (state: any): ISaveProp  {
+function mapStateToProps (state: any): ISaveProps  {
       return { workItem: state.workItem };
 }
 
@@ -34,7 +34,7 @@ function mapStateToProps (state: any): ISaveProp  {
  * Renders the Save button and makes REST api calls
  * @class { Save }
  */
-export class Save extends React.Component<ISaveProp, {}> {
+export class Save extends React.Component<ISaveProps, {}> {
 /**
  * States whether to disable the save button or not
  * @type {boolean}
