@@ -47,7 +47,7 @@ export class Save extends React.Component<ISaveProps, {}> {
    public handleSave(): void {
       this.props.dispatch(changeStage(Stage.Saved));
       Rest.createWorkItem ('t-emtenc@microsoft.com', 'o365exchange', 'Outlook Services/Ecosystem - Ext VSTS', 'Bug',
-                           this.props.workItem.stage, this.props.workItem.title, this.props.workItem.description,
+                           this.props.workItem.title, this.props.workItem.description,
                            (output) => console.log(output));
   }
 

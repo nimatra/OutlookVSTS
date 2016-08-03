@@ -156,12 +156,12 @@ export class Rest {
         });
     }
 
-   public static createWorkItem (user: string, account: string, project: string, workItemType: string, stage: Stage,
+   public static createWorkItem (user: string, account: string, project: string, workItemType: string,
                                  title: string, description: string, callback: IRestCallback): void {
         console.log('got to createWorkItem function');
         this.makeRestCallWithArgs('createWorkItem',
                                   user,
-                                  { account: account, description: description, project: project, stage: Stage,
+                                  { account: account, description: description, project: project,
                                     title: title, workItemType: workItemType},
                                   (output) => {callback(output); });
     }
