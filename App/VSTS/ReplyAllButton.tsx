@@ -1,35 +1,45 @@
 /// <reference path="../../office.d.ts" />
 import * as React from 'react';
 import { Provider } from 'react-redux';
-// import { Office } from 'Office';
 
-// let finalLink: React.ReactElement<any> = (<ItemHyperlink />);
+/**
+ * Props for ReplyAllButton Component
+ * @interface { IReplyAllButtonProps }
+ */
+interface IReplyAllButtonProps {
+  /**
+   * workItemHyperlink
+   * @type { string }
+   */
+  workItemHyperlink: string;
+}
 
-export class ReplyAllButton extends React.Component<{workItemHyperlink: any}, {}> {
-
+/**
+ * Renders a button that on-click, opens a reply-all form with the item hyperlink inserted in-line
+ * @class { ReplyAllButton }
+ */
+export class ReplyAllButton extends React.Component<IReplyAllButtonProps, {}> {
+  /**
+   * Renders the ReplyAllButton Component and reads IReplyAllButtonProps
+   * @returns { React.ReactElement } ReactHTML div
+   */
   public render(): React.ReactElement<Provider> {
-    console.log('got to replyallbutton');
-
     return (
       <div>
         <button onClick={this.handleClick} className='ms-Button'>
-        <span className='ms-Icon ms-Icon--replyAll'></span>
-        {'   '}Reply All with Work Item
+          <a className='ms-Icon ms-Icon--replyAll' />
+          {'   '}Reply All with Work Item
         </button>
-        <h1></h1>
+        <br/><br/>
       </div>
     );
   }
 
   /**
-   * handles mouse click on a suggestion
-   * 
-   * this is an anonymous method - actually, it is a variable
-   * 
+   * Handles the click and displays a reply-all form
    * @private
    */
-
-  private handleClick: any = (event) => {
+  private handleClick: () => void = () => {
     Office.context.mailbox.item.displayReplyAllForm(this.props.workItemHyperlink);
   }
 }

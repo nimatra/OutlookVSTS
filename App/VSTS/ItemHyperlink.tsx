@@ -1,14 +1,31 @@
 /// <reference path="../../office.d.ts" />
 import * as React from 'react';
 
-export class ItemHyperlink extends React.Component<{workItemHyperlink: any}, {}> {
+/**
+ * Props for ItemHyperlink Component
+ * @interface { IItemHyperlinkProps }
+ */
+interface IItemHyperlinkProps {
+  /**
+   * workItemHyperlink
+   * @type { string }
+   */
+  workItemHyperlink: string;
+}
 
+/**
+ * Renders a ReactHTML div 
+ * @class { ItemHyperlink }
+ */
+export class ItemHyperlink extends React.Component<IItemHyperlinkProps, {}> {
+  /**
+   * Renders the ItemHyperlink Component and reads IItemHyperlinkProps
+   * @returns { React.ReactElement } ReactHTML div
+   */
   public render(): React.ReactElement<any> {
-    console.log('got to itemhyperlink');
-
     return(
       <div>
-      <td dangerouslySetInnerHTML={{__html: this.props.workItemHyperlink}} />
+        <td dangerouslySetInnerHTML={{__html: this.props.workItemHyperlink}} />
       </div>
     );
   }

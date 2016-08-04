@@ -1,9 +1,11 @@
 /// <reference path="../typings/tsd.d.ts" />
-
 import { Reducer, combineReducers } from 'redux';
-import { IChangeFollowState } from './actionsEZ';
-import { InitialState, IWorkItem } from './statesEZ';
+import { InitialState, IWorkItem, IChangeFollowState } from './statesEZ';
 
+/**
+ * Reducer that describes the change to the followState member of the work item
+ * @returns { IWorkItem }
+ */
 function changeFollowReducer(state: IWorkItem = InitialState, action: IChangeFollowState): IWorkItem {
   switch (action.type) {
     case 'ChangeFollowState':
@@ -13,4 +15,8 @@ function changeFollowReducer(state: IWorkItem = InitialState, action: IChangeFol
   }
 }
 
-export const quickActionReducer: Reducer = combineReducers({ quickActionState: changeFollowReducer });
+/**
+ * The reducer for the QuickActions component
+ * @const 
+ */
+export const quickActionsReducer: Reducer = combineReducers({ workItemState: changeFollowReducer });

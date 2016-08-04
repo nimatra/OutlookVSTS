@@ -14,16 +14,15 @@ interface ICopyButtonProps {
 }
 
 /**
- * Renders a button that writes an HTML element to clipboard on-click
+ * Renders a button that writes the item hyperlink HTML element to clipboard on-click
  * @class { CopyButton }
  */
 export class CopyButton extends React.Component<ICopyButtonProps, {}> {
   /**
    * Renders the CopyButton Component and reads ICopyButtonProps
-   * Returns ReactHTML 
+   * @returns { React.ReactElement } ReactHTML div 
    */
   public render(): React.ReactElement<{}> {
-    console.log('got to copybutton');
     document.addEventListener('copy', this.setClipboardData);
     return (
       <div>
@@ -47,7 +46,7 @@ export class CopyButton extends React.Component<ICopyButtonProps, {}> {
   /**
    * Writes the formatted HTML element to the clipboard
    * @private
-   * @oaran { any } e 
+   * @param { any } e 
    */
   private setClipboardData: (e: any) => void = (e) => {
     console.log('got to handler');

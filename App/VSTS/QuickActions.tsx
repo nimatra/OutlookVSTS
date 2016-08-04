@@ -1,64 +1,75 @@
 /// <reference path="../../office.d.ts" />
 import * as React from 'react';
 import { Provider } from 'react-redux';
-// import { Office } from 'Office';
 import { ItemHyperlink } from  './ItemHyperlink';
 import { FollowButton } from './FollowButton';
 import { ReplyAllButton } from './ReplyAllButton';
 import { CopyButton } from './CopyButton';
-import { FollowStateTypes } from '../statesEZ';
-import { connect } from 'react-redux';
 import { RestButton } from './RestButton';
+import { IWorkItem } from '../statesEZ';
+import { connect } from 'react-redux';
 import * as ReactDOM from 'react-dom/server';
 
+/**
+ * Props for QuickActions Component
+ * @interface { IQuickActionProps }
+ */
 interface IQuickActionProps {
-  VSTShtmlLink?: string;
-  followState?: FollowStateTypes;
-  id?: string;
-  title?: string;
-  workItemType?: string;
+  /**
+   * Work item information
+   * @type { IWorkItem }
+   */
+  workItem?: IWorkItem;
 }
 
+/**
+ * Mapping state from store to component props
+ * @returns { IQuickActionProps } Props for QuickActions Component
+ */
 function mapStateToProps(state: any): IQuickActionProps {
   return {
-    VSTShtmlLink: state.quickActionState.VSTShtmlLink,
-    followState: state.quickActionState.followState,
-    id: state.quickActionState.id,
-    title: state.quickActionState.title,
-    workItemType: state.quickActionState.workItemType,
+    workItem: state.workItemState,
   };
 }
 
+/**
+ * Builds the formatted work item HTML element
+ * Renders all Components
+ * @returns { React.ReactElement } ReactHTML div
+ */
 @connect(mapStateToProps)
 export class QuickActions extends React.Component<IQuickActionProps, {isReady: boolean}> {
-
+  /**
+   * Builds the HTML element in the form <item type><item ID>: <item title>
+   * @returns { string }
+   */
   public buildItemHyperlink(): string {
-    return ReactDOM.renderToStaticMarkup(<label>
-      <a target='_blank'
-      href={this.props.VSTShtmlLink}
-      className='ms-font-1x ms-fontWeight-light ms-fontColor-black'>
-      {this.props.workItemType} {this.props.id}
-      </a>
-      <a className='ms-font-1x ms-fontWeight-light ms-fontColor-black'>: {this.props.title}</a>
+    return ReactDOM.renderToStaticMarkup(
+      <label>
+        <a target='_blank'
+          href={this.props.workItem.VSTShtmlLink}
+          className='ms-font-2x ms-fontWeight-light ms-fontColor-black'>
+          {this.props.workItem.workItemType} {this.props.workItem.id}
+        </a>
+        <a className='ms-font-2x ms-fontWeight-light ms-fontColor-black'>: {this.props.workItem.title}</a>
       </label>);
   }
 
+  /**
+   * Renders the ItemHyperlink, FollowButton, ReplyAllButton, and CopyButton Components
+   * @returns { React.ReactElement } ReactHTML div
+   */
   public render(): React.ReactElement<Provider> {
-    console.log('got to moretodo');
     let htmlString: string = this.buildItemHyperlink();
-
     return(
-    // todo: pass in work item ID from create work item page to build hyperlink URL
       <div>
-      {/*<img src='../../public/Images/logo.png' alt='VSTS Logo' height='100' width='100'/>*/}
-      <h2 className='ms-font-1x ms-fontWeight-light ms-fontColor-black'>Work item successfully created!</h2>
-      <ItemHyperlink workItemHyperlink={htmlString}/>
-      <h2 className='ms-font-1x ms-fontWeight-light ms-fontColor-black'>Quick Actions:</h2>
-      <FollowButton />
-      <ReplyAllButton workItemHyperlink={htmlString}/>
-      <CopyButton workItemHyperlink={htmlString}/>
-      <RestButton />
-      {/*<img src="./Images/logo_strip.png" alt="Footer VSTS Logo" height="100" width="400"/>*/}
+        <h1 className='ms-font-1x ms-fontWeight-light ms-fontColor-black'>Work item successfully created!</h1>
+        <ItemHyperlink workItemHyperlink={htmlString}/>
+        <h1 className='ms-font-1x ms-fontWeight-light ms-fontColor-black'>Quick Actions:</h1>
+        <FollowButton />
+        <ReplyAllButton workItemHyperlink={htmlString}/>
+        <CopyButton workItemHyperlink={htmlString}/>
+        <RestButton />
       </div>
     );
   }
@@ -77,5 +88,4 @@ export class QuickActions extends React.Component<IQuickActionProps, {isReady: b
    }
 
   // end work-around
-
 }
