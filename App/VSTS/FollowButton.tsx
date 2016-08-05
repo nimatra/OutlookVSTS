@@ -3,7 +3,7 @@ import * as React from 'react';
 import { Provider } from 'react-redux';
 import { changeFollowAction } from '../actionsEZ';
 import { connect } from 'react-redux';
-import { FollowStateTypes } from '../statesEZ';
+import { FollowTypes } from '../statesEZ';
 
 /**
  * Props for FollowButton Component
@@ -17,9 +17,9 @@ interface IFollowButtonProps {
   dispatch?: any;
   /**
    * Follow state of work item
-   * @type { FollowStateTypes }
+   * @type { FollowTypes }
    */
-  followState?: FollowStateTypes;
+  followState?: FollowTypes;
 }
 
 /**
@@ -46,6 +46,7 @@ export class FollowButton extends React.Component<IFollowButtonProps, {}> {
    * @returns { React.ReactElement } ReactHTML div
    */
   public render(): React.ReactElement<Provider> {
+    console.log('re-rendering follow');
     /**
      * Text displayed in the button HTML tag
      */
@@ -55,7 +56,7 @@ export class FollowButton extends React.Component<IFollowButtonProps, {}> {
      */
     const iconType: string = 'ms-Icon ms-Icon--eye';
     switch (this.props.followState) {
-      case FollowStateTypes.Followed:
+      case FollowTypes.Followed:
         buttonText = 'Following';
         break;
       default:
@@ -64,7 +65,7 @@ export class FollowButton extends React.Component<IFollowButtonProps, {}> {
     }
     return(
       <div>
-        <button className='ms-Button' id='follow' /*disabled={isDisabled}*/ onClick = {this.handleClick}>
+        <button className='ms-Button' id='follow' onClick = {this.handleClick}>
           <a className={iconType} />
           {'   ' + buttonText}
         </button>
@@ -74,8 +75,7 @@ export class FollowButton extends React.Component<IFollowButtonProps, {}> {
   }
 
   /**
-   * Handles the button click and depending on followState, changes buttonText and isBisabled
-   * When a REST call is made, followState is flagged as Request
+   * Handles the button click, which updates the followState in Store which should enable the button upon re-render
    * @private
    */
   private handleClick: () => void = () => { // so should this logic appear in the action instead?

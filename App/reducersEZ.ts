@@ -1,12 +1,12 @@
 /// <reference path="../typings/tsd.d.ts" />
 import { Reducer, combineReducers } from 'redux';
-import { InitialState, IWorkItem, IChangeFollowState } from './statesEZ';
+import { InitialState, IWorkItem, IChangeFollowAction } from './statesEZ';
 
 /**
  * Reducer that describes the change to the followState member of the work item
  * @returns { IWorkItem }
  */
-function changeFollowReducer(state: IWorkItem = InitialState, action: IChangeFollowState): IWorkItem {
+function changeFollowReducer(state: IWorkItem = InitialState, action: IChangeFollowAction): IWorkItem {
   switch (action.type) {
     case 'ChangeFollowState':
       return Object.assign({}, state, {followState: action.followState});
