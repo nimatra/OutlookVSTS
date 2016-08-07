@@ -5,52 +5,43 @@ import {Error } from '../SimpleComponents/Error';
 import {AccountDropdown } from './AccountDropdown';
 import {ProjectDropdown } from './ProjectDropdown';
 import {AreaDropdown } from './AreaDropdown';
-import {PageVisibilityEnum, updatePage} from '../../Redux/FlowActions';
+import {SaveDefaultsButton } from './SaveDefaultsButton';
 
-interface ISettingsLocal {
+interface ISettingsProps {
+  /**
+   * intermediate to dispatch actions to update the global store
+   * @type {any}
+   */
   dispatch?: any;
-  account?: string;
-  project?: string;
-  team?: string;
-}
-
-interface ICombo {
-  dispatch?: any;
-  settings?: ISettingsLocal;
+  /**
+   * user's display name
+   * @type {string}
+   */
   name?: string;
-  pageState?: PageVisibilityEnum;
 }
 
-function mapStateToProps(state: any): ICombo {
-  console.log('state:' + JSON.stringify(state));
+/**
+ * maps state in application store to properties for the component
+ * @param {any} state
+ */
+function mapStateToProps(state: any): ISettingsProps {
   return ({
-    name: state.IUserInfo.displayName,
-    pageState: state.IControlState.pageState,
-    settings: {
-      account: state.ISettingsState.account,
-      project: state.ISettingsState.project,
-      team: state.ISettingsState.team,
-    },
+    name: state.userProfile.displayName,
     });
 }
 
 @connect(mapStateToProps)
 
-export class Settings extends React.Component<ICombo, any> {
-
-  public save(): void {
-    // save defaults to roaming settings
-    Office.context.roamingSettings.set('default_account', this.props.settings.account);
-    Office.context.roamingSettings.set('default_project', this.props.settings.project);
-    Office.context.roamingSettings.set('default_team', this.props.settings.team);
-    Office.context.roamingSettings.saveAsync();
-    console.log('persisted:' + Office.context.roamingSettings.get('default_account'));
-
-    this.props.dispatch(updatePage(PageVisibilityEnum.CreateItem));
-  }
-
+/**
+ * Smart component
+ * Renders area path dropdowns and save button
+ * @class {Settings} 
+ */
+export class Settings extends React.Component<ISettingsProps, any> {
+  /**
+   * Renders the area path dropdowns and save button
+   */
   public render(): React.ReactElement<Provider> {
-    console.log('got to settings');
     let style_text: any = {
       color: 'rgb(63,63,63)', // dark gray
       font: '15px arial, ms-segoe-ui',
@@ -61,17 +52,15 @@ export class Settings extends React.Component<ICombo, any> {
       font: '15px arial, ms-segoe-ui',
     };
 
-    let style_button: any = { // not added for
-      align: 'right',
-      background: 'rgb(255,255,255)',
-      color: 'rgb(0,63,204)',
-      font: '15px arial, ms-segoe-ui',
-      textalign: 'right',
+    let style_image: any = {
+      height: '150px',
+      width: '320px',
     };
 
     return (
       <div>
         <Error />
+        <image style = {style_image} src = '../../../public/Images/VSTSLogo_Long.png'/>
         <div>
           <p style = {style_text}> Welcome {this.props.name}!</p>
           <p/>
@@ -86,9 +75,9 @@ export class Settings extends React.Component<ICombo, any> {
           <AreaDropdown />
         </div>
         <div>
-          <button className = 'ms-Button' style = {style_button} onClick = {this.save.bind(this)}>
-            <span className= 'ms-Icon ms-Icon--save' > Save and continue </span>
-          </button>
+          <br/>
+          <SaveDefaultsButton/>
+          <br/>
         </div>
       </div>
     );

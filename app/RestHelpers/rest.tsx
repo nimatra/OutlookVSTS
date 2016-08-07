@@ -138,15 +138,14 @@ export class Rest {
         });
     }
 
-       public static getAccountsNew(user: string, memberId: string, callback: IAccountsCallback): void {
-            console.log('new');
-            this.makeRestCallWithArgs('accounts', user, {memberId: memberId} , (output) => {
+       public static getAccountsNew(email: string, memberId: string, callback: IAccountsCallback): void {
+            this.makeRestCallWithArgs('accounts', email, {memberId: memberId} , (output) => {
                 let parsed: any = JSON.parse(output);
                 this.accounts = [];
                 parsed.value.forEach(account => {
                     this.accounts.push(new Account(account));
                 });
-                callback(this.accounts);
+                callback(this.accounts); //return special array for error
             });
     }
 

@@ -1,18 +1,26 @@
-import {AuthState} from './Redux/FlowActions';
+/**
+ * interface for callback
+ * @interface IAuthStateCallback 
+ */
+export interface IAuthStateCallback { (state: string): void; }
 
-export interface IAuthStateCallback { (state: AuthState): void; }
-
+/**
+ * Connects to user database
+ * @class Auth
+ */
 export class Auth {
-
+    /**
+     * check user database for token associated with user email
+     * @param {string} user - user's email address
+     * @param {IAuthStateCallback} callback
+     * @return {void}
+     */
     public static getAuthState(user: string, callback: IAuthStateCallback): void {
-        console.log('new:' + user);
         $.get('./authenticate/db?user=' + user, (output) => {
-            console.log('output:' + output);
             if (output === 'success') {
-                callback(AuthState.Authorized);
-            } else { // output === failure
-                console.log('failed');
-                callback(AuthState.NotAuthorized);
+                callback('success');
+            } else {
+                callback('failure');
             }
         });
     }

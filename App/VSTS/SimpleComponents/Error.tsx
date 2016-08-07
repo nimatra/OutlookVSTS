@@ -1,26 +1,39 @@
 import * as React from 'react';
 import { Provider, connect } from 'react-redux';
 
-export interface IErrorState {
+/**
+ * Properties needed for the Error component
+ * @interface IErrorProps
+ */
+export interface IErrorProps {
   dispatch?: any;
   isVisible?: boolean;
   message?: string;
 }
 
-function mapStateToProps(state: any): IErrorState {
-  // state of type in any
-  console.log('state:' + JSON.stringify(state));
+/**
+ * maps state in application store to properties for the component
+ * @param {any} state
+ */
+function mapStateToProps(state: any): IErrorProps {
   return (
       {
-      isVisible: state.IControlState.error.isVisible,
-      message: state.IControlState.error.message,
+      isVisible: state.controlState.error.isVisible,
+      message: state.controlState.error.message,
     });
 }
 
 @connect(mapStateToProps)
 
-export class Error extends React.Component<IErrorState, {}> {
-
+/**
+ * Smart component
+ * Renders error response
+ * @class {Error} 
+ */
+export class Error extends React.Component<IErrorProps, {}> {
+  /**
+   * Renders the error message in parent component
+   */
   public render(): React.ReactElement<Provider> {
     if (this.props.isVisible === true) {
       console.log('error');

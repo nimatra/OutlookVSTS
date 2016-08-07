@@ -6,8 +6,8 @@ import { Provider } from 'react-redux';
 import { Dogfood } from './Dogfood/dogfood';
 import { VSTS } from './VSTS/VSTS';
 import { Done } from './Authenticate/done';
-import { overallRed } from './Redux/GlobalReducer';
-import thunkMiddleware from 'redux-thunk'
+import { completeAddInReducer } from './Redux/GlobalReducer';
+import thunkMiddleware from 'redux-thunk';
 declare const require: (name: String) => any;
 
 interface IHotModule {
@@ -17,14 +17,14 @@ interface IHotModule {
 declare const module: IHotModule;
 
 function configureStore(): Store {
-  const store: Store = createStore(overallRed,applyMiddleware(
+  const store: Store = createStore(completeAddInReducer, applyMiddleware(
     thunkMiddleware // lets us dispatch() functions
     // neat middleware that logs actions
   ));
 
   if (module.hot) {
     module.hot.accept('./reducers', () => {
-      const nextRootReducer: any = require('./Redux/LoginReducer').overallRed;
+      const nextRootReducer: any = require('./Redux/LoginReducer').completeAddInReducer;
       store.replaceReducer(nextRootReducer);
     });
   }

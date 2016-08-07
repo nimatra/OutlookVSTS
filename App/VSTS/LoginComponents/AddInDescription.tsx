@@ -1,10 +1,17 @@
 import * as React from 'react';
 import { Provider } from 'react-redux';
 
+/**
+ * Dumb component
+ * Renders the static add-in description text
+ * @class {AddInDescription} 
+ */
 export class AddInDescription extends React.Component<{}, {}> {
 
+  /**
+   * Renders the add-in description text
+   */
   public render(): React.ReactElement<Provider> {
-    console.log('addindescription');
     let style_section: any = {
       color: 'rgb(0,122,204)',
       font: '20px arial, ms-segoe-ui-semibold',

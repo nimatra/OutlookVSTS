@@ -32,6 +32,7 @@ function getRequest(query, path, headers, host, callback) {
     method: 'GET',
     headers: headers
   };
+  console.log('get: ' + options.path)
   https.get(options, function (response) { parseResponse(response, callback); console.log("response:"+callback)});
 }
 

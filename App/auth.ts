@@ -9,7 +9,6 @@ export interface IAuthStateCallback { (state: AuthState): void; }
 export class Auth {
 
     public static getAuthState(user: string, callback: IAuthStateCallback): void {
-        console.log('old');
         $.get('./authenticate/db?user=' + user, (output) => {
             if (output === 'success') {
                 callback(AuthState.Authorized);
