@@ -2,7 +2,6 @@
 import * as React from 'react';
 import { Provider } from 'react-redux';
 import { Auth, AuthState } from '../auth';
-
 interface IRefreshCallback { (): void; }
 
 interface IAuthenticateProps {
@@ -24,7 +23,6 @@ export class Authenticate extends React.Component<IAuthenticateProps, {}> {
   public linkToAuth(): void {
     window.open('./authenticate?user=' + this.props.user);
   }
-
 
   public refreshAuth(): void {
     let refresh: IRefreshCallback = this.props.refresh;

@@ -82,6 +82,7 @@ router.db = function (req, res) {
         res.send("success");
       }
       else {
+        console.log("middle state")
         data.user = req.query.user;
         router.refreshToken(data, res);
       }
@@ -139,7 +140,6 @@ router.use('/callback', router.callback);
 router.authorize = function (req, res) {
 
   router.credentials = JSON.parse(getClientSecret());
-
   var authParams = {
     redirect_uri: router.credentials.redirect_uris[0],
     response_type: 'Assertion',
@@ -156,13 +156,14 @@ router.authorize = function (req, res) {
 router.use('/', router.authorize);
 
 router.refreshToken = function (state, res) {
-
+  console.log("refresh token")
   router.credentials = JSON.parse(getClientSecret());
+  console.log("token:"+state.refresh);
   var data = querystring.stringify({
     assertion: state.refresh,
     client_assertion_type: "urn:ietf:params:oauth:client-assertion-type:jwt-bearer",
     grant_type: "refresh_token",
-    client_assertion: router.credentials.client_secret.toString(),
+    client_assertion: router.credentials.client_secret.toString(), //ERROR HERE CLIENT_SECRET UNDEFINED
     redirect_uri: router.credentials.redirect_uris[0]
   });
   var options = {
@@ -219,7 +220,8 @@ function saveToken(id, data) {
   }
 }
 
-function updateToken(state, data, res) {
+function updateToken(state, data, res) { //FAILS HERE - TOKEN NULL
+  //console.log('update')
   var config = JSON.parse(getDbConfig());
   var connection = new tedious.Connection(config);
   connection.on('connect', function (err) {
