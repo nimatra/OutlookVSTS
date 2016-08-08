@@ -2,10 +2,9 @@
 import * as React from 'react';
 import { Provider } from 'react-redux';
 import { ItemHyperlink } from  './ItemHyperlink';
-import { FollowButton } from './FollowButton';
+// import { FollowButton } from './FollowButton';
 import { ReplyAllButton } from './ReplyAllButton';
 import { CopyButton } from './CopyButton';
-import { RestButton } from './RestButton';
 import { IWorkItem } from '../statesEZ';
 import { connect } from 'react-redux';
 import * as ReactDOM from 'react-dom/server';
@@ -66,10 +65,8 @@ export class QuickActions extends React.Component<IQuickActionProps, {isReady: b
         <h1 className='ms-font-1x ms-fontWeight-light ms-fontColor-black'>Work item successfully created!</h1>
         <ItemHyperlink workItemHyperlink={htmlString}/>
         <h1 className='ms-font-1x ms-fontWeight-light ms-fontColor-black'>Quick Actions:</h1>
-        <FollowButton />
         <ReplyAllButton workItemHyperlink={htmlString}/>
         <CopyButton workItemHyperlink={htmlString}/>
-        <RestButton />
       </div>
     );
   }
