@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Provider, connect } from 'react-redux';
-import { changeWorkItemType } from '../Reducers/ActionsET';
+import { updateWorkItemType } from '../Reducers/ActionsET';
 
 require ('react-select/dist/react-select.css');
 let Select: any = require('react-select');
@@ -20,20 +20,18 @@ export interface IWorkItemTypeDropdownProps {
      */
     workItemType?: string;
 }
+
+
 /**
- * Maps elements of the state to properties
- * @returns {IWorkItemTypeDropdownProps}
- * @param {any} state
+ * Renders the dropdown to select the workItemType using React-Select
+ * @class { WorkItemDropdown }
  */
 function mapStateToProps (state: any): IWorkItemTypeDropdownProps  {
     return {workItemType: state.workItem.workItemType} ;
    }
 
 @connect (mapStateToProps)
-/**
- * Renders the dropdown to select the workItemType using React-Select
- * @class { WorkItemDropdown }
- */
+
 export class WorkItemDropdown extends React.Component<IWorkItemTypeDropdownProps, {}> {
 /**
  * Dipatches an action to update the value of workItemType in the store to the selected value
@@ -43,7 +41,7 @@ export class WorkItemDropdown extends React.Component<IWorkItemTypeDropdownProps
 public handleTypeChange(option: any): void {
     let type: string = option.label;
     console.log('Selected: ' + type);
-    this.props.dispatch(changeWorkItemType(type));
+    this.props.dispatch(updateWorkItemType(type));
 }
 /**
  * Renders the workItemType Dropdown using React-Select

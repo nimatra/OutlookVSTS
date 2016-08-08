@@ -1,5 +1,3 @@
-import { Stage } from '../Reducers/ActionsET';
-
 export class UserProfile {
     public displayName: string;
     public publicAlias: string;
@@ -156,14 +154,47 @@ export class Rest {
         });
     }
 
-   public static createWorkItem (user: string, account: string, project: string, workItemType: string,
-                                 title: string, description: string, callback: IRestCallback): void {
-        console.log('got to createWorkItem function');
-        this.makeRestCallWithArgs('createWorkItem',
-                                  user,
-                                  { account: account, description: description, project: project,
-                                    title: title, workItemType: workItemType},
-                                  (output) => {callback(output); });
+    public static createWorkItem(user: string, options: any, currentIteration: string, type: string, title: string, body: string, callback: IRestCallback): void {
+        this.createWorkItemCall(user, options, currentIteration, type, title, body, callback);
+    }
+
+    public static createWorkItemCall(user: string, options: any, currentIteration: string, type: string, title: string, body: string, callback: IRestCallback): void {
+        this.getTeamAreaPath(user, options.account, options.project, options.teamName, (areaPath) => {
+            console.log(areaPath);
+            this.makeRestCallWithArgs(
+                'newWorkItem',
+                user,
+                { account: options.account, areaPath: areaPath, body: body, currentIteration: currentIteration, project: options.project, title: title, type: type },
+                (output) => {
+                    console.log(output);
+                    callback(output);
+                });
+        });
+    }
+
+    public static getCurrentIteration(user: string, options: any, type: string, title: string, body: string, callback: IRestCallback): void {
+        this.getCurrentIterationCall(user, options, type, title, body, callback);
+    }
+
+    public static getCurrentIterationCall(user: string, options: any, type: string, title: string, body: string, callback: IRestCallback): void {
+        this.getTeams(user, options.project, options.account, (teams: Team[]) => {
+            let guid: string;
+            teams.forEach(team => {
+                if (team.name === options.teamName) {
+                    guid = team.id;
+                }
+            });
+            this.makeRestCallWithArgs(
+                'getCurrentIteration',
+                user,
+                { account: options.account, project: options.project, team: guid},
+                (output) => {
+                    console.log(options);
+                    Rest.createWorkItem('t-emtenc@microsoft.com', options, JSON.parse(output).value[0].path,
+                    type, title, body,
+                    (output) => callback(output));
+                });
+        });
     }
 
     private static makeRestCall(name: string, user: string, callback: IRestCallback): void {
@@ -171,9 +202,8 @@ export class Rest {
     }
 
     private static makeRestCallWithArgs(name: string, user: string, args: any, callback: IRestCallback): void {
-        console.log('got to restcallwithargs');
         const path: string = './rest/' + name + '?user=' + user + '&' + $.param(args);
-        console.log('got to restcallwithargs part 2' + path);
+        console.log('got to restcallwithargs' + path);
         $.get(path, callback);
     }
 

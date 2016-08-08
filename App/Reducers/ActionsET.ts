@@ -2,18 +2,33 @@
  * enum for Actions
  * @type {enum}
  */
-export enum ACTION {STAGE, GEAR, WORKITEMTYPE, NEWTITLE, NEWDESCRIPTION, ADDASATTACHMENT, FOLLOWSTATE, SAVE, POSTCREATION}
+export enum ACTION {STAGE,
+                    GEAR,
+                    WORKITEMTYPE,
+                    NEWTITLE,
+                    NEWDESCRIPTION,
+                    ADDASATTACHMENT,
+                    FOLLOWSTATE,
+                    SAVE,
+                    POSTCREATION}
+
 /**
  * enum for the stages in the Follow Process
  * @type {enum}
  */
-export enum FollowStateTypes {Followed, Unfollowed, Request}
+export enum FollowTypes {Followed,
+                         Unfollowed}
+
 /**
  * enum for Stage of the edit process of the work item
  * @type {enum}
  */
-export enum Stage {New, Draft, Saved}
-export enum PageVisibility {Settings, CreateItem, InProcess, QuickActions} // remove upon merge
+export enum Stage {New,
+                   Draft,
+                   Saved}
+
+export enum PageVisibility {Settings, CreateItem, InProcess, QuickActions} // remove upon merge since Miranda's part will make this enum
+
  /**
   * Represents the Stage Action
   * @interface IStageAction
@@ -140,42 +155,42 @@ export interface ISaveAction {
    * Handles update of the stage
    * @param {Stage} stage
    */
-export function changeStage (stage: Stage): IStageAction {
+export function updateStage (stage: Stage): IStageAction {
   return {type: ACTION.STAGE, stage};
 }
   /**
    * Handles update of the pageVisibility
    * @param {PageVisibility} pageVisibility
    */
-export function changeGearVisiblility (pageVisibility: PageVisibility): IGearAction {
+export function updateGearVisiblility (pageVisibility: PageVisibility): IGearAction {
   return {type: ACTION.GEAR, pageVisibility};
 }
   /**
    * Handles update of the workItemType
    * @param {string} workItemType
    */
-export function changeWorkItemType (workItemType: string): IWorkItemTypeAction {
+export function updateWorkItemType (workItemType: string): IWorkItemTypeAction {
    return {type: ACTION.WORKITEMTYPE, workItemType};
  }
   /**
    * Handles update of the title
    * @param {string} title
    */
-export function changeTitle (title: string): ITitleAction {
+export function updateTitle (title: string): ITitleAction {
    return {type: ACTION.NEWTITLE, title};
  }
   /**
    * Handles update of the description
    * @param {string} description
    */
-export function changeDescription (description: string): IDescriptionAction {
+export function updateDescription (description: string): IDescriptionAction {
    return {type: ACTION.NEWDESCRIPTION, description};
  }
   /**
    * Handles update of addAsAttachment
    * @param {boolean} addAsAttachment
    */
-export function changeAddAsAttachment (addAsAttachment: boolean): IAddAsAttachmentAction {
+export function updateAddAsAttachment (addAsAttachment: boolean): IAddAsAttachmentAction {
    return {addAsAttachment: !addAsAttachment, type: ACTION.ADDASATTACHMENT};
  }
   /**
@@ -184,7 +199,7 @@ export function changeAddAsAttachment (addAsAttachment: boolean): IAddAsAttachme
    * @param {string} VSTShtmlLink
    * @param {string} id
    */
-export function changeSave (pageVisibility: PageVisibility, VSTShtmlLink: string, id: string): ISaveAction {
+export function updateSave (pageVisibility: PageVisibility, VSTShtmlLink: string, id: string): ISaveAction {
   return {type: ACTION.SAVE, pageVisibility, VSTShtmlLink, id};
 }
 

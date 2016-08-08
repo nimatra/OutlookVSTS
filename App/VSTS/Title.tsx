@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Provider, connect } from 'react-redux';
-import { changeTitle, changeStage, Stage } from '../Reducers/ActionsET';
+import { updateTitle, updateStage, Stage } from '../Reducers/ActionsET';
 
  /**
   * Represents the Title Properties
@@ -23,10 +23,10 @@ export interface ITitleProps {
      */
     stage?: Stage;
 }
+
 /**
- * Maps elements of the state to properties
- * @returns {ITitleProps}
- * @param {any} state
+ * Renders the Title heading and Title textbox
+ * @class { Title }
  */
 function mapStateToProps (state: any): ITitleProps  {
   console.log('mapStateToProps' + JSON.stringify(state));
@@ -34,10 +34,7 @@ function mapStateToProps (state: any): ITitleProps  {
    }
 
 @connect (mapStateToProps)
-/**
- * Renders the Title heading and Title textbox
- * @class { Title }
- */
+
 export class Title extends React.Component<ITitleProps, {}> {
 /**
  * Dipatches the action to change the value of title in the store 
@@ -45,7 +42,7 @@ export class Title extends React.Component<ITitleProps, {}> {
  * @param {any} event
  */
 public handlechangeTitle(event: any): void {
-  this.props.dispatch(changeTitle (event.target.value));
+  this.props.dispatch(updateTitle (event.target.value));
 }
 /**
  * Rendersthe Title heading and the Title textbox
@@ -64,8 +61,8 @@ public render(): React.ReactElement<Provider> {
   let normalizedSubject: string = Office.context.mailbox.item.normalizedSubject;
   let currentTitle: string = this.props.title;
   if (currentTitle === '' && this.props.stage === Stage.New) {
-      this.props.dispatch(changeTitle (normalizedSubject));
-      this.props.dispatch(changeStage (Stage.Draft));
+      this.props.dispatch(updateTitle (normalizedSubject));
+      this.props.dispatch(updateStage (Stage.Draft));
   }
 
   return (<div>

@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Provider, connect } from 'react-redux';
 // import { changeSave, StageEnum } from '../Reducers/ActionsET';
 import { Rest } from '../RestHelpers/rest';
-import { changeStage, Stage } from '../Reducers/ActionsET';
+import { updateStage, Stage } from '../Reducers/ActionsET';
 import { IWorkItem } from '../Reducers/ReducersET';
  /**
   * Represents the Save Properties
@@ -20,20 +20,17 @@ export interface ISaveProps {
      */
     workItem?: IWorkItem;
 }
+
 /**
- * Maps elements of the state to properties
- * @returns {ISaveProps}
- * @param {any} state
+ * Renders the Save button and makes REST api calls
+ * @class { Save }
  */
 function mapStateToProps (state: any): ISaveProps  {
       return { workItem: state.workItem };
 }
 
 @connect (mapStateToProps)
-/**
- * Renders the Save button and makes REST api calls
- * @class { Save }
- */
+
 export class Save extends React.Component<ISaveProps, {}> {
 /**
  * States whether to disable the save button or not
@@ -44,11 +41,17 @@ export class Save extends React.Component<ISaveProps, {}> {
  * Dispatches the action to change the Stage and make the REST call to create the work item
  * @returns {void}
  */
+
    public handleSave(): void {
-      this.props.dispatch(changeStage(Stage.Saved));
-      Rest.createWorkItem ('t-emtenc@microsoft.com', 'o365exchange', 'Outlook Services/Ecosystem - Ext VSTS', 'Bug',
-                           this.props.workItem.title, this.props.workItem.description,
-                           (output) => console.log(output));
+      let options: any = { account: 'o365exchange', project: 'Outlook Services', teamName: 'Ecosystem - Ext VSTS'};
+      let token: any = Office.context.mailbox.getCallbackTokenAsync;
+      let OutlookitemID: any = Office.context.mailbox.item.itemId;
+      let ewsURL: any = Office.context.mailbox.ewsUrl;
+      this.props.dispatch(updateStage(Stage.Saved));
+  /*    Rest.createWorkItem('t-emtenc@microsoft.com', options, token, OutlookitemID, ewsURL,
+      this.props.workItem.workItemType, this.props.workItem.title, this.props.workItem.description, (output) => console.log(output));*/
+      Rest.getCurrentIteration('t-emtenc@microsoft.com', options, this.props.workItem.workItemType, this.props.workItem.title, this.props.workItem.description, (output) => console.log(output));
+      
   }
 
 /**

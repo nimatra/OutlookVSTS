@@ -1,5 +1,5 @@
 import { Reducer, combineReducers } from 'redux';
-import { ACTION, FollowStateTypes, Stage } from './ActionsET';
+import { ACTION, FollowTypes, Stage } from './ActionsET';
  /**
   * Represents the part of the state for the new WorkItem
   * @interface IWorkItem
@@ -34,7 +34,7 @@ export interface IWorkItem {
      * where the use is in the process of Following a work item
      * @type {FollowStateTypes}
      */
-  followState: FollowStateTypes;
+  followState: FollowTypes;
     /**
      * the htmlLink of the newly created VSTS work item
      * @type {string}
@@ -54,7 +54,7 @@ export const initalState: IWorkItem = {
   VSTShtmlLink: '',
   addAsAttachment: true,
   description: 'For more details, please refer to the attached email thread. ',
-  followState: FollowStateTypes.Unfollowed,
+  followState: FollowTypes.Unfollowed,
   id: '',
   stage: Stage.New,
   title : '',
@@ -66,7 +66,7 @@ export const initalState: IWorkItem = {
    * @param {IWorkItem} state
    * @param {any} action
    */
-function changeFields(state: IWorkItem = initalState, action: any): IWorkItem {
+function workItemReducer(state: IWorkItem = initalState, action: any): IWorkItem {
   switch (action.type) {
     case ACTION.STAGE:
       return Object.assign( {}, state, {stage : action.stage});
@@ -86,4 +86,4 @@ function changeFields(state: IWorkItem = initalState, action: any): IWorkItem {
  * The reducer for the workItem state
  * @const
  */
-export const testreducer: Reducer = combineReducers({ workItem : changeFields});
+export const testreducer: Reducer = combineReducers({ workItem : workItemReducer});

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Provider, connect } from 'react-redux';
-import { changeAddAsAttachment, changeDescription } from '../Reducers/ActionsET';
+import { updateAddAsAttachment, updateDescription, Stage } from '../Reducers/ActionsET';
 
  /**
   * Represents the Description Properties
@@ -22,23 +22,20 @@ export interface IDescriptionProps {
      * @type {boolean}
      */
     addAsAttachment?: boolean;
+    stage?: Stage;
 }
 
-/**
- * Maps elements of the state to properties
- * @returns {IDescriptionProps}
- * @param {any} state
- */
-function mapStateToProps (state: any): IDescriptionProps  {
-  return {addAsAttachment: state.workItem.addAsAttachment, description: state.workItem.description} ;
-   }
-
-@connect (mapStateToProps)
 
 /**
  * Renders the Description heading, Add Email as Attachment checkbox, and description textbox
  * @class { Description }
  */
+function mapStateToProps (state: any): IDescriptionProps  {
+  return {addAsAttachment: state.workItem.addAsAttachment, description: state.workItem.description, stage: state.workItem.stage} ;
+   }
+
+@connect (mapStateToProps)
+
 export class Description extends React.Component<IDescriptionProps, {}> {
 
 /**
@@ -47,7 +44,7 @@ export class Description extends React.Component<IDescriptionProps, {}> {
  * @param {any} event
  */
 public handlechangeDescription (event: any): void {
-  this.props.dispatch(changeDescription (event.target.value));
+  this.props.dispatch(updateDescription (event.target.value));
 }
 
 /**
@@ -55,13 +52,15 @@ public handlechangeDescription (event: any): void {
  * @ returns {void}
  */
 public handlechangeAddAsAttachment (): void {
-  if (!this.props.addAsAttachment) {
-      this.props.dispatch(changeDescription('For more details, please refer to the attached email thread. ' + this.props.description));
+  this.props.dispatch(updateAddAsAttachment(this.props.addAsAttachment));
+  if (this.props.addAsAttachment || this.props.stage !== Stage.New) {
+    console.log(this.props.addAsAttachment);
+    this.props.dispatch(updateDescription('For more details, please refer to the attached email thread. ' + this.props.description));
   }else {
-      this.props.dispatch(changeDescription(
-      this.props.description.replace('For more details, please refer to the attached email thread. ', '')));
+    console.log('false');
+    this.props.dispatch(updateDescription(
+    this.props.description.replace('For more details, please refer to the attached email thread. ', '')));
   }
-  this.props.dispatch(changeAddAsAttachment(this.props.addAsAttachment));
 }
 /**
  * Renders the Description heading, the Add Email as Attachment checkbox, and the Description textbox
