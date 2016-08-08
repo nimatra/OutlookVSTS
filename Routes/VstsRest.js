@@ -28,7 +28,7 @@ function parseResponse(response, callback) {
 function getRequest(query, path, headers, host, callback) {
   var options = {
     host: host,
-    path: encodeURI(path + '?' + querystring.stringify(query)),
+    path: encodeURI(path) + '?' + querystring.stringify(query),
     method: 'GET',
     headers: headers
   };
@@ -40,7 +40,7 @@ function patchRequest(query, body, path, headers, host, callback) {
   headers['Content-Length'] = body.length;
   var options = {
     host: host,
-    path: encodeURI(path + '?' + querystring.stringify(query)),
+    path: encodeURI(path) + '?' + querystring.stringify(query),
     method: 'PATCH',
     headers: headers
   };
@@ -185,6 +185,7 @@ router.getTeamField = function (req, res) {
 router.use('/getTeamField', router.getTeamField);
 
 router.createBug = function (req, res) {
+  console.log ('in vstsrest now bug');
   var input = req.query;
   var query = {
     'api-version': API1_0
@@ -209,3 +210,97 @@ router.createBug = function (req, res) {
   })
 }
 router.use('/newBug', router.createBug);
+
+router.newWorkItem = function (req, res) {
+  console.log ('in vstsrest now');
+  var input = req.query;
+  var query = {
+    'api-version': API1_0 
+  }
+  var host = input.account + '.visualstudio.com';
+  var path = '/DefaultCollection/' + input.project + '/_apis/wit/workitems/$' + input.type
+  var headers = {
+    'Content-Type': 'application/json-patch+json'
+  };
+  console.log('created the path');
+  if (input.type === "Bug"){
+   var body = JSON.stringify([
+    jsonPatchItem('/fields/System.Title', input.title),
+    jsonPatchItem('/fields/Microsoft.VSTS.TCM.ReproSteps', input.body),
+    jsonPatchItem('/fields/System.AreaPath', input.areaPath),
+    jsonPatchItem('/fields/System.IterationPath', input.currentIteration),
+  ]);
+  }
+  else { 
+    var body = JSON.stringify([
+    jsonPatchItem('/fields/System.Title', input.title),
+    jsonPatchItem('/fields/System.Description', input.body),
+    jsonPatchItem('/fields/System.AreaPath', input.areaPath),
+    jsonPatchItem('/fields/System.IterationPath', input.currentIteration),
+  ]);
+
+  }
+
+  getToken(input.user, (token) => {
+    if (token) {
+      console.log('good token');
+      headers.Authorization = wrapToken(token);
+      patchRequest(query, body, path, headers, host, (output) => { res.send(output) });
+    } else {
+      console.log("could not find token for user " + input.user);
+    }
+  })
+}
+router.use('/newWorkItem', router.newWorkItem);
+
+router.getCurrentIteration = function (req, res) {
+  console.log ('in vstsrest iteration');
+  var input = req.query;
+  var query = {
+    '$timeframe': 'current',
+    'api-version': '2.0-preview.1'
+  }
+  var host = input.account + '.visualstudio.com';
+  var path = '/defaultcollection/' + input.project + '/' + input.team + '/_apis/work/teamsettings/iterations'
+  var headers = {}; 
+    getToken(input.user, (token) => {
+    if (token) {
+      console.log('good token');
+      headers.Authorization = wrapToken(token);
+      getRequest(query, path, headers, host, (output) => { res.send(output) });
+    } else {
+      console.log("could not find token for user " + input.user);
+    }
+  })
+}
+router.use('/getCurrentIteration', router.getCurrentIteration);
+/*
+router.newAttachment = function (req, res) {
+  var input = req.query;
+  var query = {
+    'api-version': API1_0 
+  }
+  var host = input.account + '.visualstudio.com';
+  var path = '/DefaultCollection/_apis/wit/workitems/' + input.id
+  var headers = {
+    'Content-Type': 'application/json-patch+json'
+  };
+  if (input.type === "Bug"){
+   var body = JSON.stringify([
+    jsonPatchItem('/fields/System.Title', input.title),
+    jsonPatchItem('/fields/Microsoft.VSTS.TCM.ReproSteps', input.body),
+    jsonPatchItem('/fields/System.AreaPath', input.areaPath)
+  ]);
+  }
+
+  getToken(input.user, (token) => {
+    if (token) {
+      headers.Authorization = wrapToken(token);
+      patchRequest(query, body, path, headers, host, (output) => { res.send(output) });
+    } else {
+      console.log("could not find token for user " + input.user);
+    }
+  })
+}
+router.use('/newAttachment', router.newAttachment);
+*/

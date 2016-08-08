@@ -118,7 +118,6 @@ export class Rest {
                 }
             });
         });
-
     }
 
     public static createBug(user: string, options: any, title: string, body: string, callback: IRestCallback): void {
@@ -138,6 +137,49 @@ export class Rest {
         });
     }
 
+    public static createWorkItem(user: string, options: any, currentIteration: string, type: string, title: string, body: string, callback: IRestCallback): void {
+        this.createWorkItemCall(user, options, currentIteration, type, title, body, callback);
+    }
+
+    public static createWorkItemCall(user: string, options: any, currentIteration: string, type: string, title: string, body: string, callback: IRestCallback): void {
+        this.getTeamAreaPath(user, options.account, options.project, options.teamName, (areaPath) => {
+            console.log(areaPath);
+            this.makeRestCallWithArgs(
+                'newWorkItem',
+                user,
+                { account: options.account, areaPath: areaPath, body: body, currentIteration: currentIteration, project: options.project, title: title, type: type },
+                (output) => {
+                    console.log(output);
+                    callback(output);
+                });
+        });
+    }
+
+    public static getCurrentIteration(user: string, options: any, type: string, title: string, body: string, callback: IRestCallback): void {
+        this.getCurrentIterationCall(user, options, type, title, body, callback);
+    }
+
+    public static getCurrentIterationCall(user: string, options: any, type: string, title: string, body: string, callback: IRestCallback): void {
+        this.getTeams(user, options.project, options.account, (teams: Team[]) => {
+            let guid: string;
+            teams.forEach(team => {
+                if (team.name === options.teamName) {
+                    guid = team.id;
+                }
+            });
+            this.makeRestCallWithArgs(
+                'getCurrentIteration',
+                user,
+                { account: options.account, project: options.project, team: guid},
+                (output) => {
+                    console.log(options);
+                    Rest.createWorkItem('t-emtenc@microsoft.com', options, JSON.parse(output).value[0].path,
+                    type, title, body,
+                    (output) => callback(output));
+                });
+        });
+    }
+       
        public static getAccountsNew(email: string, memberId: string, callback: IAccountsCallback): void {
             this.makeRestCallWithArgs('accounts', email, {memberId: memberId} , (output) => {
                 let parsed: any = JSON.parse(output);
@@ -172,6 +214,7 @@ export class Rest {
 
     private static makeRestCallWithArgs(name: string, user: string, args: any, callback: IRestCallback): void {
         const path: string = './rest/' + name + '?user=' + user + '&' + $.param(args);
+        console.log('got to restcallwithargs' + path);
         $.get(path, callback);
     }
 
