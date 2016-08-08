@@ -11,4 +11,7 @@
 /// <reference path="react/react.d.ts" />
 /// <reference path="redux-logger/redux-logger.d.ts" />
 /// <reference path="redux-thunk/redux-thunk.d.ts" />
+/// <reference path="redux-form/redux-form.d.ts" />
+/// <reference path="react-select/react-select.d.ts" />
 /// <reference path="redux/redux.d.ts" />
+

@@ -32,8 +32,8 @@ function getRequest(query, path, headers, host, callback) {
     method: 'GET',
     headers: headers
   };
-  console.log(options.path);
-  https.get(options, function (response) { parseResponse(response, callback) });
+  console.log('get: ' + options.path)
+  https.get(options, function (response) { parseResponse(response, callback); console.log("response:"+callback)});
 }
 
 function patchRequest(query, body, path, headers, host, callback) {
@@ -44,7 +44,6 @@ function patchRequest(query, body, path, headers, host, callback) {
     method: 'PATCH',
     headers: headers
   };
-  console.log(options.path);
   var request = https.request(options, function (response) { parseResponse(response, callback) });
   request.write(body);
   request.end();
@@ -111,7 +110,7 @@ router.use('/me', router.me);
 router.accounts = function (req, res) {
   var input = req.query;
   var query = {
-    'memberId': input.memberId,
+    'memberId': input.memberId, //is this the correct way to get ID?
     'api-version': API1_0
   };
   var host = 'app.vssps.visualstudio.com';
@@ -120,7 +119,7 @@ router.accounts = function (req, res) {
   getToken(input.user, (token) => {
     if (token) {
       headers.Authorization = wrapToken(token);
-      getRequest(query, path, headers, host, (output) => { res.send(output) });
+      getRequest(query, path, headers, host, (output) => { res.send(output); console.log("json:"+output.JSON)});
     } else {
       console.log("could not find token for user " + input.user);
     }

@@ -23,10 +23,10 @@ export class ButtonField extends React.Component<IButtonFieldProps, {}> {
     }
     return (
         <button className={buttonClass} onClick={this.onClick.bind(this) }>
-          <span className="ms-Button-icon">
-            <i className="ms-Icon ms-Icon--plus"></i>
+          <span className='ms-Button-icon'>
+            <i className='ms-Icon ms-Icon--plus'></i>
           </span>
-          <span className="ms-Button-label">{this.props.label}</span>
+          <span className='ms-Button-label'>{this.props.label}</span>
         </button>
     );
   }
