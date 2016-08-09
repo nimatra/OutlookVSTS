@@ -5,7 +5,7 @@ import { ItemHyperlink } from  './ItemHyperlink';
 // import { FollowButton } from './FollowButton';
 import { ReplyAllButton } from './ReplyAllButton';
 import { CopyButton } from './CopyButton';
-import { IWorkItem } from '../statesEZ';
+import { IWorkItem } from '../Redux/WorkItemReducer';
 import { connect } from 'react-redux';
 import * as ReactDOM from 'react-dom/server';
 
@@ -27,7 +27,7 @@ interface IQuickActionProps {
  */
 function mapStateToProps(state: any): IQuickActionProps {
   return {
-    workItem: state.workItemState,
+    workItem: state.workItem,
   };
 }
 

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Provider, connect } from 'react-redux';
-import { updateWorkItemType } from '../Reducers/ActionsET';
+import { updateWorkItemType } from '../Redux/WorkItemActions';
 
 require ('react-select/dist/react-select.css');
 let Select: any = require('react-select');

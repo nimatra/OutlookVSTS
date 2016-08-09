@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Provider, connect } from 'react-redux';
-import { updateAddAsAttachment, updateDescription, Stage } from '../Reducers/ActionsET';
+import { updateAddAsAttachment, updateDescription, Stage } from '../Redux/WorkItemActions';
 
  /**
   * Represents the Description Properties
@@ -32,10 +32,9 @@ export interface IDescriptionProps {
  */
 function mapStateToProps (state: any): IDescriptionProps  {
   return {addAsAttachment: state.workItem.addAsAttachment, description: state.workItem.description, stage: state.workItem.stage} ;
-   }
+}
 
 @connect (mapStateToProps)
-
 export class Description extends React.Component<IDescriptionProps, {}> {
 
 /**

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Provider, connect } from 'react-redux';
-import { updateTitle, updateStage, Stage } from '../Reducers/ActionsET';
+import { updateTitle, updateStage, Stage } from '../Redux/WorkItemActions';
 
  /**
   * Represents the Title Properties

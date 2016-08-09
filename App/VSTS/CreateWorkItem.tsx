@@ -14,9 +14,9 @@ import { Gear } from './Gear';
 
 export class CreateWorkItem extends React.Component<{}, {}> {
 
-  public isReady: boolean; // set to false
+  // public isReady: boolean; // set to false
 
-  private Initialize(): void {
+  /*private Initialize(): void {
     this.isReady = true;
     this.forceUpdate(); // re-renders page
   }
@@ -26,17 +26,16 @@ export class CreateWorkItem extends React.Component<{}, {}> {
     this.isReady = false;
     this.Initialize = this.Initialize.bind(this);
     Office.initialize = this.Initialize;
-  }
+  }*/
 
 /**
  * Renders the div that contains all the components of the Create page
  */
 public render(): React.ReactElement<{}> {
-
   console.log('got to create pg');
-  if (this.isReady === false) {
+ /* if (this.isReady === false) {
     return (<div>loading!!</div>);
-  }
+  }*/
 
   return (<div>
   <Gear />

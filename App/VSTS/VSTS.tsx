@@ -1,14 +1,16 @@
 /// <reference path="../../office.d.ts" />
 import * as React from 'react';
-import {Provider, connect } from 'react-redux';
-import {LogInPage } from './LoginComponents/LogInPage';
-import {Settings} from './SettingsComponents/Settings';
-import {Loading } from './SimpleComponents/Loading';
-import {Connecting } from './SimpleComponents/Connecting';
-import {Auth } from './authMM';
+import { Provider, connect } from 'react-redux';
+import { LogInPage } from './LoginComponents/LogInPage';
+import { Settings} from './SettingsComponents/Settings';
+import { Loading } from './SimpleComponents/Loading';
+import { Connecting } from './SimpleComponents/Connecting';
+import { Auth } from './authMM';
 import { updateUserProfileAction} from '../Redux/LoginActions';
-import {PageVisibility, AuthState, updateAuthAction, IErrorStateAction, updatePageAction} from '../Redux/FlowActions';
-import { UserProfile} from '../RestHelpers/rest';
+import { PageVisibility, AuthState, updateAuthAction, IErrorStateAction, updatePageAction } from '../Redux/FlowActions';
+import { UserProfile } from '../RestHelpers/rest';
+import { CreateWorkItem } from './CreateWorkItem';
+import { QuickActions } from './QuickActions';
 
 interface IRefreshCallback { (): void; }
 interface IUserProfileCallback { (profile: UserProfile): void; }
@@ -96,12 +98,12 @@ export class VSTS extends React.Component<IVSTSProps, any> {
         {
             switch (this.props.pageState) {
               case PageVisibility.CreateItem:
-                return (<div>Create Item...</div>);
+                return (<CreateWorkItem />);
               case PageVisibility.QuickActions:
-                return (<div>Quick Actions...</div>);
+                return (<QuickActions />);
               case PageVisibility.Settings:
               default:
-              return (<Settings />);
+                return (<Settings />);
             }
         }
       default:
