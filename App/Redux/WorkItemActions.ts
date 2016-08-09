@@ -137,11 +137,6 @@ export interface ISaveAction {
      */
   type: ACTION;
     /**
-     * The page that is visible to the user/rendered
-     * @type {PageVisibility}
-     */
-  pageVisibility: PageVisibility;
-    /**
      * The link to the newly created VSTS work item
      * @type {string}
      */
@@ -158,13 +153,6 @@ export interface ISaveAction {
    */
 export function updateStage (stage: Stage): IStageAction {
   return {type: ACTION.STAGE, stage};
-}
-  /**
-   * Handles update of the pageVisibility
-   * @param {PageVisibility} pageVisibility
-   */
-export function updateGearVisiblility (pageVisibility: PageVisibility): IGearAction {
-  return {type: ACTION.GEAR, pageVisibility};
 }
   /**
    * Handles update of the workItemType
@@ -200,6 +188,6 @@ export function updateAddAsAttachment (addAsAttachment: boolean): IAddAsAttachme
    * @param {string} VSTShtmlLink
    * @param {string} id
    */
-export function updateSave (pageVisibility: PageVisibility, VSTShtmlLink: string, id: string): ISaveAction {
-  return {type: ACTION.SAVE, pageVisibility, VSTShtmlLink, id};
+export function updateSave (VSTShtmlLink: string, id: string): ISaveAction {
+  return {type: ACTION.SAVE, VSTShtmlLink, id};
 }

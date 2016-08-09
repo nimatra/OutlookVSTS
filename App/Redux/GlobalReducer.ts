@@ -3,6 +3,7 @@
 import { Reducer, combineReducers } from 'redux';
 import { updateUserProfileReducer, updateSettingsAndListsReducer } from './LoginReducer';
 import { updateControlStateReducer} from './FlowReducer';
+import { workItemReducer } from './WorkItemReducer';
 
 /**
  * combined reducer for entire application
@@ -10,4 +11,6 @@ import { updateControlStateReducer} from './FlowReducer';
  */
 export const completeAddInReducer: Reducer = combineReducers({ controlState : updateControlStateReducer,
     currentSettings : updateSettingsAndListsReducer,
-    userProfile: updateUserProfileReducer});
+    userProfile: updateUserProfileReducer,
+    workItem: workItemReducer,
+});

@@ -51,13 +51,13 @@ export interface IWorkItem {
  * @const
  */
 export const initalState: IWorkItem = {
-  VSTShtmlLink: '',
+  VSTShtmlLink: 'https://www.visualstudio.com/products/what-is-visual-studio-online-vs?WT.srch=1&WT.mc_ID=SEM_xXsQTNj1',
   addAsAttachment: true,
   description: 'For more details, please refer to the attached email thread. ',
   followState: FollowTypes.Unfollowed,
-  id: '',
+  id: '<work item id>',
   stage: Stage.New,
-  title : '',
+  title: '',
   workItemType: 'Bug',
 };
 
