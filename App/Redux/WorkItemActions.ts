@@ -1,3 +1,4 @@
+import { PageVisibility } from './FlowActions';
 /**
  * enum for Actions
  * @type {enum}
